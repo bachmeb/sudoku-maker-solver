@@ -134,12 +134,21 @@ public class SudokuGrid {
 
         output = "I Am A Grid";
 
+        if(cols == null){
+            return "columns array is null";
+        }
+
+        if(rows == null){
+            return "rows array is null";
+        }
         StringBuilder sb = new StringBuilder();
 
         sb.append("\n");
 
         for (int[] row : rows){
+            if(row == null) return "row is null";
             for(int numby : row) {
+                if(numby == 0) return "numby is zero";
                 sb.append(numby);
                 sb.append("  ");
             }

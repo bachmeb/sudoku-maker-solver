@@ -17,8 +17,6 @@ class HelloTest {
         logger.info("setting up");
         fixture = new Hello();
 
-
-
     }
 
     @AfterEach

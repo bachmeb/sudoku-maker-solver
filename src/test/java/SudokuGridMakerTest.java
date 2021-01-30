@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -25,7 +26,11 @@ class SudokuGridMakerTest {
 
     @Test
     void make() {
-        fixture.make();
+        SudokuGrid grid = fixture.make();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
     }
 
 }
