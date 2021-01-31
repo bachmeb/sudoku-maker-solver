@@ -17,9 +17,9 @@ public class SudokuGridSolver {
 
             logger.info("loop number: " + loop++ + " - not yet solved");
 
-            int boxCountsIndexedByNumber[] = new int[10];
-            int rowCountsIndexedByNumber[] = new int[10];
-            int columnCountsIndexedByNumber[] = new int[10];
+            int countOfBoxesWithNumberIndexedByNumber[] = new int[10];
+            int countOfRowsWithNumberIndexedByNumber[] = new int[10];
+            int countOfColumnsWithNumberIndexedByNumber[] = new int[10];
 
             int countOfFilledSquaresIndexedByBoxNumber[] = new int[10];
             int countOfFilledSquaresIndexedByRowNumber[] = new int[10];
@@ -29,13 +29,13 @@ public class SudokuGridSolver {
             for(int num = 1; num <10; num++){
                 int boxNumber = 1;
                 for(int[] box : grid.getBoxes()){
-                    boxCountsIndexedByNumber[num] = 0;
+                    countOfBoxesWithNumberIndexedByNumber[num] = 0;
                     for(int i = 0; i < 9; i++){
                         if(num == box[i]){
-                            boxCountsIndexedByNumber[num]++;
+                            countOfBoxesWithNumberIndexedByNumber[num]++;
                         }
                     }
-                    logger.info("There are " + boxCountsIndexedByNumber[num] + " " + num + "s in box number " + boxNumber++ + " " + intArrayToString(box));
+                    logger.info("There are " + countOfBoxesWithNumberIndexedByNumber[num] + " " + num + "s in box number " + boxNumber++ + " " + intArrayToString(box));
                 }
             }
 
@@ -43,13 +43,13 @@ public class SudokuGridSolver {
             for(int num = 1; num <10; num++){
                 int rowNumber = 1;
                 for(int[] row : grid.getRows()){
-                    rowCountsIndexedByNumber[num] = 0;
+                    countOfRowsWithNumberIndexedByNumber[num] = 0;
                     for(int i = 0; i < 9; i++){
                         if(num == row[i]){
-                            rowCountsIndexedByNumber[num]++;
+                            countOfRowsWithNumberIndexedByNumber[num]++;
                         }
                     }
-                    logger.info("There are " + rowCountsIndexedByNumber[num] + " " + num + "s in row number " + rowNumber++ + " - " + intArrayToString(row));
+                    logger.info("There are " + countOfRowsWithNumberIndexedByNumber[num] + " " + num + "s in row number " + rowNumber++ + " - " + intArrayToString(row));
                 }
             }
 
@@ -57,13 +57,13 @@ public class SudokuGridSolver {
             for(int num = 1; num <10; num++){
                 int columnNumber = 1;
                 for(int[] column : grid.getColumns()){
-                    columnCountsIndexedByNumber[num] = 0;
+                    countOfColumnsWithNumberIndexedByNumber[num] = 0;
                     for(int i = 0; i < 9; i++){
                         if(num == column[i]){
-                            columnCountsIndexedByNumber[num]++;
+                            countOfColumnsWithNumberIndexedByNumber[num]++;
                         }
                     }
-                    logger.info("There are " + columnCountsIndexedByNumber[num] + " " + num + "s in column number " + columnNumber++ + " - " + intArrayToString(column));
+                    logger.info("There are " + countOfColumnsWithNumberIndexedByNumber[num] + " " + num + "s in column number " + columnNumber++ + " - " + intArrayToString(column));
                 }
             }
 
