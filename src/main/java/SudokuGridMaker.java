@@ -157,7 +157,7 @@ public class SudokuGridMaker {
         cols[8] = 8;
 
         rows[8] = cols;
-        
+
         grid.setCols(cols);
         grid.setRows(rows);
 
