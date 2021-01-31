@@ -1,6 +1,6 @@
 public class SudokuGridChecker {
 
-    public boolean checkArray(SudokuGrid grid) {
+    public boolean checkGrid(SudokuGrid grid) {
 
         boolean rowsSolved = false;
         boolean columnsSolved = false;
@@ -10,18 +10,10 @@ public class SudokuGridChecker {
             return false;
         }
 
-        int[] row;
-        int[] column;
-        int[] box;
-
-        row = new int[9];
-        column = new int[9];
-        box = new int[9];
-
         int count = 0;
 
-        for (int[] rw : grid.getRows()) {
-            if (checkArray(rw)) {
+        for (int[] row : grid.getRows()) {
+            if (checkArray(row)) {
                 count++;
             }
         }
@@ -32,11 +24,7 @@ public class SudokuGridChecker {
 
         count = 0;
 
-        for (int colNum = 0; colNum < 9; colNum++) {
-            int rowNum = 0;
-            for (int[] rw : grid.getRows()) {
-                column[rowNum++] = rw[colNum];
-            }
+        for (int[] column : grid.getColumns()) {
             if (checkArray(column)) {
                 count++;
             }
@@ -48,14 +36,9 @@ public class SudokuGridChecker {
 
         count = 0;
 
-        for (int boxCol = 0; boxCol < 9; boxCol = boxCol + 3) {
-
-            for (int boxRow = 0; boxRow < 9; boxRow = boxRow + 3) {
-                box = selectBox(grid, boxCol, boxRow);
-
-                if (checkArray(box)) {
-                    count++;
-                }
+        for (int[] box : grid.getBoxes()) {
+            if (checkArray(box)) {
+                count++;
             }
         }
 
@@ -67,19 +50,6 @@ public class SudokuGridChecker {
 
     }
 
-    private int[] selectBox(SudokuGrid grid, int column, int row) {
-
-        int[] box = new int[9];
-        int count = 0;
-
-        for (int c = column; c < column + 3; c++) {
-            for (int r = row; r < row + 3; r++) {
-                box[count++] = grid.getRows()[r][c];
-            }
-        }
-
-        return box;
-    }
 
     private boolean checkArray(int[] numbers) {
 
