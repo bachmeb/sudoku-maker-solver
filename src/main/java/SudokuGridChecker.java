@@ -1,12 +1,12 @@
 public class SudokuGridChecker {
 
-    public boolean solve(SudokuGrid grid){
+    public boolean checkArray(SudokuGrid grid) {
 
         boolean rowsSolved = false;
         boolean columnsSolved = false;
         boolean boxesSolved = false;
 
-        if(grid == null){
+        if (grid == null) {
             return false;
         }
 
@@ -20,47 +20,46 @@ public class SudokuGridChecker {
 
         int count = 0;
 
-        for (int[] cols : grid.getRows()){
-            row = cols;
-            if(check(row)){
+        for (int[] rw : grid.getRows()) {
+            if (checkArray(rw)) {
                 count++;
             }
         }
 
-        if(count == 9){
+        if (count == 9) {
             rowsSolved = true;
         }
 
         count = 0;
 
-        for(int colNum = 0; colNum < 9; colNum++){
+        for (int colNum = 0; colNum < 9; colNum++) {
             int rowNum = 0;
-            for (int[] rw : grid.getRows()){
+            for (int[] rw : grid.getRows()) {
                 column[rowNum++] = rw[colNum];
             }
-            if(check(column)){
+            if (checkArray(column)) {
                 count++;
             }
         }
 
-        if(count == 9){
+        if (count == 9) {
             columnsSolved = true;
         }
 
         count = 0;
 
-        for(int boxCol = 0; boxCol < 9; boxCol = boxCol+3){
+        for (int boxCol = 0; boxCol < 9; boxCol = boxCol + 3) {
 
-            for(int boxRow = 0; boxRow < 9; boxRow = boxRow+3){
-                box = selectBox(grid,boxCol,boxRow);
+            for (int boxRow = 0; boxRow < 9; boxRow = boxRow + 3) {
+                box = selectBox(grid, boxCol, boxRow);
 
-                if(check(box)){
+                if (checkArray(box)) {
                     count++;
                 }
             }
         }
 
-        if(count == 9){
+        if (count == 9) {
             boxesSolved = true;
         }
 
@@ -68,13 +67,13 @@ public class SudokuGridChecker {
 
     }
 
-    private int[] selectBox(SudokuGrid grid, int column, int row){
+    private int[] selectBox(SudokuGrid grid, int column, int row) {
 
         int[] box = new int[9];
         int count = 0;
 
-        for(int c = column; c < column+3 ; c++){
-            for(int r = row; r < row+3; r++){
+        for (int c = column; c < column + 3; c++) {
+            for (int r = row; r < row + 3; r++) {
                 box[count++] = grid.getRows()[r][c];
             }
         }
@@ -82,23 +81,25 @@ public class SudokuGridChecker {
         return box;
     }
 
-    private boolean check(int[] numbers){
-        boolean ok = true;
-        for (int m : numbers){
-            int count = 0;
-            if(m == 0){
-                return false;
-            }
-            for (int n = 1; n<=9; n++){
-                if(m==n){
+    private boolean checkArray(int[] numbers) {
+
+        int count = 0;
+
+        for (int n = 1; n <= 9; n++) {
+            for (int m : numbers) {
+                if (m == 0) {
+                    return false;
+                }
+                if (m == n) {
                     count++;
                 }
             }
-            if (count != 1){
-                ok = false;
+            if (count != 1) {
+                return false;
             }
+            count = 0;
         }
-        return ok;
-    }
 
+        return true;
+    }
 }
