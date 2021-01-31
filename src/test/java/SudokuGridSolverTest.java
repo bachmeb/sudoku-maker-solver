@@ -68,4 +68,17 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
     }
+
+    @Test
+    void addTheLastNumberToTheSet() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeAlmostSolvedGridWithOneMissingNumber();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+    }
 }

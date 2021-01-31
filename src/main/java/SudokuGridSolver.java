@@ -107,6 +107,16 @@ public class SudokuGridSolver {
             }
 
             // if the number of numbers in a given box is 8 then add the last number
+            for(int i = 1; i < countOfFilledSquaresIndexedByBoxNumber.length; i++){
+                if(countOfFilledSquaresIndexedByBoxNumber[i] == 8){
+                    int boxNumber = i;
+                    int[][] boxes = grid.getBoxes();
+                    int[] set = boxes[i];
+                    int[] replacementSet = addTheLastNumberToTheSet(set);
+                    boxes[i]=replacementSet;
+                    grid.setBoxes(boxes);
+                }
+            }
 
             // if the number of numbers in a given row is 8 then add the last number
 
@@ -132,6 +142,45 @@ public class SudokuGridSolver {
         logger.info("This grid is solved!!!");
 
         return grid;
+
+    }
+
+    public int[] addTheLastNumberToTheSet(int[] set) {
+        // make sure the set is not null
+        if(set == null){
+            throw new RuntimeException();
+        }
+        // make sure the set has a length of 10
+        if(set.length != 10){
+            throw new RuntimeException();
+        }
+        // make sure the set has 8 numbers
+        int countOfNumbers = 0;
+        for(int i = 0; i < set.length; i++){
+            if(set[i]>0){
+                countOfNumbers++;
+            }
+        }
+        if(countOfNumbers != 8){
+            throw new RuntimeException();
+        }
+        // find the missing number
+        int missingNumber = 0;
+        int sumOfNumbersInSet = 0;
+        int sumOfAllNumbers = 1+2+3+4+5+6+7+8+9;
+        for(int i = 0; i < set.length; i++){
+            sumOfNumbersInSet += set[i];
+        }
+        missingNumber = sumOfAllNumbers - sumOfNumbersInSet;
+
+        // add the missing number to the set
+        for(int i = 0; i < set.length; i++){
+            if(set[i]==0){
+                set[i]=missingNumber;
+            }
+        }
+
+        return set;
 
     }
 
