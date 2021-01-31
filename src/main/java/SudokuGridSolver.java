@@ -156,7 +156,7 @@ public class SudokuGridSolver {
         }
         // make sure the set has 8 numbers
         int countOfNumbers = 0;
-        for(int i = 0; i < set.length; i++){
+        for(int i = 1; i < set.length; i++){
             if(set[i]>0){
                 countOfNumbers++;
             }
@@ -168,13 +168,13 @@ public class SudokuGridSolver {
         int missingNumber = 0;
         int sumOfNumbersInSet = 0;
         int sumOfAllNumbers = 1+2+3+4+5+6+7+8+9;
-        for(int i = 0; i < set.length; i++){
+        for(int i = 1; i < set.length; i++){
             sumOfNumbersInSet += set[i];
         }
         missingNumber = sumOfAllNumbers - sumOfNumbersInSet;
 
         // add the missing number to the set
-        for(int i = 0; i < set.length; i++){
+        for(int i = 1; i < set.length; i++){
             if(set[i]==0){
                 set[i]=missingNumber;
             }
