@@ -28,13 +28,14 @@ class SudokuGridCheckerTest {
     @Test
     void check() {
         SudokuGridMaker maker = new SudokuGridMaker();
-        boolean solved = fixture.checkArray(maker.make());
+        boolean solved = fixture.checkArray(maker.makeSolvedGrid());
         Assertions.assertTrue(solved);
     }
 
     @Test
     void check_NotSolved() {
-        boolean solved = fixture.checkArray(new SudokuGrid());
+        SudokuGridMaker maker = new SudokuGridMaker();
+        boolean solved = fixture.checkArray(maker.makeOnesThruNinesGrid());
         Assertions.assertFalse(solved);
     }
 }

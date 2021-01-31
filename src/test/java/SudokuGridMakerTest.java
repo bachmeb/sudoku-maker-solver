@@ -26,7 +26,7 @@ class SudokuGridMakerTest {
 
     @Test
     void make() {
-        SudokuGrid grid = fixture.make();
+        SudokuGrid grid = fixture.makeEmptyGrid();
         Assertions.assertNotNull(grid);
 
         String result = grid.toString();
