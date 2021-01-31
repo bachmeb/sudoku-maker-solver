@@ -114,7 +114,7 @@ public class SudokuGrid {
 
         for (int c = column; c < column + 3; c++) {
             for (int r = row; r < row + 3; r++) {
-                box[count++] = grid.getRows()[r][c];
+                box[count++] = grid.getRows()[c][r];
             }
         }
 
