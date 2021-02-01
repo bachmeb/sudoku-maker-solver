@@ -60,19 +60,40 @@ public class SudokuGridSolver {
             }
 
             // start with the number found in the most boxes
+            int mostCommonNumber = 0;
+            int[] boxInFocus;
+            for(int i = 1; i < countOfBoxesWithNumberIndexedByNumber.length; i++){
+                if(countOfBoxesWithNumberIndexedByNumber[i] > mostCommonNumber){
+                    mostCommonNumber = countOfBoxesWithNumberIndexedByNumber[i];
+                }
+            }
 
             // go to each box without that number
+            int boxNum = 0;
+            for(int[] box : grid.getBoxes()){
+                for(int i = 0; i < box.length; i++){
+                    if(box[i]==mostCommonNumber){
+                        break;
+                    }
+                    boxInFocus = box;
 
-            // go to each empty square in that box
+                    // go to each empty square in that box
+                    for(int j = 0; j < box.length; j++){
+                        if(box[j] == 0){
+                            // see if that number is in any other square in the same row
+                            boolean inAnotherSquareSameRow = checkRowforNumberGivenBoxCoordinates(mostCommonNumber, boxNum, i);
+                            // see if that number is in any other square in the same column
 
-            // see if that number is in any other square in the same row
+                            // determine if that number can be added to any other square in the same box
 
-            // see if that number is in any other square in the same column
+                            // if a number can be added to an empty square and cannot be added to any other square in the same box, row, or square
+                            // then add that number to the empty square
+                        }
+                    }
 
-            // determine if that number can be added to any other square in the same box
-
-            // if a number can be added to an empty square and cannot be added to any other square in the same box, row, or square
-            // then add that number to the empty square
+                }
+                boxNum++;
+            }
 
             if (loop == 100) {
                 logger.info("I give up after " + loop + " loops!");
@@ -84,6 +105,18 @@ public class SudokuGridSolver {
 
         return grid;
 
+    }
+
+    private boolean checkRowforNumberGivenBoxCoordinates(int findNum, int boxNum, int posNum){
+        int rowNum = grid.findRowNumForBoxNumAndPosNum(boxNum, posNum);
+
+        int[] row = grid.getRows()[rowNum];
+        for(int i = 0; i < row.length; i++){
+            if(row[i]==findNum){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void reCountNumbersInSquares(){

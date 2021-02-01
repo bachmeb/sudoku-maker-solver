@@ -459,4 +459,105 @@ public class SudokuGrid {
         return box;
     }
 
+    public int findRowNumForBoxNumAndPosNum(int boxNum, int posNum){
+
+        int[][] rowNumbersByBoxNumAndPosNum = new int[9][9];
+
+        rowNumbersByBoxNumAndPosNum[0][0] = 0;
+        rowNumbersByBoxNumAndPosNum[0][1] = 0;
+        rowNumbersByBoxNumAndPosNum[0][2] = 0;
+        rowNumbersByBoxNumAndPosNum[0][3] = 1;
+        rowNumbersByBoxNumAndPosNum[0][4] = 1;
+        rowNumbersByBoxNumAndPosNum[0][5] = 1;
+        rowNumbersByBoxNumAndPosNum[0][6] = 2;
+        rowNumbersByBoxNumAndPosNum[0][7] = 2;
+        rowNumbersByBoxNumAndPosNum[0][8] = 2;
+
+        rowNumbersByBoxNumAndPosNum[1][0] = 0;
+        rowNumbersByBoxNumAndPosNum[1][1] = 0;
+        rowNumbersByBoxNumAndPosNum[1][2] = 0;
+        rowNumbersByBoxNumAndPosNum[1][3] = 1;
+        rowNumbersByBoxNumAndPosNum[1][4] = 1;
+        rowNumbersByBoxNumAndPosNum[1][5] = 1;
+        rowNumbersByBoxNumAndPosNum[1][6] = 2;
+        rowNumbersByBoxNumAndPosNum[1][7] = 2;
+        rowNumbersByBoxNumAndPosNum[1][8] = 2;
+
+        rowNumbersByBoxNumAndPosNum[2][0] = 0;
+        rowNumbersByBoxNumAndPosNum[2][1] = 0;
+        rowNumbersByBoxNumAndPosNum[2][2] = 0;
+        rowNumbersByBoxNumAndPosNum[2][3] = 1;
+        rowNumbersByBoxNumAndPosNum[2][4] = 1;
+        rowNumbersByBoxNumAndPosNum[2][5] = 1;
+        rowNumbersByBoxNumAndPosNum[2][6] = 2;
+        rowNumbersByBoxNumAndPosNum[2][7] = 2;
+        rowNumbersByBoxNumAndPosNum[2][8] = 2;
+
+        ///
+
+        rowNumbersByBoxNumAndPosNum[3][0] = 3;
+        rowNumbersByBoxNumAndPosNum[3][1] = 3;
+        rowNumbersByBoxNumAndPosNum[3][2] = 3;
+        rowNumbersByBoxNumAndPosNum[3][3] = 4;
+        rowNumbersByBoxNumAndPosNum[3][4] = 4;
+        rowNumbersByBoxNumAndPosNum[3][5] = 4;
+        rowNumbersByBoxNumAndPosNum[3][6] = 5;
+        rowNumbersByBoxNumAndPosNum[3][7] = 5;
+        rowNumbersByBoxNumAndPosNum[3][8] = 5;
+
+        rowNumbersByBoxNumAndPosNum[4][0] = 3;
+        rowNumbersByBoxNumAndPosNum[4][1] = 3;
+        rowNumbersByBoxNumAndPosNum[4][2] = 3;
+        rowNumbersByBoxNumAndPosNum[4][3] = 4;
+        rowNumbersByBoxNumAndPosNum[4][4] = 4;
+        rowNumbersByBoxNumAndPosNum[4][5] = 4;
+        rowNumbersByBoxNumAndPosNum[4][6] = 5;
+        rowNumbersByBoxNumAndPosNum[4][7] = 5;
+        rowNumbersByBoxNumAndPosNum[4][8] = 5;
+
+        rowNumbersByBoxNumAndPosNum[5][0] = 3;
+        rowNumbersByBoxNumAndPosNum[5][1] = 3;
+        rowNumbersByBoxNumAndPosNum[5][2] = 3;
+        rowNumbersByBoxNumAndPosNum[5][3] = 4;
+        rowNumbersByBoxNumAndPosNum[5][4] = 4;
+        rowNumbersByBoxNumAndPosNum[5][5] = 4;
+        rowNumbersByBoxNumAndPosNum[5][6] = 5;
+        rowNumbersByBoxNumAndPosNum[5][7] = 5;
+        rowNumbersByBoxNumAndPosNum[5][8] = 5;
+
+        ///
+
+        rowNumbersByBoxNumAndPosNum[6][0] = 6;
+        rowNumbersByBoxNumAndPosNum[6][1] = 6;
+        rowNumbersByBoxNumAndPosNum[6][2] = 6;
+        rowNumbersByBoxNumAndPosNum[6][3] = 7;
+        rowNumbersByBoxNumAndPosNum[6][4] = 7;
+        rowNumbersByBoxNumAndPosNum[6][5] = 7;
+        rowNumbersByBoxNumAndPosNum[6][6] = 8;
+        rowNumbersByBoxNumAndPosNum[6][7] = 8;
+        rowNumbersByBoxNumAndPosNum[6][8] = 8;
+
+        rowNumbersByBoxNumAndPosNum[7][0] = 6;
+        rowNumbersByBoxNumAndPosNum[7][1] = 6;
+        rowNumbersByBoxNumAndPosNum[7][2] = 6;
+        rowNumbersByBoxNumAndPosNum[7][3] = 7;
+        rowNumbersByBoxNumAndPosNum[7][4] = 7;
+        rowNumbersByBoxNumAndPosNum[7][5] = 7;
+        rowNumbersByBoxNumAndPosNum[7][6] = 8;
+        rowNumbersByBoxNumAndPosNum[7][7] = 8;
+        rowNumbersByBoxNumAndPosNum[7][8] = 8;
+
+        rowNumbersByBoxNumAndPosNum[8][0] = 6;
+        rowNumbersByBoxNumAndPosNum[8][1] = 6;
+        rowNumbersByBoxNumAndPosNum[8][2] = 6;
+        rowNumbersByBoxNumAndPosNum[8][3] = 7;
+        rowNumbersByBoxNumAndPosNum[8][4] = 7;
+        rowNumbersByBoxNumAndPosNum[8][5] = 7;
+        rowNumbersByBoxNumAndPosNum[8][6] = 8;
+        rowNumbersByBoxNumAndPosNum[8][7] = 8;
+        rowNumbersByBoxNumAndPosNum[8][8] = 8;
+
+        return rowNumbersByBoxNumAndPosNum[boxNum][posNum];
+    }
+
 }
