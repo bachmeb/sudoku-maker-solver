@@ -32,22 +32,27 @@ public class SudokuGridSolver {
             // if the number of numbers in a given box is 8 then add the last number
             for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
                 if (countOfFilledSquaresIndexedByBoxNumber[i] == 8) {
+                    logger.info("There are 8 squares filled in box number " + i);
                     addTheLastNumberToTheSet(grid.getBoxes()[i]);
                     grid.setBoxes(grid.getBoxes());
+                    reCountNumbersInSquares();
                 }
             }
 
             // if the number of numbers in a given row is 8 then add the last number
             for (int i = 0; i < countOfFilledSquaresIndexedByRowNumber.length; i++) {
                 if (countOfFilledSquaresIndexedByRowNumber[i] == 8) {
+                    logger.info("There are 8 squares filled in row number " + i);
                     addTheLastNumberToTheSet(grid.getRows()[i]);
                     grid.setRows(grid.rows);
+                    reCountNumbersInSquares();
                 }
             }
 
             // if the number of numbers in a given column is 8 then add the last number
             for (int i = 0; i < countOfFilledSquaresIndexedByColumnNumber.length; i++) {
                 if (countOfFilledSquaresIndexedByColumnNumber[i] == 8) {
+                    logger.info("There are 8 squares filled in column number " + i);
                     addTheLastNumberToTheSet(grid.getColumns()[i]);
                     grid.setColumns(grid.getColumns());
                     reCountNumbersInSquares();
@@ -75,7 +80,7 @@ public class SudokuGridSolver {
             }
         }
 
-        logger.info("This grid is solved!!!");
+        logger.info("This grid is solved after " + loop + " loops!!!");
 
         return grid;
 
@@ -212,7 +217,8 @@ public class SudokuGridSolver {
         for (int i = 0; i < set.length; i++) {
             if (set[i] == 0) {
                 set[i] = missingNumber;
-            }
+                logger.debug("Added missing number " + missingNumber + " to the set");
+                        }
         }
 
     }

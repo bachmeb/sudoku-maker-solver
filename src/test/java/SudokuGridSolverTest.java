@@ -95,4 +95,31 @@ class SudokuGridSolverTest {
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
     }
+
+
+    @Test
+    void addTheLastNumberToTheSet_MissingColumn8() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeAlmostSolvedGridMissingLastColumn();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+    }
+
+    @Test
+    void addTheLastNumberToTheSet_MissingOneInEveryBox() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeAlmostSolvedGridMissingOneInEveryBox();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+    }
 }
