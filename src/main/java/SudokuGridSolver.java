@@ -6,121 +6,53 @@ public class SudokuGridSolver {
     static final Logger logger =
             LoggerFactory.getLogger(SudokuGridSolver.class);
 
+    SudokuGrid grid;
+
+    int countOfBoxesWithNumberIndexedByNumber[] = new int[10];
+    int countOfRowsWithNumberIndexedByNumber[] = new int[10];
+    int countOfColumnsWithNumberIndexedByNumber[] = new int[10];
+
+    int countOfFilledSquaresIndexedByBoxNumber[] = new int[9];
+    int countOfFilledSquaresIndexedByRowNumber[] = new int[9];
+    int countOfFilledSquaresIndexedByColumnNumber[] = new int[9];
 
     public SudokuGrid solve(SudokuGrid grid) {
-        SudokuGridChecker checker = new SudokuGridChecker();
-
+        this.grid = grid;
         int loop = 0;
 
+        SudokuGridChecker checker = new SudokuGridChecker();
+
         // is the grid solved?
-        while (checker.checkGrid(grid) != true && loop < 100) {
+        while (checker.checkGrid(grid) != true) {
 
             logger.info("loop number: " + loop++ + " - not yet solved");
 
-            int countOfBoxesWithNumberIndexedByNumber[] = new int[10];
-            int countOfRowsWithNumberIndexedByNumber[] = new int[10];
-            int countOfColumnsWithNumberIndexedByNumber[] = new int[10];
-
-            int countOfFilledSquaresIndexedByBoxNumber[] = new int[9];
-            int countOfFilledSquaresIndexedByRowNumber[] = new int[9];
-            int countOfFilledSquaresIndexedByColumnNumber[] = new int[9];
-
-            // count the number of times each number appears in any box
-            for(int num = 1; num <10; num++){
-                int boxNumber = 1;
-                for(int[] box : grid.getBoxes()){
-                    countOfBoxesWithNumberIndexedByNumber[num] = 0;
-                    for(int i = 0; i < 9; i++){
-                        if(num == box[i]){
-                            countOfBoxesWithNumberIndexedByNumber[num]++;
-                        }
-                    }
-                    logger.debug("There are " + countOfBoxesWithNumberIndexedByNumber[num] + " " + num + "s in box number " + boxNumber++ + " " + intArrayToString(box));
-                }
-            }
-
-            // count the number of times each number appears in any row
-            for(int num = 1; num <10; num++){
-                int rowNumber = 1;
-                for(int[] row : grid.getRows()){
-                    countOfRowsWithNumberIndexedByNumber[num] = 0;
-                    for(int i = 0; i < 9; i++){
-                        if(num == row[i]){
-                            countOfRowsWithNumberIndexedByNumber[num]++;
-                        }
-                    }
-                    logger.debug("There are " + countOfRowsWithNumberIndexedByNumber[num] + " " + num + "s in row number " + rowNumber++ + " - " + intArrayToString(row));
-                }
-            }
-
-            // count the number of times each number appears in any column
-            for(int num = 1; num <10; num++){
-                int columnNumber = 1;
-                for(int[] column : grid.getColumns()){
-                    countOfColumnsWithNumberIndexedByNumber[num] = 0;
-                    for(int i = 0; i < 9; i++){
-                        if(num == column[i]){
-                            countOfColumnsWithNumberIndexedByNumber[num]++;
-                        }
-                    }
-                    logger.debug("There are " + countOfColumnsWithNumberIndexedByNumber[num] + " " + num + "s in column number " + columnNumber++ + " - " + intArrayToString(column));
-                }
-            }
-
-            // count the number of numbers in each box
-            for(int num = 0; num <9; num++){
-                for(int[] box : grid.getBoxes()){
-                    countOfFilledSquaresIndexedByBoxNumber[num] = 0;
-                    for(int i = 0; i < 9; i++){
-                        if(box[i] > 0){
-                            countOfFilledSquaresIndexedByBoxNumber[num]++;
-                        }
-                    }
-                    logger.debug("There are " + countOfFilledSquaresIndexedByBoxNumber[num] + " squares filled in box number " + num  + " - " + intArrayToString(box));
-                }
-            }
-
-            // count the number of squares filled in each row
-            for(int num = 0; num <9; num++){
-                for(int[] row : grid.getRows()){
-                    countOfFilledSquaresIndexedByRowNumber[num] = 0;
-                    for(int i = 0; i < 9; i++){
-                        if(row[i] > 0){
-                            countOfFilledSquaresIndexedByRowNumber[num]++;
-                        }
-                    }
-                    logger.debug("There are " + countOfFilledSquaresIndexedByRowNumber[num] + " squares filled in row number " + num  + " - " + intArrayToString(row));
-                }
-            }
-
-            // count the number of numbers in each column
-            for(int num = 0; num <9; num++){
-                for(int[] column : grid.getColumns()){
-                    countOfFilledSquaresIndexedByColumnNumber[num] = 0;
-                    for(int i = 0; i < 9; i++){
-                        if(column[i] > 0){
-                            countOfFilledSquaresIndexedByColumnNumber[num]++;
-                        }
-                    }
-                    logger.debug("There are " + countOfFilledSquaresIndexedByColumnNumber[num] + " squares filled in column number " + num  + " - " + intArrayToString(column));
-                }
-            }
+            reCountNumbersInSquares();
 
             // if the number of numbers in a given box is 8 then add the last number
-            for(int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++){
-                if(countOfFilledSquaresIndexedByBoxNumber[i] == 8){
-                    int boxNumber = i;
-                    int[][] boxes = grid.getBoxes();
-                    int[] set = boxes[i];
-                    int[] replacementSet = addTheLastNumberToTheSet(set);
-                    boxes[i]=replacementSet;
-                    grid.setBoxes(boxes);
+            for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
+                if (countOfFilledSquaresIndexedByBoxNumber[i] == 8) {
+                    addTheLastNumberToTheSet(grid.getBoxes()[i]);
+                    grid.setBoxes(grid.getBoxes());
                 }
             }
 
             // if the number of numbers in a given row is 8 then add the last number
+            for (int i = 0; i < countOfFilledSquaresIndexedByRowNumber.length; i++) {
+                if (countOfFilledSquaresIndexedByRowNumber[i] == 8) {
+                    addTheLastNumberToTheSet(grid.getRows()[i]);
+                    grid.setRows(grid.rows);
+                }
+            }
 
             // if the number of numbers in a given column is 8 then add the last number
+            for (int i = 0; i < countOfFilledSquaresIndexedByColumnNumber.length; i++) {
+                if (countOfFilledSquaresIndexedByColumnNumber[i] == 8) {
+                    addTheLastNumberToTheSet(grid.getColumns()[i]);
+                    grid.setColumns(grid.getColumns());
+                    reCountNumbersInSquares();
+                }
+            }
 
             // start with the number found in the most boxes
 
@@ -137,6 +69,10 @@ public class SudokuGridSolver {
             // if a number can be added to an empty square and cannot be added to any other square in the same box, row, or square
             // then add that number to the empty square
 
+            if (loop == 100) {
+                logger.info("I give up after " + loop + " loops!");
+                return grid;
+            }
         }
 
         logger.info("This grid is solved!!!");
@@ -145,54 +81,151 @@ public class SudokuGridSolver {
 
     }
 
-    public int[] addTheLastNumberToTheSet(int[] set) {
+    public void reCountNumbersInSquares(){
+
+        countOfBoxesWithNumberIndexedByNumber = new int[10];
+        countOfRowsWithNumberIndexedByNumber = new int[10];
+        countOfColumnsWithNumberIndexedByNumber = new int[10];
+
+        countOfFilledSquaresIndexedByBoxNumber = new int[9];
+        countOfFilledSquaresIndexedByRowNumber = new int[9];
+        countOfFilledSquaresIndexedByColumnNumber = new int[9];
+
+
+        // count the number of times each number appears in any box
+        for (int num = 1; num < 10; num++) {
+            countOfBoxesWithNumberIndexedByNumber[num] = 0;
+            int boxNumber = 0;
+            for (int[] box : grid.getBoxes()) {
+                for (int i = 0; i < 9; i++) {
+                    if (num == box[i]) {
+                        countOfBoxesWithNumberIndexedByNumber[num]++;
+                    }
+                }
+                logger.debug("There are " + countOfBoxesWithNumberIndexedByNumber[num] + " boxes with the number " + num + " - " + intArrayToString(box));
+            }
+            boxNumber++;
+        }
+
+        logger.debug(countOfBoxesWithNumberIndexedByNumber.toString());
+
+        // count the number of times each number appears in any row
+        for (int num = 1; num < 10; num++) {
+            countOfRowsWithNumberIndexedByNumber[num] = 0;
+            int rowNumber = 0;
+            for (int[] row : grid.getRows()) {
+                for (int i = 0; i < 9; i++) {
+                    if (num == row[i]) {
+                        countOfRowsWithNumberIndexedByNumber[num]++;
+                    }
+                }
+                logger.debug("There are " + countOfRowsWithNumberIndexedByNumber[num] + " rows with the number " + num + " - " + intArrayToString(row));
+            }
+            rowNumber++;
+        }
+
+        // count the number of times each number appears in any column
+        for (int num = 1; num < 10; num++) {
+            countOfColumnsWithNumberIndexedByNumber[num] = 0;
+            int columnNumber = 0;
+            for (int[] column : grid.getColumns()) {
+                for (int i = 0; i < 9; i++) {
+                    if (num == column[i]) {
+                        countOfColumnsWithNumberIndexedByNumber[num]++;
+                    }
+                }
+                logger.debug("There are " + countOfColumnsWithNumberIndexedByNumber[num] + " columns with the number " + num + " - " + intArrayToString(column));
+            }
+            columnNumber++;
+        }
+
+        // count the number of filled squares in each box
+        int boxNum = 0;
+        for (int[] box : grid.getBoxes()) {
+            countOfFilledSquaresIndexedByBoxNumber[boxNum] = 0;
+            for (int sudNum : box) {
+                if (sudNum > 0) {
+                    countOfFilledSquaresIndexedByBoxNumber[boxNum]++;
+                }
+            }
+            logger.debug("There are " + countOfFilledSquaresIndexedByBoxNumber[boxNum] + " squares filled in box number " + boxNum + " - " + intArrayToString(box));
+            boxNum++;
+        }
+
+
+        // count the number of squares filled in each row
+        int rowNum = 0;
+        for (int[] row : grid.getRows()) {
+            countOfFilledSquaresIndexedByRowNumber[rowNum] = 0;
+            for (int sudNum : row) {
+                if (sudNum > 0) {
+                    countOfFilledSquaresIndexedByRowNumber[rowNum]++;
+                }
+            }
+            logger.debug("There are " + countOfFilledSquaresIndexedByRowNumber[rowNum] + " squares filled in row number " + boxNum + " - " + intArrayToString(row));
+            rowNum++;
+        }
+
+        // count the number of numbers in each column
+        int colNum = 0;
+        for (int[] column : grid.getColumns()) {
+            countOfFilledSquaresIndexedByColumnNumber[colNum] = 0;
+            for (int sudNum : column) {
+                if (sudNum > 0) {
+                    countOfFilledSquaresIndexedByColumnNumber[colNum]++;
+                }
+            }
+            logger.debug("There are " + countOfFilledSquaresIndexedByColumnNumber[colNum] + " squares filled in column number " + colNum + " - " + intArrayToString(column));
+            colNum++;
+        }
+    }
+
+    public void addTheLastNumberToTheSet(int[] set) {
         // make sure the set is not null
-        if(set == null){
+        if (set == null) {
             throw new RuntimeException();
         }
         // make sure the set has a length of 9
-        if(set.length != 9){
+        if (set.length != 9) {
             throw new RuntimeException("There are only 9 squares in every set");
         }
         // make sure the set has 8 numbers
         int countOfNumbers = 0;
-        for(int i = 0; i < set.length; i++){
-            if(set[i]>0){
+        for (int i = 0; i < set.length; i++) {
+            if (set[i] > 0) {
                 countOfNumbers++;
             }
         }
-        if(countOfNumbers != 8){
+        if (countOfNumbers != 8) {
             throw new RuntimeException("there are supposed to be 8 squares with a number");
         }
         // find the missing number
         int missingNumber = 0;
         int sumOfNumbersInSet = 0;
-        int sumOfAllNumbers = 1+2+3+4+5+6+7+8+9;
-        for(int i = 1; i < set.length; i++){
+        int sumOfAllNumbers = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
+        for (int i = 0; i < set.length; i++) {
             sumOfNumbersInSet += set[i];
         }
         missingNumber = sumOfAllNumbers - sumOfNumbersInSet;
 
         // add the missing number to the set
-        for(int i = 0; i < set.length; i++){
-            if(set[i]==0){
-                set[i]=missingNumber;
+        for (int i = 0; i < set.length; i++) {
+            if (set[i] == 0) {
+                set[i] = missingNumber;
             }
         }
 
-        return set;
-
     }
 
-    private String intArrayToString(int[] arr){
+    private String intArrayToString(int[] arr) {
         StringBuilder sb = new StringBuilder();
 
-        if(arr == null){
+        if (arr == null) {
             return "[]";
         }
 
         sb.append("[");
-        for(int i = 0; i < arr.length; i++){
+        for (int i = 0; i < arr.length; i++) {
             sb.append(arr[i]);
         }
         sb.append("]");

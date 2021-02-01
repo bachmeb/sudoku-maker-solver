@@ -64,6 +64,8 @@ public class SudokuGrid {
             }
         }
         this.columns = newColumns;
+        this.rows = makeRowsFromColumns(newColumns);
+        this.boxes = makeBoxesFromColumns(newColumns);
     }
 
     public int[][] getBoxes() {
@@ -106,10 +108,10 @@ public class SudokuGrid {
 
     private int[][] makeColumnsFromRows(int[][] rowSet) {
 
-        int[][] columns = new int[9][];
-        int[] column = new int[9];
+        int[][] columns = new int[9][9];
 
         for (int colNum = 0; colNum < 9; colNum++) {
+            int[] column = new int[9];
             int rowNum = 0;
             for (int[] row : rowSet) {
                 column[rowNum++] = row[colNum];
@@ -118,6 +120,23 @@ public class SudokuGrid {
         }
 
         return columns;
+
+    }
+
+    private int[][] makeRowsFromColumns(int[][] colSet) {
+
+        int[][] rows = new int[9][9];
+
+        for (int rowNum = 0; rowNum < 9; rowNum++) {
+            int[] row = new int[9];
+            int colNum = 0;
+            for (int[] column : colSet) {
+                row[colNum++] = column[rowNum];
+            }
+            rows[rowNum] = row;
+        }
+
+        return rows;
 
     }
 
@@ -220,6 +239,107 @@ public class SudokuGrid {
         columns[8][8] = boxSet[8][8];
 
         return columns;
+    }
+
+    private int[][] makeBoxesFromColumns(int[][] colSet) {
+
+        int[][] boxes = new int[9][9];
+
+        boxes[0][0] = colSet[0][0];
+        boxes[0][1] = colSet[1][0];
+        boxes[0][2] = colSet[2][0];
+        boxes[0][3] = colSet[0][1];
+        boxes[0][4] = colSet[1][1];
+        boxes[0][5] = colSet[2][1];
+        boxes[0][6] = colSet[0][2];
+        boxes[0][7] = colSet[1][2];
+        boxes[0][8] = colSet[2][2];
+
+        boxes[1][0] = colSet[3][0];
+        boxes[1][1] = colSet[4][0];
+        boxes[1][2] = colSet[5][0];
+        boxes[1][3] = colSet[3][1];
+        boxes[1][4] = colSet[4][1];
+        boxes[1][5] = colSet[5][1];
+        boxes[1][6] = colSet[3][2];
+        boxes[1][7] = colSet[4][2];
+        boxes[1][8] = colSet[5][2];
+
+        boxes[2][0] = colSet[6][0];
+        boxes[2][1] = colSet[7][0];
+        boxes[2][2] = colSet[8][0];
+        boxes[2][3] = colSet[6][1];
+        boxes[2][4] = colSet[7][1];
+        boxes[2][5] = colSet[8][1];
+        boxes[2][6] = colSet[6][2];
+        boxes[2][7] = colSet[7][2];
+        boxes[2][8] = colSet[8][2];
+
+        ///
+
+        boxes[3][0] = colSet[0][3];
+        boxes[3][1] = colSet[1][3];
+        boxes[3][2] = colSet[2][3];
+        boxes[3][3] = colSet[0][4];
+        boxes[3][4] = colSet[1][4];
+        boxes[3][5] = colSet[2][4];
+        boxes[3][6] = colSet[0][5];
+        boxes[3][7] = colSet[1][5];
+        boxes[3][8] = colSet[2][5];
+
+        boxes[4][0] = colSet[3][3];
+        boxes[4][1] = colSet[4][3];
+        boxes[4][2] = colSet[5][3];
+        boxes[4][3] = colSet[3][4];
+        boxes[4][4] = colSet[4][4];
+        boxes[4][5] = colSet[5][4];
+        boxes[4][6] = colSet[3][5];
+        boxes[4][7] = colSet[4][5];
+        boxes[4][8] = colSet[5][5];
+
+        boxes[5][0] = colSet[6][3];
+        boxes[5][1] = colSet[7][3];
+        boxes[5][2] = colSet[8][3];
+        boxes[5][3] = colSet[6][4];
+        boxes[5][4] = colSet[7][4];
+        boxes[5][5] = colSet[8][4];
+        boxes[5][6] = colSet[6][5];
+        boxes[5][7] = colSet[7][5];
+        boxes[5][8] = colSet[8][5];
+
+        ///
+
+        boxes[6][0] = colSet[0][6];
+        boxes[6][1] = colSet[1][6];
+        boxes[6][2] = colSet[2][6];
+        boxes[6][3] = colSet[0][7];
+        boxes[6][4] = colSet[1][7];
+        boxes[6][5] = colSet[2][7];
+        boxes[6][6] = colSet[0][8];
+        boxes[6][7] = colSet[1][8];
+        boxes[6][8] = colSet[2][8];
+
+        boxes[7][0] = colSet[3][6];
+        boxes[7][1] = colSet[4][6];
+        boxes[7][2] = colSet[5][6];
+        boxes[7][3] = colSet[3][7];
+        boxes[7][4] = colSet[4][7];
+        boxes[7][5] = colSet[5][7];
+        boxes[7][6] = colSet[3][8];
+        boxes[7][7] = colSet[4][8];
+        boxes[7][8] = colSet[5][8];
+
+        boxes[8][0] = colSet[6][6];
+        boxes[8][1] = colSet[7][6];
+        boxes[8][2] = colSet[8][6];
+        boxes[8][3] = colSet[6][7];
+        boxes[8][4] = colSet[7][7];
+        boxes[8][5] = colSet[8][7];
+        boxes[8][6] = colSet[6][8];
+        boxes[8][7] = colSet[7][8];
+        boxes[8][8] = colSet[8][8];
+
+        return boxes;
     }
 
     private int[][] makeRowsFromBoxes(int[][] boxSet) {

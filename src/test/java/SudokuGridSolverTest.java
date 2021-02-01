@@ -69,10 +69,24 @@ class SudokuGridSolverTest {
 
     }
 
+
     @Test
-    void addTheLastNumberToTheSet() {
+    void addTheLastNumberToTheSet_MissingR0C3() {
         SudokuGridMaker maker = new SudokuGridMaker();
         SudokuGrid grid = maker.makeAlmostSolvedGridWithOneMissingNumber();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+    }
+
+    @Test
+    void addTheLastNumberToTheSet_MissingRow8() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeAlmostSolvedGridMissingLastRow();
         Assertions.assertNotNull(grid);
 
         String result = grid.toString();
