@@ -21,9 +21,9 @@ public class SudokuGridSolver {
             int countOfRowsWithNumberIndexedByNumber[] = new int[10];
             int countOfColumnsWithNumberIndexedByNumber[] = new int[10];
 
-            int countOfFilledSquaresIndexedByBoxNumber[] = new int[10];
-            int countOfFilledSquaresIndexedByRowNumber[] = new int[10];
-            int countOfFilledSquaresIndexedByColumnNumber[] = new int[10];
+            int countOfFilledSquaresIndexedByBoxNumber[] = new int[9];
+            int countOfFilledSquaresIndexedByRowNumber[] = new int[9];
+            int countOfFilledSquaresIndexedByColumnNumber[] = new int[9];
 
             // count the number of times each number appears in any box
             for(int num = 1; num <10; num++){
@@ -68,7 +68,7 @@ public class SudokuGridSolver {
             }
 
             // count the number of numbers in each box
-            for(int num = 1; num <10; num++){
+            for(int num = 0; num <9; num++){
                 for(int[] box : grid.getBoxes()){
                     countOfFilledSquaresIndexedByBoxNumber[num] = 0;
                     for(int i = 0; i < 9; i++){
@@ -81,7 +81,7 @@ public class SudokuGridSolver {
             }
 
             // count the number of squares filled in each row
-            for(int num = 1; num <10; num++){
+            for(int num = 0; num <9; num++){
                 for(int[] row : grid.getRows()){
                     countOfFilledSquaresIndexedByRowNumber[num] = 0;
                     for(int i = 0; i < 9; i++){
@@ -94,7 +94,7 @@ public class SudokuGridSolver {
             }
 
             // count the number of numbers in each column
-            for(int num = 1; num <10; num++){
+            for(int num = 0; num <9; num++){
                 for(int[] column : grid.getColumns()){
                     countOfFilledSquaresIndexedByColumnNumber[num] = 0;
                     for(int i = 0; i < 9; i++){
@@ -107,7 +107,7 @@ public class SudokuGridSolver {
             }
 
             // if the number of numbers in a given box is 8 then add the last number
-            for(int i = 1; i < countOfFilledSquaresIndexedByBoxNumber.length; i++){
+            for(int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++){
                 if(countOfFilledSquaresIndexedByBoxNumber[i] == 8){
                     int boxNumber = i;
                     int[][] boxes = grid.getBoxes();
@@ -150,19 +150,19 @@ public class SudokuGridSolver {
         if(set == null){
             throw new RuntimeException();
         }
-        // make sure the set has a length of 10
-        if(set.length != 10){
-            throw new RuntimeException();
+        // make sure the set has a length of 9
+        if(set.length != 9){
+            throw new RuntimeException("There are only 9 squares in every set");
         }
         // make sure the set has 8 numbers
         int countOfNumbers = 0;
-        for(int i = 1; i < set.length; i++){
+        for(int i = 0; i < set.length; i++){
             if(set[i]>0){
                 countOfNumbers++;
             }
         }
         if(countOfNumbers != 8){
-            throw new RuntimeException();
+            throw new RuntimeException("there are supposed to be 8 squares with a number");
         }
         // find the missing number
         int missingNumber = 0;
@@ -174,7 +174,7 @@ public class SudokuGridSolver {
         missingNumber = sumOfAllNumbers - sumOfNumbersInSet;
 
         // add the missing number to the set
-        for(int i = 1; i < set.length; i++){
+        for(int i = 0; i < set.length; i++){
             if(set[i]==0){
                 set[i]=missingNumber;
             }
