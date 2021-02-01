@@ -35,7 +35,7 @@ public class SudokuGridSolver {
                             countOfBoxesWithNumberIndexedByNumber[num]++;
                         }
                     }
-                    logger.info("There are " + countOfBoxesWithNumberIndexedByNumber[num] + " " + num + "s in box number " + boxNumber++ + " " + intArrayToString(box));
+                    logger.debug("There are " + countOfBoxesWithNumberIndexedByNumber[num] + " " + num + "s in box number " + boxNumber++ + " " + intArrayToString(box));
                 }
             }
 
@@ -49,7 +49,7 @@ public class SudokuGridSolver {
                             countOfRowsWithNumberIndexedByNumber[num]++;
                         }
                     }
-                    logger.info("There are " + countOfRowsWithNumberIndexedByNumber[num] + " " + num + "s in row number " + rowNumber++ + " - " + intArrayToString(row));
+                    logger.debug("There are " + countOfRowsWithNumberIndexedByNumber[num] + " " + num + "s in row number " + rowNumber++ + " - " + intArrayToString(row));
                 }
             }
 
@@ -63,7 +63,7 @@ public class SudokuGridSolver {
                             countOfColumnsWithNumberIndexedByNumber[num]++;
                         }
                     }
-                    logger.info("There are " + countOfColumnsWithNumberIndexedByNumber[num] + " " + num + "s in column number " + columnNumber++ + " - " + intArrayToString(column));
+                    logger.debug("There are " + countOfColumnsWithNumberIndexedByNumber[num] + " " + num + "s in column number " + columnNumber++ + " - " + intArrayToString(column));
                 }
             }
 
@@ -76,7 +76,7 @@ public class SudokuGridSolver {
                             countOfFilledSquaresIndexedByBoxNumber[num]++;
                         }
                     }
-                    logger.info("There are " + countOfFilledSquaresIndexedByBoxNumber[num] + " squares filled in box number " + num  + " - " + intArrayToString(box));
+                    logger.debug("There are " + countOfFilledSquaresIndexedByBoxNumber[num] + " squares filled in box number " + num  + " - " + intArrayToString(box));
                 }
             }
 
@@ -89,7 +89,7 @@ public class SudokuGridSolver {
                             countOfFilledSquaresIndexedByRowNumber[num]++;
                         }
                     }
-                    logger.info("There are " + countOfFilledSquaresIndexedByRowNumber[num] + " squares filled in row number " + num  + " - " + intArrayToString(row));
+                    logger.debug("There are " + countOfFilledSquaresIndexedByRowNumber[num] + " squares filled in row number " + num  + " - " + intArrayToString(row));
                 }
             }
 
@@ -102,7 +102,7 @@ public class SudokuGridSolver {
                             countOfFilledSquaresIndexedByColumnNumber[num]++;
                         }
                     }
-                    logger.info("There are " + countOfFilledSquaresIndexedByColumnNumber[num] + " squares filled in column number " + num  + " - " + intArrayToString(column));
+                    logger.debug("There are " + countOfFilledSquaresIndexedByColumnNumber[num] + " squares filled in column number " + num  + " - " + intArrayToString(column));
                 }
             }
 
