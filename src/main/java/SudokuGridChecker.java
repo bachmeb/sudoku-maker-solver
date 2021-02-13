@@ -51,16 +51,16 @@ public class SudokuGridChecker {
     }
 
 
-    private boolean checkArray(int[] numbers) {
+    private boolean checkArray(int[] set) {
 
         int count = 0;
 
-        for (int n = 1; n <= 9; n++) {
-            for (int m : numbers) {
-                if (m == 0) {
+        for (int number = 1; number <= 9; number++) {
+            for (int answer : set) {
+                if (answer == 0) {
                     return false;
                 }
-                if (m == n) {
+                if (answer == number) {
                     count++;
                 }
             }
