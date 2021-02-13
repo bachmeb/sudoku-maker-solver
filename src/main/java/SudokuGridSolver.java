@@ -33,8 +33,10 @@ public class SudokuGridSolver {
             for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
                 if (countOfFilledSquaresIndexedByBoxNumber[i] == 8) {
                     logger.info("There are 8 squares filled in box number " + i);
-                    addTheLastNumberToTheSet(grid.getBoxes()[i]);
-                    grid.setBoxes(grid.getBoxes());
+                    int set[] = addTheLastNumberToTheSet(grid.getBoxes()[i]);
+                    int[][] boxes = grid.getBoxes();
+                    boxes[i] = set;
+                    grid.setBoxes(boxes);
                     reCountNumbersInSquares();
                 }
             }
@@ -43,8 +45,10 @@ public class SudokuGridSolver {
             for (int i = 0; i < countOfFilledSquaresIndexedByRowNumber.length; i++) {
                 if (countOfFilledSquaresIndexedByRowNumber[i] == 8) {
                     logger.info("There are 8 squares filled in row number " + i);
-                    addTheLastNumberToTheSet(grid.getRows()[i]);
-                    grid.setRows(grid.rows);
+                    int set[] = addTheLastNumberToTheSet(grid.getRows()[i]);
+                    int[][] rows = grid.getRows();
+                    rows[i] = set;
+                    grid.setRows(rows);
                     reCountNumbersInSquares();
                 }
             }
@@ -53,8 +57,10 @@ public class SudokuGridSolver {
             for (int i = 0; i < countOfFilledSquaresIndexedByColumnNumber.length; i++) {
                 if (countOfFilledSquaresIndexedByColumnNumber[i] == 8) {
                     logger.info("There are 8 squares filled in column number " + i);
-                    addTheLastNumberToTheSet(grid.getColumns()[i]);
-                    grid.setColumns(grid.getColumns());
+                    int set[] = addTheLastNumberToTheSet(grid.getColumns()[i]);
+                    int[][] columns = grid.getColumns();
+                    columns[i] = set;
+                    grid.setColumns(columns);
                     reCountNumbersInSquares();
                 }
             }
@@ -218,7 +224,7 @@ public class SudokuGridSolver {
         }
     }
 
-    public void addTheLastNumberToTheSet(int[] set) {
+    public int[] addTheLastNumberToTheSet(int[] set) {
         // make sure the set is not null
         if (set == null) {
             throw new RuntimeException();
@@ -251,8 +257,11 @@ public class SudokuGridSolver {
             if (set[i] == 0) {
                 set[i] = missingNumber;
                 logger.debug("Added missing number " + missingNumber + " to the set");
-                        }
+                break;
+            }
         }
+
+        return set;
 
     }
 

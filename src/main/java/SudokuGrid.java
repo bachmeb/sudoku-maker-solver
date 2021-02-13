@@ -1,109 +1,157 @@
 public class SudokuGrid {
 
-    int[][] columns;
+    int[] squares;
     int[][] rows;
+    int[][] columns;
     int[][] boxes;
 
     public SudokuGrid() {
+        this.setSquares(new int[81]);
+    }
 
+    public SudokuGrid(int[] squares) {
+        this.setSquares(squares);
+    }
+
+    public boolean validSquares(int[] squares){
+        boolean valid = true;
+        if(squares == null){
+            valid = false;
+        }
+        if(squares.length != 81){
+            valid = false;
+        }
+        for(int i=0;i<squares.length;i++){
+            if(squares[i] < 0){
+                valid = false;
+            }
+            if(squares[i] > 9){
+                valid = false;
+            }
+        }
+        return valid;
+    }
+
+    public int[] getSquares() {
+        return this.squares;
+    }
+
+    public void setSquares(int[] squares) {
+        if(validSquares(squares)) {
+            this.squares = squares;
+        }
+        else {
+            throw new RuntimeException("invalid array of squares");
+        }
+    }
+
+    public int[][] getRows() {
+        return makeRowsOfSquares();
+    }
+
+    public int[][] getColumns() {
+        return makeColumnsOfSquares();
+    }
+
+    public int[][] getBoxes() {
+        return makeBoxesOfSquares();
+    }
+
+    public void setRows(int[][] rows) {
+        int[] set = makeSquaresFromRows(rows);
+        this.squares = set;
+    }
+
+    public void setColumns(int[][] columns) {
+        int[][] rows = makeRowsFromColumns(columns);
+        this.squares = makeSquaresFromRows(rows);
+    }
+
+    public void setBoxes(int[][] boxes) {
+        int[][] rows = makeRowsFromBoxes(boxes);
+        this.squares = makeSquaresFromRows(rows);
     }
 
     @Override
     public String toString() {
         String output;
 
-        output = "I Am A Grid";
+        int[][] rows = new int[9][9];
 
-        if (columns == null) {
-            throw new RuntimeException("columns array is null");
-        }
+        rows = makeRowsOfSquares();
 
-        if (rows == null) {
-            throw new RuntimeException("rows array is null");
-        }
         StringBuilder sb = new StringBuilder();
+
+        sb.append("I Am A Grid");
 
         sb.append("\n");
 
         for (int[] row : rows) {
-            if (row == null) {
-                throw new RuntimeException("row[] is null");
-            }
             for (int numby : row) {
-                if (numby > 9) {
-                    throw new RuntimeException("This numby is too high: " + numby);
-                }
-                if (numby < 0) {
-                    throw new RuntimeException("This numby is too low: " + numby);
-                }
                 sb.append(numby);
                 sb.append("  ");
             }
             sb.append("\n");
         }
 
-        if (!sb.isEmpty()) {
             output = sb.toString();
-        }
 
         return output;
     }
 
-    public int[][] getColumns() {
-        return columns;
-    }
-
-    public void setColumns(int[][] newColumns) {
-        // validate array lengths
-        if (newColumns.length != 9) {
-            throw new RuntimeException();
-        }
-        for (int i = 0; i < newColumns.length; i++) {
-            if (newColumns[i].length != 9) {
-                throw new RuntimeException();
+    private int[][] makeRowsOfSquares(){
+        int[][] rows = new int[9][9];
+        int[] row = new int[9];
+        int rowIndex = 0;
+        int rowsIndex = 0;
+        for (int squaresIndex = 0;squaresIndex<squares.length;squaresIndex++){
+            if(rowIndex == 9){
+                rowIndex = 0;
+                rows[rowsIndex++] = row;
+                row = new int[9];
             }
+            row[rowIndex++]=squares[squaresIndex];
         }
-        this.columns = newColumns;
-        this.rows = makeRowsFromColumns(newColumns);
-        this.boxes = makeBoxesFromColumns(newColumns);
-    }
-
-    public int[][] getBoxes() {
-        return boxes;
-    }
-
-    public void setBoxes(int[][] newBoxes) {
-        // validate array lengths
-        if (newBoxes.length != 9) {
-            throw new RuntimeException();
-        }
-        for (int i = 0; i < newBoxes.length; i++) {
-            if (newBoxes[i].length != 9) {
-                throw new RuntimeException();
-            }
-        }
-        this.boxes = newBoxes;
-        this.columns = makeColumnsFromBoxes(newBoxes);
-        this.rows = makeRowsFromBoxes(newBoxes);
-    }
-
-    public int[][] getRows() {
+        rows[rowsIndex] = row;
         return rows;
     }
 
-    public void setRows(int[][] newRows) {
-        // validate array lengths
-        if (newRows.length != 9) {
-            throw new RuntimeException();
+    private int[][] makeColumnsOfSquares(){
+        int[][] rows = makeRowsOfSquares();
+        int[][] columns = makeColumnsFromRows(rows);
+        return columns;
+    }
+
+    private int[][] makeBoxesOfSquares(){
+        int[][] rows = makeRowsOfSquares();
+        int[][] boxes = makeBoxesFromRows(rows);
+        return boxes;
+    }
+
+    public boolean validGrid(int[][] grid) {
+        boolean valid = true;
+
+        if (grid.length != 9) {
+            valid = false;
         }
-        for (int i = 0; i < newRows.length; i++) {
-            if (newRows[i].length != 9) {
-                throw new RuntimeException();
+        for (int i = 0; i < grid.length; i++) {
+            if (grid[i].length != 9) {
+                valid = false;
             }
         }
-        this.rows = newRows;
-        this.columns = makeColumnsFromRows(newRows);
-        this.boxes = makeBoxesFromRows(newRows);
+
+        return valid;
+    }
+
+    private int[] makeSquaresFromRows(int[][] rows){
+        int s = 0;
+        int [] sqs = new int[81];
+        for(int i=0;i<rows.length;i++){
+            for(int j=0;j<9;j++){
+                sqs[s++]=rows[i][j];
+            }
+        }
+        return sqs;
     }
 
     private int[][] makeColumnsFromRows(int[][] rowSet) {

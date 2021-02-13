@@ -12,16 +12,26 @@ class SudokuGridTest {
             LoggerFactory.getLogger(SudokuGridTest.class);
 
     SudokuGrid fixture;
+    SudokuGridMaker maker;
 
     @BeforeEach
     void setUp() {
+        maker = new SudokuGridMaker();
         logger.info("setting up test");
-        fixture = new SudokuGrid();
     }
 
     @Test
     void testToString() {
         logger.info("testToString()");
+        fixture = new SudokuGrid();
+        String output = fixture.toString();
+        Assertions.assertNotNull(output);
+    }
+
+    @Test
+    void testToString_SolvedGrid() {
+        logger.info("testToString()");
+        fixture = maker.makeSolvedGrid();
         String output = fixture.toString();
         Assertions.assertNotNull(output);
     }

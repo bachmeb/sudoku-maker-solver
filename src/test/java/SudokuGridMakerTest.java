@@ -33,4 +33,14 @@ class SudokuGridMakerTest {
         logger.info(result);
     }
 
+
+    @Test
+    void makeSolvedGrid() {
+        SudokuGrid grid = fixture.makeSolvedGrid();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+    }
+
 }
