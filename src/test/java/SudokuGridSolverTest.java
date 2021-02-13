@@ -122,4 +122,18 @@ class SudokuGridSolverTest {
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
     }
+
+    @Test
+    void solveHalfSolvedGrid() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeHalfSolvedGrid();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+
+    }
 }

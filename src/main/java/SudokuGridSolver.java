@@ -19,12 +19,19 @@ public class SudokuGridSolver {
     public SudokuGrid solve(SudokuGrid grid) {
         this.grid = grid;
         int loop = 0;
+        boolean solved;
 
         SudokuGridChecker checker = new SudokuGridChecker();
 
         // is the grid solved?
         solverLoop:
-        while (checker.checkGrid(grid) != true) {
+        while (true) {
+
+            solved = checker.checkGrid(grid);
+
+            if(solved){
+                break solverLoop;
+            }
 
             logger.info("loop number: " + loop++ + " - not yet solved");
 
@@ -71,24 +78,39 @@ public class SudokuGridSolver {
             int[] boxInFocus;
             for(int i = 1; i < countOfBoxesWithNumberIndexedByNumber.length; i++){
                 if(countOfBoxesWithNumberIndexedByNumber[i] > mostCommonNumber){
-                    mostCommonNumber = countOfBoxesWithNumberIndexedByNumber[i];
+                    if(countOfBoxesWithNumberIndexedByNumber[i] < 8) {
+                        mostCommonNumber = countOfBoxesWithNumberIndexedByNumber[i];
+                    }
                 }
+            }
+
+            if(mostCommonNumber == 0){
+                logger.info("there's something funny about this grid");
+                break solverLoop;
             }
 
             // go to each box without that number
             int boxNum = 0;
+            boolean found = false;
             for(int[] box : grid.getBoxes()){
                 for(int i = 0; i < box.length; i++){
                     if(box[i]==mostCommonNumber){
-                        break;
+                        found = true;
                     }
-                    boxInFocus = box;
-
+                }
+                if(!found){
                     // go to each empty square in that box
                     for(int j = 0; j < box.length; j++){
                         if(box[j] == 0){
+                            // get the row of numbers for that square
+                            int rowNum = grid.findRowNumForBoxNumAndPosNum(boxNum, j);
+                            int[] row = grid.getRows()[rowNum];
+                            logger.info(intArrayToString(row));
+
+                            // get the column of numbers for that square
+
                             // see if that number is in any other square in the same row
-                            boolean inAnotherSquareSameRow = checkRowforNumberGivenBoxCoordinates(mostCommonNumber, boxNum, i);
+                            boolean inAnotherSquareSameRow = checkRowforNumberGivenBoxCoordinates(mostCommonNumber, boxNum, j);
                             // see if that number is in any other square in the same column
 
                             // determine if that number can be added to any other square in the same box
@@ -97,7 +119,6 @@ public class SudokuGridSolver {
                             // then add that number to the empty square
                         }
                     }
-
                 }
                 boxNum++;
             }
@@ -109,7 +130,9 @@ public class SudokuGridSolver {
             }
         }
 
-        logger.info("This grid is solved after " + loop + " loops!!!");
+        if(solved){
+            logger.info("This grid is solved after " + loop + " loops!!!");
+        }
         logger.info(grid.toString());
 
         return grid;
@@ -142,7 +165,6 @@ public class SudokuGridSolver {
         // count the number of times each number appears in any box
         for (int num = 1; num < 10; num++) {
             countOfBoxesWithNumberIndexedByNumber[num] = 0;
-            int boxNumber = 0;
             for (int[] box : grid.getBoxes()) {
                 for (int i = 0; i < 9; i++) {
                     if (num == box[i]) {
@@ -151,7 +173,6 @@ public class SudokuGridSolver {
                 }
                 logger.debug("There are " + countOfBoxesWithNumberIndexedByNumber[num] + " boxes with the number " + num + " - " + intArrayToString(box));
             }
-            boxNumber++;
         }
 
         logger.debug(countOfBoxesWithNumberIndexedByNumber.toString());
@@ -159,7 +180,6 @@ public class SudokuGridSolver {
         // count the number of times each number appears in any row
         for (int num = 1; num < 10; num++) {
             countOfRowsWithNumberIndexedByNumber[num] = 0;
-            int rowNumber = 0;
             for (int[] row : grid.getRows()) {
                 for (int i = 0; i < 9; i++) {
                     if (num == row[i]) {
@@ -168,13 +188,11 @@ public class SudokuGridSolver {
                 }
                 logger.debug("There are " + countOfRowsWithNumberIndexedByNumber[num] + " rows with the number " + num + " - " + intArrayToString(row));
             }
-            rowNumber++;
         }
 
         // count the number of times each number appears in any column
         for (int num = 1; num < 10; num++) {
             countOfColumnsWithNumberIndexedByNumber[num] = 0;
-            int columnNumber = 0;
             for (int[] column : grid.getColumns()) {
                 for (int i = 0; i < 9; i++) {
                     if (num == column[i]) {
@@ -183,7 +201,6 @@ public class SudokuGridSolver {
                 }
                 logger.debug("There are " + countOfColumnsWithNumberIndexedByNumber[num] + " columns with the number " + num + " - " + intArrayToString(column));
             }
-            columnNumber++;
         }
 
         // count the number of filled squares in each box
@@ -213,7 +230,7 @@ public class SudokuGridSolver {
             rowNum++;
         }
 
-        // count the number of numbers in each column
+        // count the number of squares filled in each column
         int colNum = 0;
         for (int[] column : grid.getColumns()) {
             countOfFilledSquaresIndexedByColumnNumber[colNum] = 0;
@@ -253,8 +270,6 @@ public class SudokuGridSolver {
             sumOfNumbersInSet += set[i];
         }
         int sumOfAllNumbers = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
-
-
 
         missingNumber = sumOfAllNumbers - sumOfNumbersInSet;
 
