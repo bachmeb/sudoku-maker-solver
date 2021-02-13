@@ -403,6 +403,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         for(int boxNum = 0; boxNum < 3; boxNum++){
@@ -411,6 +412,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         for(int boxNum = 0; boxNum < 3; boxNum++){
@@ -419,6 +421,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         ///
@@ -429,6 +432,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         for(int boxNum = 3; boxNum < 6; boxNum++){
@@ -437,6 +441,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         for(int boxNum = 3; boxNum < 6; boxNum++){
@@ -445,6 +450,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         ///
@@ -455,6 +461,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         for(int boxNum = 6; boxNum < 9; boxNum++){
@@ -463,6 +470,7 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
+        row = new int[9];
         colNum = 0;
 
         for(int boxNum = 6; boxNum < 9; boxNum++){
@@ -471,7 +479,6 @@ public class SudokuGrid {
             }
         }
         rows[rowNum++] = row;
-        colNum = 0;
 
         return rows;
 

@@ -23,6 +23,7 @@ public class SudokuGridSolver {
         SudokuGridChecker checker = new SudokuGridChecker();
 
         // is the grid solved?
+        solverLoop:
         while (checker.checkGrid(grid) != true) {
 
             logger.info("loop number: " + loop++ + " - not yet solved");
@@ -37,7 +38,7 @@ public class SudokuGridSolver {
                     int[][] boxes = grid.getBoxes();
                     boxes[i] = set;
                     grid.setBoxes(boxes);
-                    reCountNumbersInSquares();
+                    continue solverLoop;
                 }
             }
 
@@ -49,7 +50,7 @@ public class SudokuGridSolver {
                     int[][] rows = grid.getRows();
                     rows[i] = set;
                     grid.setRows(rows);
-                    reCountNumbersInSquares();
+                    continue solverLoop;
                 }
             }
 
@@ -61,7 +62,7 @@ public class SudokuGridSolver {
                     int[][] columns = grid.getColumns();
                     columns[i] = set;
                     grid.setColumns(columns);
-                    reCountNumbersInSquares();
+                    continue solverLoop;
                 }
             }
 
@@ -103,11 +104,13 @@ public class SudokuGridSolver {
 
             if (loop == 100) {
                 logger.info("I give up after " + loop + " loops!");
+                logger.info(grid.toString());
                 return grid;
             }
         }
 
         logger.info("This grid is solved after " + loop + " loops!!!");
+        logger.info(grid.toString());
 
         return grid;
 
@@ -246,10 +249,13 @@ public class SudokuGridSolver {
         // find the missing number
         int missingNumber = 0;
         int sumOfNumbersInSet = 0;
-        int sumOfAllNumbers = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
         for (int i = 0; i < set.length; i++) {
             sumOfNumbersInSet += set[i];
         }
+        int sumOfAllNumbers = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
+
+
+
         missingNumber = sumOfAllNumbers - sumOfNumbersInSet;
 
         // add the missing number to the set
