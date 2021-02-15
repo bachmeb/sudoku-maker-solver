@@ -155,7 +155,7 @@ public class SudokuGridSolver {
             }
 
             // quit after x number of loops so as not to go on infinitely
-            if (loop == 100) {
+            if (loop == 1000) {
                 logger.info("I give up after " + loop + " loops!");
                 logger.info(grid.toString());
                 return grid;

@@ -180,4 +180,40 @@ class SudokuGridSolverTest {
 
     }
 
+    @Test
+    void solveGridMissingTwoBoxes() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeAlmostSolvedGridMissingTwoBoxes();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(grid);
+        Assertions.assertFalse(solved);
+
+    }
+
+    @Test
+    void solveGridFromPCGame() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeGridFromPCGame();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(grid);
+        Assertions.assertTrue(solved);
+
+    }
+
 }
