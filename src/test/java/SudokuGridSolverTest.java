@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class SudokuGridSolverTest {
 
 
@@ -136,4 +134,20 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
     }
+
+
+    @Test
+    void solveGridMissingOneBox() {
+        SudokuGridMaker maker = new SudokuGridMaker();
+        SudokuGrid grid = maker.makeAlmostSolvedGridMissingOneRowInThreeBoxes();
+        Assertions.assertNotNull(grid);
+
+        String result = grid.toString();
+        logger.info(result);
+
+        SudokuGrid solvedGrid = fixture.solve(grid);
+        Assertions.assertNotNull(solvedGrid);
+
+    }
+
 }

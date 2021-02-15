@@ -615,4 +615,106 @@ public class SudokuGrid {
         return rowNumbersByBoxNumAndPosNum[boxNum][posNum];
     }
 
+
+    public int findColNumForBoxNumAndPosNum(int boxNum, int posNum){
+
+        int[][] columnNumbersByBoxNumAndPosNum = new int[9][9];
+
+        columnNumbersByBoxNumAndPosNum[0][0] = 0;
+        columnNumbersByBoxNumAndPosNum[0][1] = 1;
+        columnNumbersByBoxNumAndPosNum[0][2] = 2;
+        columnNumbersByBoxNumAndPosNum[0][3] = 0;
+        columnNumbersByBoxNumAndPosNum[0][4] = 1;
+        columnNumbersByBoxNumAndPosNum[0][5] = 2;
+        columnNumbersByBoxNumAndPosNum[0][6] = 0;
+        columnNumbersByBoxNumAndPosNum[0][7] = 1;
+        columnNumbersByBoxNumAndPosNum[0][8] = 2;
+
+        columnNumbersByBoxNumAndPosNum[1][0] = 3;
+        columnNumbersByBoxNumAndPosNum[1][1] = 4;
+        columnNumbersByBoxNumAndPosNum[1][2] = 5;
+        columnNumbersByBoxNumAndPosNum[1][3] = 3;
+        columnNumbersByBoxNumAndPosNum[1][4] = 4;
+        columnNumbersByBoxNumAndPosNum[1][5] = 5;
+        columnNumbersByBoxNumAndPosNum[1][6] = 3;
+        columnNumbersByBoxNumAndPosNum[1][7] = 4;
+        columnNumbersByBoxNumAndPosNum[1][8] = 5;
+
+        columnNumbersByBoxNumAndPosNum[2][0] = 6;
+        columnNumbersByBoxNumAndPosNum[2][1] = 7;
+        columnNumbersByBoxNumAndPosNum[2][2] = 8;
+        columnNumbersByBoxNumAndPosNum[2][3] = 6;
+        columnNumbersByBoxNumAndPosNum[2][4] = 7;
+        columnNumbersByBoxNumAndPosNum[2][5] = 8;
+        columnNumbersByBoxNumAndPosNum[2][6] = 6;
+        columnNumbersByBoxNumAndPosNum[2][7] = 7;
+        columnNumbersByBoxNumAndPosNum[2][8] = 8;
+
+        ///
+
+        columnNumbersByBoxNumAndPosNum[3][0] = 0;
+        columnNumbersByBoxNumAndPosNum[3][1] = 1;
+        columnNumbersByBoxNumAndPosNum[3][2] = 2;
+        columnNumbersByBoxNumAndPosNum[3][3] = 0;
+        columnNumbersByBoxNumAndPosNum[3][4] = 1;
+        columnNumbersByBoxNumAndPosNum[3][5] = 2;
+        columnNumbersByBoxNumAndPosNum[3][6] = 0;
+        columnNumbersByBoxNumAndPosNum[3][7] = 1;
+        columnNumbersByBoxNumAndPosNum[3][8] = 2;
+
+        columnNumbersByBoxNumAndPosNum[4][0] = 3;
+        columnNumbersByBoxNumAndPosNum[4][1] = 4;
+        columnNumbersByBoxNumAndPosNum[4][2] = 5;
+        columnNumbersByBoxNumAndPosNum[4][3] = 3;
+        columnNumbersByBoxNumAndPosNum[4][4] = 4;
+        columnNumbersByBoxNumAndPosNum[4][5] = 5;
+        columnNumbersByBoxNumAndPosNum[4][6] = 3;
+        columnNumbersByBoxNumAndPosNum[4][7] = 4;
+        columnNumbersByBoxNumAndPosNum[4][8] = 5;
+
+        columnNumbersByBoxNumAndPosNum[5][0] = 6;
+        columnNumbersByBoxNumAndPosNum[5][1] = 7;
+        columnNumbersByBoxNumAndPosNum[5][2] = 8;
+        columnNumbersByBoxNumAndPosNum[5][3] = 6;
+        columnNumbersByBoxNumAndPosNum[5][4] = 7;
+        columnNumbersByBoxNumAndPosNum[5][5] = 8;
+        columnNumbersByBoxNumAndPosNum[5][6] = 6;
+        columnNumbersByBoxNumAndPosNum[5][7] = 7;
+        columnNumbersByBoxNumAndPosNum[5][8] = 8;
+
+        ///
+
+        columnNumbersByBoxNumAndPosNum[6][0] = 0;
+        columnNumbersByBoxNumAndPosNum[6][1] = 1;
+        columnNumbersByBoxNumAndPosNum[6][2] = 2;
+        columnNumbersByBoxNumAndPosNum[6][3] = 0;
+        columnNumbersByBoxNumAndPosNum[6][4] = 1;
+        columnNumbersByBoxNumAndPosNum[6][5] = 2;
+        columnNumbersByBoxNumAndPosNum[6][6] = 0;
+        columnNumbersByBoxNumAndPosNum[6][7] = 1;
+        columnNumbersByBoxNumAndPosNum[6][8] = 2;
+
+        columnNumbersByBoxNumAndPosNum[7][0] = 3;
+        columnNumbersByBoxNumAndPosNum[7][1] = 4;
+        columnNumbersByBoxNumAndPosNum[7][2] = 5;
+        columnNumbersByBoxNumAndPosNum[7][3] = 3;
+        columnNumbersByBoxNumAndPosNum[7][4] = 4;
+        columnNumbersByBoxNumAndPosNum[7][5] = 5;
+        columnNumbersByBoxNumAndPosNum[7][6] = 3;
+        columnNumbersByBoxNumAndPosNum[7][7] = 4;
+        columnNumbersByBoxNumAndPosNum[7][8] = 5;
+
+        columnNumbersByBoxNumAndPosNum[8][0] = 6;
+        columnNumbersByBoxNumAndPosNum[8][1] = 7;
+        columnNumbersByBoxNumAndPosNum[8][2] = 8;
+        columnNumbersByBoxNumAndPosNum[8][3] = 6;
+        columnNumbersByBoxNumAndPosNum[8][4] = 7;
+        columnNumbersByBoxNumAndPosNum[8][5] = 8;
+        columnNumbersByBoxNumAndPosNum[8][6] = 6;
+        columnNumbersByBoxNumAndPosNum[8][7] = 7;
+        columnNumbersByBoxNumAndPosNum[8][8] = 8;
+
+        return columnNumbersByBoxNumAndPosNum[boxNum][posNum];
+    }
+
 }
