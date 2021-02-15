@@ -45,117 +45,14 @@ public class SudokuGridSolver {
 
             reCountNumbersInSquares();
 
-            // if the number of numbers in a given box is 8 then add the last number
-            for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
-                if (countOfFilledSquaresIndexedByBoxNumber[i] == 8) {
-                    logger.info("There are 8 squares filled in box number " + i);
-                    int set[] = addTheLastNumberToTheSet(grid.getBoxes()[i]);
-                    int[][] boxes = grid.getBoxes();
-                    boxes[i] = set;
-                    grid.setBoxes(boxes);
-                    continue solverLoop;
-                }
-            }
+            solveSetsOfEight();
 
-            // if the number of numbers in a given row is 8 then add the last number
-            for (int i = 0; i < countOfFilledSquaresIndexedByRowNumber.length; i++) {
-                if (countOfFilledSquaresIndexedByRowNumber[i] == 8) {
-                    logger.info("There are 8 squares filled in row number " + i);
-                    int set[] = addTheLastNumberToTheSet(grid.getRows()[i]);
-                    int[][] rows = grid.getRows();
-                    rows[i] = set;
-                    grid.setRows(rows);
-                    continue solverLoop;
-                }
-            }
+            solveByCrossChecking();
 
-            // if the number of numbers in a given column is 8 then add the last number
-            for (int i = 0; i < countOfFilledSquaresIndexedByColumnNumber.length; i++) {
-                if (countOfFilledSquaresIndexedByColumnNumber[i] == 8) {
-                    logger.info("There are 8 squares filled in column number " + i);
-                    int set[] = addTheLastNumberToTheSet(grid.getColumns()[i]);
-                    int[][] columns = grid.getColumns();
-                    columns[i] = set;
-                    grid.setColumns(columns);
-                    continue solverLoop;
-                }
-            }
-
-            // order numbers by most common
-            int[] numbersInOrderOfMostCommon = new int[9];
-            numbersInOrderOfMostCommon = sortUnsolvedNumbersByMostCommon(countOfBoxesWithNumberIndexedByNumber);
-
-            for (int numberInMind : numbersInOrderOfMostCommon) {
-
-                int boxNum = -1;
-                // go to each box without that number
-                for (int[] box : grid.getBoxes()) {
-                    boxNum++;
-                    boolean found = checkSetForNumber(numberInMind, box);
-                    if (!found) {
-                        // go to each empty square in that box
-                        for (int j = 0; j < box.length; j++) {
-                            squareWithZero:
-                            if (box[j] == 0) {
-                                // get the row of numbers for that square
-                                int rowNum = grid.findRowNumForBoxNumAndPosNum(boxNum, j);
-                                int[] row = grid.getRows()[rowNum];
-                                logger.info(intArrayToString(row));
-
-                                // get the column of numbers for that square
-                                int colNum = grid.findColNumForBoxNumAndPosNum(boxNum, j);
-                                int[] column = grid.getColumns()[colNum];
-                                logger.info(intArrayToString(column));
-
-                                // see if that number is in any other square in the same row
-                                for (int r = 0; r < row.length; r++) {
-                                    if (row[r] == numberInMind) {
-                                        break squareWithZero;
-                                    }
-                                }
-
-                                // see if that number is in any other square in the same column
-                                for (int c = 0; c < column.length; c++) {
-                                    if (column[c] == numberInMind) {
-                                        break squareWithZero;
-                                    }
-                                }
-
-                                // see if that number is in two other columns of the other two boxes above or below the current box
-                                int[] otherTwoColumns = findTheNumbersOfTheTwoAdjacentColumnsOrRows(colNum);
-                                int[] otherColOne = grid.getColumns()[otherTwoColumns[0]];
-                                boolean inOtherColOne = checkSetForNumber(numberInMind, otherColOne);
-
-                                int[] otherColTwo = grid.getColumns()[otherTwoColumns[1]];
-                                boolean inOtherColTwo = checkSetForNumber(numberInMind, otherColTwo);
-
-                                // see if that number is in two other rows of the two boxes horizontal to the current box
-                                int[] otherTwoRows = findTheNumbersOfTheTwoAdjacentColumnsOrRows(rowNum);
-                                int[] otherRowOne = grid.getRows()[otherTwoRows[0]];
-                                boolean inOtherRowOne = checkSetForNumber(numberInMind, otherRowOne);
-
-                                int[] otherRowTwo = grid.getRows()[otherTwoRows[1]];
-                                boolean inOtherRowTwo = checkSetForNumber(numberInMind, otherRowTwo);
-
-                                // determine if that number can be added to any other square in the same box
-
-                                // if a number can be added to an empty square and cannot be added to any other square in the same box, row, or square
-                                // then add that number to the empty square
-                                if (inOtherColOne && inOtherColTwo && inOtherRowOne && inOtherRowTwo) {
-                                    box[j] = numberInMind;
-                                    int[][] boxes = grid.getBoxes();
-                                    boxes[boxNum] = box;
-                                    grid.setBoxes(boxes);
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
+            solveByEliminationInBoxesAdjacentToTwoCompletedBoxes();
 
             // quit after x number of loops so as not to go on infinitely
-            if (loop == 1000) {
+            if (loop == 100) {
                 logger.info("I give up after " + loop + " loops!");
                 logger.info(grid.toString());
                 return grid;
@@ -170,6 +67,125 @@ public class SudokuGridSolver {
 
         return grid;
 
+    }
+
+    private void solveByEliminationInBoxesAdjacentToTwoCompletedBoxes() {
+
+
+
+    }
+
+    private void solveSetsOfEight(){
+
+        // if the number of numbers in a given box is 8 then add the last number
+        for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
+            if (countOfFilledSquaresIndexedByBoxNumber[i] == 8) {
+                logger.info("There are 8 squares filled in box number " + i);
+                int set[] = addTheLastNumberToTheSet(grid.getBoxes()[i]);
+                int[][] boxes = grid.getBoxes();
+                boxes[i] = set;
+                grid.setBoxes(boxes);
+                return;
+            }
+        }
+
+        // if the number of numbers in a given row is 8 then add the last number
+        for (int i = 0; i < countOfFilledSquaresIndexedByRowNumber.length; i++) {
+            if (countOfFilledSquaresIndexedByRowNumber[i] == 8) {
+                logger.info("There are 8 squares filled in row number " + i);
+                int set[] = addTheLastNumberToTheSet(grid.getRows()[i]);
+                int[][] rows = grid.getRows();
+                rows[i] = set;
+                grid.setRows(rows);
+                return;
+            }
+        }
+
+        // if the number of numbers in a given column is 8 then add the last number
+        for (int i = 0; i < countOfFilledSquaresIndexedByColumnNumber.length; i++) {
+            if (countOfFilledSquaresIndexedByColumnNumber[i] == 8) {
+                logger.info("There are 8 squares filled in column number " + i);
+                int set[] = addTheLastNumberToTheSet(grid.getColumns()[i]);
+                int[][] columns = grid.getColumns();
+                columns[i] = set;
+                grid.setColumns(columns);
+                return;
+            }
+        }
+
+    }
+
+    private void solveByCrossChecking(){
+
+        // order numbers by most common
+        int[] numbersInOrderOfMostCommon = new int[9];
+        numbersInOrderOfMostCommon = sortUnsolvedNumbersByMostCommon(countOfBoxesWithNumberIndexedByNumber);
+
+        for (int numberInMind : numbersInOrderOfMostCommon) {
+
+            int boxNum = -1;
+            // go to each box without that number
+            for (int[] box : grid.getBoxes()) {
+                boxNum++;
+                boolean found = checkSetForNumber(numberInMind, box);
+                if (!found) {
+                    // go to each empty square in that box
+                    for (int j = 0; j < box.length; j++) {
+                        squareWithZero:
+                        if (box[j] == 0) {
+                            // get the row of numbers for that square
+                            int rowNum = grid.findRowNumForBoxNumAndPosNum(boxNum, j);
+                            int[] row = grid.getRows()[rowNum];
+                            logger.info(intArrayToString(row));
+
+                            // get the column of numbers for that square
+                            int colNum = grid.findColNumForBoxNumAndPosNum(boxNum, j);
+                            int[] column = grid.getColumns()[colNum];
+                            logger.info(intArrayToString(column));
+
+                            // see if that number is in any other square in the same row
+                            for (int r = 0; r < row.length; r++) {
+                                if (row[r] == numberInMind) {
+                                    break squareWithZero;
+                                }
+                            }
+
+                            // see if that number is in any other square in the same column
+                            for (int c = 0; c < column.length; c++) {
+                                if (column[c] == numberInMind) {
+                                    break squareWithZero;
+                                }
+                            }
+
+                            // see if that number is in two other columns of the other two boxes above or below the current box
+                            int[] otherTwoColumns = findTheNumbersOfTheTwoAdjacentColumnsOrRows(colNum);
+                            int[] otherColOne = grid.getColumns()[otherTwoColumns[0]];
+                            boolean inOtherColOne = checkSetForNumber(numberInMind, otherColOne);
+
+                            int[] otherColTwo = grid.getColumns()[otherTwoColumns[1]];
+                            boolean inOtherColTwo = checkSetForNumber(numberInMind, otherColTwo);
+
+                            // see if that number is in two other rows of the two boxes horizontal to the current box
+                            int[] otherTwoRows = findTheNumbersOfTheTwoAdjacentColumnsOrRows(rowNum);
+                            int[] otherRowOne = grid.getRows()[otherTwoRows[0]];
+                            boolean inOtherRowOne = checkSetForNumber(numberInMind, otherRowOne);
+
+                            int[] otherRowTwo = grid.getRows()[otherTwoRows[1]];
+                            boolean inOtherRowTwo = checkSetForNumber(numberInMind, otherRowTwo);
+
+                            // if a number can be added to an empty square and cannot be added to any other square in the same box, row, or square
+                            // then add that number to the empty square
+                            if (inOtherColOne && inOtherColTwo && inOtherRowOne && inOtherRowTwo) {
+                                box[j] = numberInMind;
+                                int[][] boxes = grid.getBoxes();
+                                boxes[boxNum] = box;
+                                grid.setBoxes(boxes);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private int[] sortUnsolvedNumbersByMostCommon(int[] numbers) {
