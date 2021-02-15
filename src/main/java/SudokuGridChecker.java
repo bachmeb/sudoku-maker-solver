@@ -1,6 +1,6 @@
 public class SudokuGridChecker {
 
-    public boolean checkGrid(SudokuGrid grid) {
+    public boolean checkGridSolved(SudokuGrid grid) {
 
         boolean rowsSolved = false;
         boolean columnsSolved = false;
@@ -50,7 +50,6 @@ public class SudokuGridChecker {
 
     }
 
-
     private boolean checkArray(int[] set) {
 
         int count = 0;
@@ -72,4 +71,45 @@ public class SudokuGridChecker {
 
         return true;
     }
+
+    public boolean checkGridForErrors(SudokuGrid grid) {
+
+        for (int[] row : grid.getRows()) {
+            if (checkSetForDuplicates(row)) {
+                return true;
+            }
+        }
+
+        for (int[] column : grid.getColumns()) {
+            if (checkSetForDuplicates(column)) {
+                return true;
+            }
+        }
+
+        for (int[] box : grid.getBoxes()) {
+            if (checkSetForDuplicates(box)) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    private boolean checkSetForDuplicates(int[] set) {
+        for (int num = 1; num < 10; num++) {
+            int count = 0;
+            for (int pos = 0; pos < set.length; pos++) {
+                if (set[pos] == num) {
+                    count++;
+                    if (count > 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

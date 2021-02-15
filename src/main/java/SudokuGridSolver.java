@@ -23,11 +23,19 @@ public class SudokuGridSolver {
 
         SudokuGridChecker checker = new SudokuGridChecker();
 
+        // does the grid have any errors?
+        boolean hasError = checker.checkGridForErrors(grid);
+
+        if(hasError){
+            logger.info("this grid has more than one of the same number in a box, row, or column");
+            return grid;
+        }
+
         // is the grid solved?
         solverLoop:
         while (true) {
 
-            solved = checker.checkGrid(grid);
+            solved = checker.checkGridSolved(grid);
 
             if (solved) {
                 break solverLoop;

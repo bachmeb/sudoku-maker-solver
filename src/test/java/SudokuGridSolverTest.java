@@ -54,7 +54,7 @@ class SudokuGridSolverTest {
 
 
     @Test
-    void solveUnsolveableGrid() {
+    void solveGridWithDuplicates() {
         SudokuGridMaker maker = new SudokuGridMaker();
         SudokuGrid grid = maker.makeOnesThruNinesGrid();
         Assertions.assertNotNull(grid);
@@ -64,6 +64,13 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(solvedGrid);
+        Assertions.assertFalse(solved);
+
+        boolean hasError = checker.checkGridForErrors(solvedGrid);
+        Assertions.assertTrue(hasError);
 
     }
 
@@ -79,6 +86,11 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(solvedGrid);
+        Assertions.assertTrue(solved);
+
     }
 
     @Test
@@ -92,6 +104,11 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(solvedGrid);
+        Assertions.assertTrue(solved);
+
     }
 
 
@@ -106,6 +123,11 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(grid);
+        Assertions.assertTrue(solved);
+
     }
 
     @Test
@@ -119,6 +141,10 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(grid);
+        Assertions.assertTrue(solved);
     }
 
     @Test
@@ -147,6 +173,10 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
+
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(grid);
+        Assertions.assertTrue(solved);
 
     }
 
