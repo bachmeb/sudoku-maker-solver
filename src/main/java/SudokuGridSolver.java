@@ -48,13 +48,22 @@ public class SudokuGridSolver {
             boolean gotOne;
 
             gotOne = solveSetsOfEight();
-            if(gotOne)continue;
+            if(gotOne){
+                logger.info("got one");
+                continue;
+            }
 
             gotOne = solveByCrossChecking();
-            if(gotOne)continue;
+            if(gotOne){
+                logger.info("got one");
+                continue;
+            }
 
             gotOne = solveByEliminationInBoxesAdjacentToTwoCompletedBoxes();
-            if(gotOne)continue;
+            if(gotOne){
+                logger.info("got one");
+                continue;
+            }
 
             // quit after x number of loops so as not to go on infinitely
             if (loop == 100) {
@@ -75,6 +84,7 @@ public class SudokuGridSolver {
     }
 
     private boolean solveByEliminationInBoxesAdjacentToTwoCompletedBoxes() {
+        logger.info("solve by elimination in adjacent boxes and rows");
 
         // get a list of numbers 1 - 9
         int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -169,6 +179,7 @@ public class SudokuGridSolver {
     }
 
     private boolean solveSetsOfEight() {
+        logger.info("solve by looking for sets of eight");
 
         // if the number of numbers in a given box is 8 then add the last number
         for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
@@ -209,6 +220,7 @@ public class SudokuGridSolver {
     }
 
     private boolean solveByCrossChecking() {
+        logger.info("solve by cross-checking");
 
         // order numbers by most common
         int[] numbersInOrderOfMostCommon = new int[9];
@@ -229,12 +241,12 @@ public class SudokuGridSolver {
                             // get the row of numbers for that square
                             int rowNum = grid.findRowNumForBoxNumAndPosNum(boxNum, j);
                             int[] row = grid.getRows()[rowNum];
-                            logger.info(intArrayToString(row));
+                            logger.debug(intArrayToString(row));
 
                             // get the column of numbers for that square
                             int colNum = grid.findColNumForBoxNumAndPosNum(boxNum, j);
                             int[] column = grid.getColumns()[colNum];
-                            logger.info(intArrayToString(column));
+                            logger.debug(intArrayToString(column));
 
                             // see if that number is in any other square in the same row
                             for (int r = 0; r < row.length; r++) {

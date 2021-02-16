@@ -165,7 +165,7 @@ class SudokuGridSolverTest {
     @Test
     void solveGridMissingOneBox() {
         SudokuGridMaker maker = new SudokuGridMaker();
-        SudokuGrid grid = maker.makeAlmostSolvedGridMissingOneRowInThreeBoxes();
+        SudokuGrid grid = maker.makeAlmostSolvedGridMissingOneBox();
         Assertions.assertNotNull(grid);
 
         String result = grid.toString();
@@ -194,7 +194,7 @@ class SudokuGridSolverTest {
 
         SudokuGridChecker checker = new SudokuGridChecker();
         boolean solved = checker.checkGridSolved(grid);
-        Assertions.assertFalse(solved);
+        Assertions.assertTrue(solved);
 
     }
 
