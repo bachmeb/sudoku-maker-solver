@@ -26,7 +26,7 @@ public class SudokuGridSolver {
         // does the grid have any errors?
         boolean hasError = checker.checkGridForErrors(grid);
 
-        if(hasError){
+        if (hasError) {
             logger.info("this grid has more than one of the same number in a box, row, or column");
             return grid;
         }
@@ -45,11 +45,16 @@ public class SudokuGridSolver {
 
             reCountNumbersInSquares();
 
-            solveSetsOfEight();
+            boolean gotOne;
 
-            solveByCrossChecking();
+            gotOne = solveSetsOfEight();
+            if(gotOne)continue;
 
-            solveByEliminationInBoxesAdjacentToTwoCompletedBoxes();
+            gotOne = solveByCrossChecking();
+            if(gotOne)continue;
+
+            gotOne = solveByEliminationInBoxesAdjacentToTwoCompletedBoxes();
+            if(gotOne)continue;
 
             // quit after x number of loops so as not to go on infinitely
             if (loop == 100) {
@@ -69,13 +74,101 @@ public class SudokuGridSolver {
 
     }
 
-    private void solveByEliminationInBoxesAdjacentToTwoCompletedBoxes() {
+    private boolean solveByEliminationInBoxesAdjacentToTwoCompletedBoxes() {
+
+        // get a list of numbers 1 - 9
+        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        // loop through the list
+        for (int numberInMind : numbers) {
+
+            // loop through every box
+            for (int boxIndex = 0; boxIndex < grid.getBoxes().length; boxIndex++) {
+
+                // see if the number in mind is in the box
+                boolean numberInMindIsInBox = checkSetForNumber(numberInMind, grid.getBoxes()[boxIndex]);
+
+                // if the number in mind isn't in the box
+                if (!numberInMindIsInBox) {
+
+                    // get the two boxes horizontally adjacent to the box
+                    int[] otherTwoHorizontal = findTwoHorizontallyAdjacentSquaresInBox(boxIndex);
+
+                    // see if the number is in the other two horizontally adjacent boxes
+                    int count = 0;
+                    for (int hBoxIndex : otherTwoHorizontal) {
+                        boolean itsThere = checkSetForNumber(numberInMind, grid.getBoxes()[hBoxIndex]);
+                        if (itsThere) {
+                            count++;
+                        }
+                    }
+
+                    // if yes then get the index number of the row that doesn't have the number in mind
+                    if (count == 2) {
+                        int otherRowNums[] = new int[2];
+                        int otherRowsIndex = 0;
+                        for (int i = 0; i < otherTwoHorizontal.length; i++) {
+                            int[] box = grid.getBoxes()[otherTwoHorizontal[i]];
+                            for (int pos = 0; pos < 9; pos++) {
+                                if (box[pos] == numberInMind) {
+                                    int rowNum = grid.findRowNumForBoxNumAndPosNum(otherTwoHorizontal[i], pos);
+                                    otherRowNums[otherRowsIndex++] = rowNum;
+                                }
+                            }
+                        }
+
+                        // select the three squares in the row of the box that isn't in the same row as the two that already have the number
+                        int candidateSquares[] = new int[3];
+                        int candidateSquaresPos[] = new int[3];
+                        int candidateIndex = 0;
+                        for (int posNum = 0; posNum < 9; posNum++) {
+                            int rowNum = grid.findRowNumForBoxNumAndPosNum(boxIndex, posNum);
+                            boolean inOther = false;
+                            for (int i = 0; i < 2; i++) {
+                                if (rowNum == otherRowNums[i]) {
+                                    inOther = true;
+                                }
+                            }
+                            if (!inOther) {
+                                candidateSquares[candidateIndex] = grid.getBoxes()[boxIndex][posNum];
+                                candidateSquaresPos[candidateIndex++] = posNum;
+                            }
+                        }
+
+                        // see if two of the boxes are occupied by other numbers
+                        int countOfOtherOccupied = 0;
+                        for (int y = 0; y < 3; y++) {
+                            if (candidateSquares[y] > 0) {
+                                countOfOtherOccupied++;
+                            }
+                        }
+
+                        // if so then add the number in mind to the empty box
+                        if (countOfOtherOccupied == 2) {
+                            for (int b = 0; b < 3; b++) {
+                                if (candidateSquares[b] == 0) {
+                                    int box[] = grid.getBoxes()[boxIndex];
+                                    box[candidateSquaresPos[b]] = numberInMind;
+                                    int[][] boxes = grid.getBoxes();
+                                    boxes[boxIndex] = box;
+                                    grid.setBoxes(boxes);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+
+                    // get the two boxes vertically adjacent to the box
+                    int[] otherTwoVertical = findTwoVerticallyAdjacentSquaresInABox(numberInMind);
 
 
-
+                }
+            }
+        }
+        return false;
     }
 
-    private void solveSetsOfEight(){
+    private boolean solveSetsOfEight() {
 
         // if the number of numbers in a given box is 8 then add the last number
         for (int i = 0; i < countOfFilledSquaresIndexedByBoxNumber.length; i++) {
@@ -85,7 +178,7 @@ public class SudokuGridSolver {
                 int[][] boxes = grid.getBoxes();
                 boxes[i] = set;
                 grid.setBoxes(boxes);
-                return;
+                return true;
             }
         }
 
@@ -97,7 +190,7 @@ public class SudokuGridSolver {
                 int[][] rows = grid.getRows();
                 rows[i] = set;
                 grid.setRows(rows);
-                return;
+                return true;
             }
         }
 
@@ -109,13 +202,13 @@ public class SudokuGridSolver {
                 int[][] columns = grid.getColumns();
                 columns[i] = set;
                 grid.setColumns(columns);
-                return;
+                return true;
             }
         }
-
+        return false;
     }
 
-    private void solveByCrossChecking(){
+    private boolean solveByCrossChecking() {
 
         // order numbers by most common
         int[] numbersInOrderOfMostCommon = new int[9];
@@ -180,12 +273,14 @@ public class SudokuGridSolver {
                                 int[][] boxes = grid.getBoxes();
                                 boxes[boxNum] = box;
                                 grid.setBoxes(boxes);
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
+        return false;
     }
 
     private int[] sortUnsolvedNumbersByMostCommon(int[] numbers) {
@@ -200,102 +295,129 @@ public class SudokuGridSolver {
             case 0:
                 otherTwo[0] = 1;
                 otherTwo[1] = 2;
+                break;
             case 1:
                 otherTwo[0] = 0;
                 otherTwo[1] = 2;
+                break;
             case 2:
                 otherTwo[0] = 0;
                 otherTwo[1] = 1;
+                break;
             case 3:
                 otherTwo[0] = 4;
                 otherTwo[1] = 5;
+                break;
             case 4:
                 otherTwo[0] = 3;
                 otherTwo[1] = 5;
+                break;
             case 5:
                 otherTwo[0] = 3;
                 otherTwo[1] = 4;
+                break;
             case 6:
                 otherTwo[0] = 7;
                 otherTwo[1] = 8;
+                break;
             case 7:
                 otherTwo[0] = 6;
                 otherTwo[1] = 8;
+                break;
             case 8:
                 otherTwo[0] = 6;
                 otherTwo[1] = 7;
+                break;
         }
 
         return otherTwo;
     }
 
 
-    private int[] findTheNumbersOfTheTwoOtherHorizontallyAdjacentSquares(int num) {
+    private int[] findTwoHorizontallyAdjacentSquaresInBox(int num) {
         int[] otherTwo = new int[2];
         switch (num) {
             case 0:
                 otherTwo[0] = 1;
                 otherTwo[1] = 2;
+                break;
             case 1:
                 otherTwo[0] = 0;
                 otherTwo[1] = 2;
+                break;
             case 2:
                 otherTwo[0] = 0;
                 otherTwo[1] = 1;
+                break;
             case 3:
                 otherTwo[0] = 4;
                 otherTwo[1] = 5;
+                break;
             case 4:
                 otherTwo[0] = 3;
                 otherTwo[1] = 5;
+                break;
             case 5:
                 otherTwo[0] = 3;
                 otherTwo[1] = 4;
+                break;
             case 6:
                 otherTwo[0] = 7;
                 otherTwo[1] = 8;
+                break;
             case 7:
                 otherTwo[0] = 6;
                 otherTwo[1] = 8;
+                break;
             case 8:
                 otherTwo[0] = 6;
                 otherTwo[1] = 7;
+                break;
         }
 
         return otherTwo;
 
     }
 
-    private int[] findTheNumbersOfTheTwoOtherVerticallyAdjacentSquares(int num) {
+    private int[] findTwoVerticallyAdjacentSquaresInABox(int num) {
         int[] otherTwo = new int[2];
         switch (num) {
             case 0:
                 otherTwo[0] = 3;
                 otherTwo[1] = 6;
+                break;
             case 1:
                 otherTwo[0] = 4;
                 otherTwo[1] = 7;
+                break;
             case 2:
                 otherTwo[0] = 5;
                 otherTwo[1] = 8;
+                break;
             case 3:
                 otherTwo[0] = 0;
                 otherTwo[1] = 6;
+                break;
             case 4:
                 otherTwo[0] = 1;
                 otherTwo[1] = 7;
+                break;
             case 5:
                 otherTwo[0] = 2;
                 otherTwo[1] = 8;
+                break;
             case 6:
                 otherTwo[0] = 0;
                 otherTwo[1] = 3;
+                break;
             case 7:
                 otherTwo[0] = 1;
                 otherTwo[1] = 4;
+                break;
             case 8:
                 otherTwo[0] = 2;
                 otherTwo[1] = 5;
+                break;
         }
 
         return otherTwo;
