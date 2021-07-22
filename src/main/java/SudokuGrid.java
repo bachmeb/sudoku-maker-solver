@@ -13,19 +13,19 @@ public class SudokuGrid {
         this.setSquares(squares);
     }
 
-    public boolean validSquares(int[] squares){
+    public boolean validSquares(int[] squares) {
         boolean valid = true;
-        if(squares == null){
+        if (squares == null) {
             valid = false;
         }
-        if(squares.length != 81){
+        if (squares.length != 81) {
             valid = false;
         }
-        for(int i=0;i<squares.length;i++){
-            if(squares[i] < 0){
+        for (int i = 0; i < squares.length; i++) {
+            if (squares[i] < 0) {
                 valid = false;
             }
-            if(squares[i] > 9){
+            if (squares[i] > 9) {
                 valid = false;
             }
         }
@@ -37,10 +37,9 @@ public class SudokuGrid {
     }
 
     public void setSquares(int[] squares) {
-        if(validSquares(squares)) {
+        if (validSquares(squares)) {
             this.squares = squares;
-        }
-        else {
+        } else {
             throw new RuntimeException("invalid array of squares");
         }
     }
@@ -94,35 +93,35 @@ public class SudokuGrid {
             sb.append("\n");
         }
 
-            output = sb.toString();
+        output = sb.toString();
 
         return output;
     }
 
-    private int[][] makeRowsOfSquares(){
+    private int[][] makeRowsOfSquares() {
         int[][] rows = new int[9][9];
         int[] row = new int[9];
         int rowIndex = 0;
         int rowsIndex = 0;
-        for (int squaresIndex = 0;squaresIndex<squares.length;squaresIndex++){
-            if(rowIndex == 9){
+        for (int squaresIndex = 0; squaresIndex < squares.length; squaresIndex++) {
+            if (rowIndex == 9) {
                 rowIndex = 0;
                 rows[rowsIndex++] = row;
                 row = new int[9];
             }
-            row[rowIndex++]=squares[squaresIndex];
+            row[rowIndex++] = squares[squaresIndex];
         }
         rows[rowsIndex] = row;
         return rows;
     }
 
-    private int[][] makeColumnsOfSquares(){
+    private int[][] makeColumnsOfSquares() {
         int[][] rows = makeRowsOfSquares();
         int[][] columns = makeColumnsFromRows(rows);
         return columns;
     }
 
-    private int[][] makeBoxesOfSquares(){
+    private int[][] makeBoxesOfSquares() {
         int[][] rows = makeRowsOfSquares();
         int[][] boxes = makeBoxesFromRows(rows);
         return boxes;
@@ -143,12 +142,12 @@ public class SudokuGrid {
         return valid;
     }
 
-    private int[] makeSquaresFromRows(int[][] rows){
+    private int[] makeSquaresFromRows(int[][] rows) {
         int s = 0;
-        int [] sqs = new int[81];
-        for(int i=0;i<rows.length;i++){
-            for(int j=0;j<9;j++){
-                sqs[s++]=rows[i][j];
+        int[] sqs = new int[81];
+        for (int i = 0; i < rows.length; i++) {
+            for (int j = 0; j < 9; j++) {
+                sqs[s++] = rows[i][j];
             }
         }
         return sqs;
@@ -397,8 +396,8 @@ public class SudokuGrid {
         int rowNum = 0;
         int colNum = 0;
 
-        for(int boxNum = 0; boxNum < 3; boxNum++){
-            for(int posNum = 0; posNum < 3; posNum++){
+        for (int boxNum = 0; boxNum < 3; boxNum++) {
+            for (int posNum = 0; posNum < 3; posNum++) {
                 row[colNum++] = boxSet[boxNum][posNum];
             }
         }
@@ -406,8 +405,8 @@ public class SudokuGrid {
         row = new int[9];
         colNum = 0;
 
-        for(int boxNum = 0; boxNum < 3; boxNum++){
-            for(int posNum = 3; posNum < 6; posNum++){
+        for (int boxNum = 0; boxNum < 3; boxNum++) {
+            for (int posNum = 3; posNum < 6; posNum++) {
                 row[colNum++] = boxSet[boxNum][posNum];
             }
         }
@@ -415,37 +414,8 @@ public class SudokuGrid {
         row = new int[9];
         colNum = 0;
 
-        for(int boxNum = 0; boxNum < 3; boxNum++){
-            for(int posNum = 6; posNum < 9; posNum++){
-                row[colNum++] = boxSet[boxNum][posNum];
-            }
-        }
-        rows[rowNum++] = row;
-        row = new int[9];
-        colNum = 0;
-
-        ///
-
-        for(int boxNum = 3; boxNum < 6; boxNum++){
-            for(int posNum = 0; posNum < 3; posNum++){
-                row[colNum++] = boxSet[boxNum][posNum];
-            }
-        }
-        rows[rowNum++] = row;
-        row = new int[9];
-        colNum = 0;
-
-        for(int boxNum = 3; boxNum < 6; boxNum++){
-            for(int posNum = 3; posNum < 6; posNum++){
-                row[colNum++] = boxSet[boxNum][posNum];
-            }
-        }
-        rows[rowNum++] = row;
-        row = new int[9];
-        colNum = 0;
-
-        for(int boxNum = 3; boxNum < 6; boxNum++){
-            for(int posNum = 6; posNum < 9; posNum++){
+        for (int boxNum = 0; boxNum < 3; boxNum++) {
+            for (int posNum = 6; posNum < 9; posNum++) {
                 row[colNum++] = boxSet[boxNum][posNum];
             }
         }
@@ -455,8 +425,8 @@ public class SudokuGrid {
 
         ///
 
-        for(int boxNum = 6; boxNum < 9; boxNum++){
-            for(int posNum = 0; posNum < 3; posNum++){
+        for (int boxNum = 3; boxNum < 6; boxNum++) {
+            for (int posNum = 0; posNum < 3; posNum++) {
                 row[colNum++] = boxSet[boxNum][posNum];
             }
         }
@@ -464,8 +434,8 @@ public class SudokuGrid {
         row = new int[9];
         colNum = 0;
 
-        for(int boxNum = 6; boxNum < 9; boxNum++){
-            for(int posNum = 3; posNum < 6; posNum++){
+        for (int boxNum = 3; boxNum < 6; boxNum++) {
+            for (int posNum = 3; posNum < 6; posNum++) {
                 row[colNum++] = boxSet[boxNum][posNum];
             }
         }
@@ -473,8 +443,37 @@ public class SudokuGrid {
         row = new int[9];
         colNum = 0;
 
-        for(int boxNum = 6; boxNum < 9; boxNum++){
-            for(int posNum = 6; posNum < 9; posNum++){
+        for (int boxNum = 3; boxNum < 6; boxNum++) {
+            for (int posNum = 6; posNum < 9; posNum++) {
+                row[colNum++] = boxSet[boxNum][posNum];
+            }
+        }
+        rows[rowNum++] = row;
+        row = new int[9];
+        colNum = 0;
+
+        ///
+
+        for (int boxNum = 6; boxNum < 9; boxNum++) {
+            for (int posNum = 0; posNum < 3; posNum++) {
+                row[colNum++] = boxSet[boxNum][posNum];
+            }
+        }
+        rows[rowNum++] = row;
+        row = new int[9];
+        colNum = 0;
+
+        for (int boxNum = 6; boxNum < 9; boxNum++) {
+            for (int posNum = 3; posNum < 6; posNum++) {
+                row[colNum++] = boxSet[boxNum][posNum];
+            }
+        }
+        rows[rowNum++] = row;
+        row = new int[9];
+        colNum = 0;
+
+        for (int boxNum = 6; boxNum < 9; boxNum++) {
+            for (int posNum = 6; posNum < 9; posNum++) {
                 row[colNum++] = boxSet[boxNum][posNum];
             }
         }
@@ -514,7 +513,7 @@ public class SudokuGrid {
         return box;
     }
 
-    public int findRowNumForBoxNumAndPosNum(int boxNum, int posNum){
+    public int findRowNumForBoxNumAndPosNum(int boxNum, int posNum) {
 
         int[][] rowNumbersByBoxNumAndPosNum = new int[9][9];
 
@@ -616,7 +615,7 @@ public class SudokuGrid {
     }
 
 
-    public int findColNumForBoxNumAndPosNum(int boxNum, int posNum){
+    public int findColNumForBoxNumAndPosNum(int boxNum, int posNum) {
 
         int[][] columnNumbersByBoxNumAndPosNum = new int[9][9];
 

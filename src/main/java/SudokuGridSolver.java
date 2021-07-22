@@ -144,8 +144,8 @@ public class SudokuGridSolver {
                                 }
                             }
                             if (!inOther) {
-                                if(candidateIndex>2){
-                                    throw  new RuntimeException("What's happening???");
+                                if (candidateIndex > 2) {
+                                    throw new RuntimeException("What's happening???");
                                 }
                                 candidateSquares[candidateIndex] = grid.getBoxes()[boxIndex][posNum];
                                 candidateSquaresPos[candidateIndex++] = posNum;
@@ -277,8 +277,8 @@ public class SudokuGridSolver {
                                 }
                             }
                             if (!inOther) {
-                                if(candidateIndex>2){
-                                    throw  new RuntimeException("What's happening???");
+                                if (candidateIndex > 2) {
+                                    throw new RuntimeException("What's happening???");
                                 }
                                 candidateSquares[candidateIndex] = grid.getBoxes()[boxIndex][posNum];
                                 candidateSquaresPos[candidateIndex++] = posNum;

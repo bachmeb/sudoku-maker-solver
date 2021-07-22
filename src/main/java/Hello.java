@@ -6,14 +6,14 @@ public class Hello {
     static final Logger logger =
             LoggerFactory.getLogger(Hello.class);
 
-    public static void main(String[] arg0){
+    public static void main(String[] arg0) {
         System.out.println("hello");
 
         Hello me = new Hello();
         me.go();
     }
 
-    private void go(){
+    private void go() {
         SudokuGrid grid = new SudokuGrid();
         logger.info(grid.toString());
 

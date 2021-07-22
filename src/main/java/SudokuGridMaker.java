@@ -1,12 +1,12 @@
 public class SudokuGridMaker {
 
-    public SudokuGrid makeEmptyGrid(){
+    public SudokuGrid makeEmptyGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
         int rows[][] = new int[9][];
 
-        int row[]= new int[9];
+        int row[] = new int[9];
 
         rows[0] = row;
         rows[1] = row;
@@ -25,13 +25,13 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeZerosGrid(){
+    public SudokuGrid makeZerosGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
         int rows[][] = new int[9][];
 
-        int row[]= new int[9];
+        int row[] = new int[9];
 
         row[0] = 0;
         row[1] = 0;
@@ -154,13 +154,13 @@ public class SudokuGridMaker {
         return grid;
     }
 
-    public SudokuGrid makeOnesThruNinesGrid(){
+    public SudokuGrid makeOnesThruNinesGrid() {
 
         SudokuGrid grid = new SudokuGrid();
-        
+
         int rows[][] = new int[9][];
 
-        int row[]= new int[9];
+        int row[] = new int[9];
 
         row[0] = 1;
         row[1] = 1;
@@ -277,13 +277,13 @@ public class SudokuGridMaker {
         row[8] = 9;
 
         rows[8] = row;
-        
+
         grid.setRows(rows);
-        
+
         return grid;
     }
 
-    public SudokuGrid makeSolvedGrid(){
+    public SudokuGrid makeSolvedGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -443,7 +443,7 @@ public class SudokuGridMaker {
 
     }
 
-    public SudokuGrid makeAlmostSolvedGridWithOneMissingNumber(){
+    public SudokuGrid makeAlmostSolvedGridWithOneMissingNumber() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -603,7 +603,7 @@ public class SudokuGridMaker {
 
     }
 
-    public SudokuGrid makeAlmostSolvedGridMissingLastRow(){
+    public SudokuGrid makeAlmostSolvedGridMissingLastRow() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -763,7 +763,7 @@ public class SudokuGridMaker {
 
     }
 
-    public SudokuGrid makeAlmostSolvedGridMissingLastColumn(){
+    public SudokuGrid makeAlmostSolvedGridMissingLastColumn() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -924,7 +924,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingOneInEveryBox(){
+    public SudokuGrid makeAlmostSolvedGridMissingOneInEveryBox() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1085,7 +1085,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeHalfSolvedGrid(){
+    public SudokuGrid makeHalfSolvedGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1246,7 +1246,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingOneRowInThreeBoxes(){
+    public SudokuGrid makeAlmostSolvedGridMissingOneRowInThreeBoxes() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1407,7 +1407,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingOneBox(){
+    public SudokuGrid makeAlmostSolvedGridMissingOneBox() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1568,7 +1568,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingTwoBoxes(){
+    public SudokuGrid makeAlmostSolvedGridMissingTwoBoxes() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1729,13 +1729,13 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeGridFromPCGame(){
+    public SudokuGrid makeGridFromPCGame() {
 
         SudokuGrid grid = new SudokuGrid();
 
         int rows[][] = new int[9][];
 
-        int row[]= new int[9];
+        int row[] = new int[9];
 
         row[0] = 8;
         row[1] = 9;
