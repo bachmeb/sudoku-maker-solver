@@ -1,6 +1,7 @@
 package view;
 
-public class ASDF {
+public class SudokuGridView {
+
     public static String intArrayToString(int[] arr) {
         StringBuilder sb = new StringBuilder();
 

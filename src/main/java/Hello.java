@@ -1,3 +1,4 @@
+import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +17,6 @@ public class Hello {
     private void go() {
         SudokuGrid grid = new SudokuGrid();
         logger.info(grid.toString());
-
-
     }
 
 }

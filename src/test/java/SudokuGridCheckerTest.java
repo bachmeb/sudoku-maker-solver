@@ -1,3 +1,6 @@
+import model.SudokuGrid;
+import service.SudokuGridChecker;
+import service.SudokuGridMaker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

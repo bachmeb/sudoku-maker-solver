@@ -1,4 +1,4 @@
-package service;
+package algorithms;
 
 import model.SudokuGrid;
 

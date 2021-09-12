@@ -1,3 +1,7 @@
+package service;
+
+import model.SudokuGrid;
+
 public class SudokuGridMaker {
 
     public SudokuGrid makeEmptyGrid() {

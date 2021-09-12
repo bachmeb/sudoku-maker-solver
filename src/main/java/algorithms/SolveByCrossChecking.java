@@ -4,15 +4,22 @@ import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.SudokuGridChecker;
+import service.SudokuGridObserver;
+import service.SudokuGridSolver;
 import view.SudokuGridView;
 
-public class CrossChecking {
-    static int[] countOfBoxesWithNumberIndexedByNumber = new int[10];
-    static int[] countOfRowsWithNumberIndexedByNumber = new int[10];
-    static int[] countOfColumnsWithNumberIndexedByNumber = new int[10];
+public class SolveByCrossChecking extends SudokuGridSolver implements SudokuGridSolverAlgorithms {
 
     static final Logger logger =
-            LoggerFactory.getLogger(CrossChecking.class);
+            LoggerFactory.getLogger(SolveByCrossChecking.class);
+
+    SudokuGridObserver observer;
+
+    @Override
+    public SudokuGrid solve(SudokuGrid grid) {
+        grid = solveByCrossChecking(grid);
+        return grid;
+    }
 
     private static int[] sortUnsolvedNumbersByMostCommon(int[] numbers) {
         int[] sorted = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -20,13 +27,14 @@ public class CrossChecking {
         return sorted;
     }
 
-
-    public static SudokuGrid solveByCrossChecking(SudokuGrid grid) {
+    private SudokuGrid solveByCrossChecking(SudokuGrid grid) {
         logger.info("solve by cross-checking");
+
+        observer = new SudokuGridObserver(grid);
 
         // order numbers by most common
         int[] numbersInOrderOfMostCommon = new int[9];
-        numbersInOrderOfMostCommon = sortUnsolvedNumbersByMostCommon(countOfBoxesWithNumberIndexedByNumber);
+        numbersInOrderOfMostCommon = sortUnsolvedNumbersByMostCommon(observer.getCountOfBoxesWithNumberIndexedByNumber());
 
         for (int numberInMind : numbersInOrderOfMostCommon) {
 
@@ -141,6 +149,5 @@ public class CrossChecking {
 
         return otherTwo;
     }
-
 
 }

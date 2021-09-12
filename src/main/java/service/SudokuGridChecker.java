@@ -1,4 +1,4 @@
-package toppppy;
+package service;
 
 import model.SudokuGrid;
 
@@ -17,7 +17,7 @@ public class SudokuGridChecker {
         int count = 0;
 
         for (int[] row : grid.getRows()) {
-            if (checkArray(row)) {
+            if (checkArrayHasAllNineNumbers(row)) {
                 count++;
             }
         }
@@ -29,7 +29,7 @@ public class SudokuGridChecker {
         count = 0;
 
         for (int[] column : grid.getColumns()) {
-            if (checkArray(column)) {
+            if (checkArrayHasAllNineNumbers(column)) {
                 count++;
             }
         }
@@ -41,7 +41,7 @@ public class SudokuGridChecker {
         count = 0;
 
         for (int[] box : grid.getBoxes()) {
-            if (checkArray(box)) {
+            if (checkArrayHasAllNineNumbers(box)) {
                 count++;
             }
         }
@@ -54,7 +54,7 @@ public class SudokuGridChecker {
 
     }
 
-    private boolean checkArray(int[] set) {
+    private boolean checkArrayHasAllNineNumbers(int[] set) {
 
         int count = 0;
 

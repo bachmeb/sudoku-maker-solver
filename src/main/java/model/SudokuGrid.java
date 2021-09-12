@@ -1,4 +1,12 @@
+package model;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SudokuGrid {
+
+    static final Logger logger =
+            LoggerFactory.getLogger(SudokuGrid.class);
 
     int[] squares;
     int[][] rows;
@@ -715,5 +723,6 @@ public class SudokuGrid {
 
         return columnNumbersByBoxNumAndPosNum[boxNum][posNum];
     }
+
 
 }

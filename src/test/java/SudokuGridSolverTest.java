@@ -1,9 +1,14 @@
+import model.SudokuGrid;
+import service.SudokuGridChecker;
+import service.SudokuGridMaker;
+import algorithms.SudokuGridSolverAlgorithms;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.SudokuGridSolver;
 
 class SudokuGridSolverTest {
 
@@ -35,8 +40,9 @@ class SudokuGridSolverTest {
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
 
+        SudokuGridChecker checker = new SudokuGridChecker();
+        Assertions.assertFalse(checker.checkGridSolved(solvedGrid));
     }
-
 
     @Test
     void solveSolvedGrid() {
@@ -50,8 +56,9 @@ class SudokuGridSolverTest {
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
 
+        SudokuGridChecker checker = new SudokuGridChecker();
+        Assertions.assertTrue(checker.checkGridSolved(solvedGrid));
     }
-
 
     @Test
     void solveGridWithDuplicates() {
@@ -71,9 +78,7 @@ class SudokuGridSolverTest {
 
         boolean hasError = checker.checkGridForErrors(solvedGrid);
         Assertions.assertTrue(hasError);
-
     }
-
 
     @Test
     void addTheLastNumberToTheSet_MissingR0C3() {
@@ -90,7 +95,6 @@ class SudokuGridSolverTest {
         SudokuGridChecker checker = new SudokuGridChecker();
         boolean solved = checker.checkGridSolved(solvedGrid);
         Assertions.assertTrue(solved);
-
     }
 
     @Test
@@ -159,6 +163,10 @@ class SudokuGridSolverTest {
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
 
+        SudokuGridChecker checker = new SudokuGridChecker();
+        boolean solved = checker.checkGridSolved(grid);
+        Assertions.assertTrue(solved);
+
     }
 
 
@@ -212,7 +220,7 @@ class SudokuGridSolverTest {
 
         SudokuGridChecker checker = new SudokuGridChecker();
         boolean solved = checker.checkGridSolved(grid);
-//        Assertions.assertTrue(solved);
+        Assertions.assertTrue(solved);
 
     }
 
