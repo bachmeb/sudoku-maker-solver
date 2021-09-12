@@ -1,3 +1,7 @@
+package toppppy;
+
+import model.SudokuGrid;
+
 public class SudokuGridChecker {
 
     public boolean checkGridSolved(SudokuGrid grid) {
@@ -106,6 +110,16 @@ public class SudokuGridChecker {
                         return true;
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkSetForNumber(int findNum, int[] set) {
+
+        for (int i = 0; i < set.length; i++) {
+            if (set[i] == findNum) {
+                return true;
             }
         }
         return false;
