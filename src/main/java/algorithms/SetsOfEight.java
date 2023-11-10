@@ -14,7 +14,9 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
 
     @Override
     public String explanation() {
-        return "this algorithm checks each column, row, and box to see if eight squares are already filled. If so, the one empty square is filled with the missing number.";
+        return "this algorithm checks each column, row, and box to see if " +
+                "eight squares are already filled. If so, the one empty " +
+                "square is filled with the missing number.";
     }
 
     @Override
@@ -39,7 +41,8 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
             }
         }
         if (countOfNumbers != 8) {
-            throw new RuntimeException("there are supposed to be 8 squares with a number");
+            throw new RuntimeException("there are supposed to be 8 squares " +
+                    "with a number");
         }
         // find the missing number
         int missingNumber = 0;
@@ -55,7 +58,8 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
         for (int i = 0; i < set.length; i++) {
             if (set[i] == 0) {
                 set[i] = missingNumber;
-                logger.debug("Added missing number " + missingNumber + " to the set");
+                logger.debug("Added missing number " + missingNumber + " to " +
+                        "the set");
                 break;
             }
         }
@@ -78,7 +82,8 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
     private void fillLastEmptySquareInAnyColumn(SudokuGrid grid) {
         observer = new SudokuGridObserver(grid);
         observer.reCountNumbersInSquares();
-        // if the number of numbers in a given column is 8 then add the last number
+        // if the number of numbers in a given column is 8 then add the last
+        // number
         for (int i = 0; i < observer.getCountOfFilledSquaresIndexedByColumnNumber().length; i++) {
             if (observer.getCountOfFilledSquaresIndexedByColumnNumber()[i] == 8) {
                 logger.info("There are 8 squares filled in column number " + i);

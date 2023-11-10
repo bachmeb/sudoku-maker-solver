@@ -26,10 +26,7 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
                 "numbers have not been added to every row, column, and " +
                 "box and for each of those numbers, goes through every " +
                 "square in the grid and looks at the two rows " + "and " +
-                "columns adjacent to that square and sees if the number in " +
-                "mind is already present in the other two rows and " +
-                "columns. If so, then the number in mind is added to the " +
-                "square.";
+                "columns adjacent to that square and sees if the number in " + "mind is already present in the other two rows and " + "columns. If so, then the number in mind is added to the " + "square.";
 
 
         return e;
@@ -58,9 +55,7 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
         for (int numberInMind : numbersInOrderOfMostCommon) {
 
             int boxNum = -1;
-            // go
-            // to
-            // each box without that number
+            // go to each box without that number
             for (int[] box : grid.getBoxes()) {
                 boxNum++;
                 boolean found =

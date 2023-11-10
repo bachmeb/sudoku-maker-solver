@@ -22,7 +22,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
 
     @Override
     public String explanation() {
-        return null;
+        return "i don't understand what this algorithm is trying to do";
     }
 
     private void solveByEliminationInAdjacentBoxesHorizontal(SudokuGrid grid) {

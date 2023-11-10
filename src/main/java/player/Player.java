@@ -13,7 +13,7 @@ public class Player {
     SudokuGrid grid;
 
     public void introduce() {
-        print("Hi, We're going to play Sudoku. I'm going to solve this puzzle with you.");
+        print("Hi, We're going to play Sudoku. Let's solve this puzzle together.");
     }
 
     public PlayerAction getNextAction() {
@@ -22,6 +22,13 @@ public class Player {
 
     public void assess(SudokuGrid grid) {
         this.grid = grid;
+        // Check if the grid is solved
+        // Check columns for sets of eight
+        // Check rows for sets of eight
+        // Check boxes for sets of eight
+        //
+        // Check for sets of eight
+        //
         PlayerAction next = new SolveBySetsOfEight();
         updatePlan(next);
     }
