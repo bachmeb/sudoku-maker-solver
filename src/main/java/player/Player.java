@@ -34,7 +34,15 @@ public class Player {
         if (aDimensionHasEight(grid)){
             next = new SolveBySetsOfEight();
         };
+        // Check if a square can be solved by only one number
+        if (aSquareCanBeSolvedByOnlyOne(grid)){
+            next = new SolveByThreeWayElimination();
+        };
         updatePlan(next);
+    }
+
+    private boolean aSquareCanBeSolvedByOnlyOne(SudokuGrid grid) {
+        return false;
     }
 
     private boolean aDimensionHasEight(SudokuGrid grid) {
