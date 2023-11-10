@@ -37,6 +37,26 @@ public class SudokuGridObserver {
     }
 
 
+
+
+    private int[] countNumberAppearancesByDimension(int[][] slices) {
+        // count the number of times each number appears in any slice of the given dimension
+        int[] countByDimension = new int[10];
+        for (int num = 1; num < 10; num++) {
+            countByDimension[num] = 0;
+            for (int[] slice : slices) {
+                for (int i = 0; i < 9; i++) {
+                    if (num == slice[i]) {
+                        countByDimension[num]++;
+                    }
+                }
+            }
+        }
+        return countByDimension;
+    }
+
+
+
     public static int[] countValuesInBoxes(SudokuGrid grid){
         return countFilledSquaresByDimension(grid.getBoxes()) ;
     }
@@ -47,37 +67,10 @@ public class SudokuGridObserver {
         return countFilledSquaresByDimension(grid.getRows()) ;
     }
 
-    public int[] getCountOfBoxesWithNumberIndexedByNumber() {
-        return countOfColumnsWithNumberIndexedByNumber;
+    public int[] getCountOfBoxesWithNumberIndexedByNumber(SudokuGrid grid) {
+        return   countNumberAppearancesByDimension(grid.getBoxes());
     }
 
-    void setCountOfBoxesWithNumberIndexedByNumber(int[] countOfColumnsWithNumberIndexedByNumber) {
-        this.countOfColumnsWithNumberIndexedByNumber = countOfColumnsWithNumberIndexedByNumber;
-    }
-
-    public int[] getCountOfFilledSquaresIndexedByBoxNumber() {
-        return countOfFilledSquaresIndexedByBoxNumber;
-    }
-
-    void setCountOfFilledSquaresIndexedByBoxNumber(int[] countOfFilledSquaresIndexedByBoxNumber) {
-        this.countOfFilledSquaresIndexedByBoxNumber = countOfFilledSquaresIndexedByBoxNumber;
-    }
-
-    public int[] getCountOfFilledSquaresIndexedByRowNumber() {
-        return countOfFilledSquaresIndexedByRowNumber;
-    }
-
-    void setCountOfFilledSquaresIndexedByRowNumber(int[] countOfFilledSquaresIndexedByRowNumber) {
-        this.countOfFilledSquaresIndexedByRowNumber = countOfFilledSquaresIndexedByRowNumber;
-    }
-
-    public int[] getCountOfFilledSquaresIndexedByColumnNumber() {
-        return countOfFilledSquaresIndexedByColumnNumber;
-    }
-
-    void setCountOfFilledSquaresIndexedByColumnNumber(int[] countOfFilledSquaresIndexedByColumnNumber) {
-        this.countOfFilledSquaresIndexedByColumnNumber = countOfFilledSquaresIndexedByColumnNumber;
-    }
 
 
 }

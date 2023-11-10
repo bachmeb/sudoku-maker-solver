@@ -38,9 +38,7 @@ public class Play {
             // wait for input
             player.waitForInput("Ready?");
             // given input, do the next thing
-            grid = player.take(next);
-            // See if the game is finished
-            finished = player.finished(grid);
+            finished = player.take(next);
         }
         print("Our game is over. Thanks for playing.");
     }

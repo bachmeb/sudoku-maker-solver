@@ -25,7 +25,7 @@ public class Player {
 
     public void assess(SudokuGrid grid) {
         this.grid = grid;
-        PlayerAction next = null;
+        PlayerAction next = new DefaultAction();
         // Check if the grid is solved
         if (checkGridSolved(grid)) {
             next = new Celebrate();
@@ -77,16 +77,13 @@ public class Player {
         print(response);
     }
 
-    public boolean finished(SudokuGrid grid) {
-        return true;
-    }
-
     public void explain(PlayerAction next) {
         print(next.explanation());
     }
 
-    public SudokuGrid take(PlayerAction next) {
+    public boolean take(PlayerAction next) {
         nextAction++;
-        return next.move(this.grid);
+        this.grid = next.move(this.grid);
+        return checkGridSolved(this.grid);
     }
 }

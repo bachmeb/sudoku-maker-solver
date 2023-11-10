@@ -44,13 +44,13 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
     private SudokuGrid solveByCrossChecking(SudokuGrid grid) {
         logger.info("solve by cross-checking");
 
-        observer = new SudokuGridObserver(grid);
+        observer = new SudokuGridObserver();
 
         // order
         // numbers by most common
         int[] numbersInOrderOfMostCommon = new int[9];
         numbersInOrderOfMostCommon =
-                sortUnsolvedNumbersByMostCommon(observer.getCountOfBoxesWithNumberIndexedByNumber());
+                sortUnsolvedNumbersByMostCommon(observer.getCountOfBoxesWithNumberIndexedByNumber(grid));
 
         for (int numberInMind : numbersInOrderOfMostCommon) {
 

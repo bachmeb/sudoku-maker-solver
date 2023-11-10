@@ -6,11 +6,14 @@ import org.slf4j.LoggerFactory;
 import service.SudokuGridObserver;
 import service.SudokuGridSolver;
 
+import static service.SudokuGridObserver.*;
+
 public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
 
     static final Logger logger = LoggerFactory.getLogger(SetsOfEight.class);
 
-    SudokuGridObserver observer;
+    SudokuGridObserver         observer = new SudokuGridObserver();
+    ;
 
     @Override
     public String explanation() {
@@ -80,12 +83,10 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
     }
 
     private void fillLastEmptySquareInAnyColumn(SudokuGrid grid) {
-        observer = new SudokuGridObserver(grid);
-        observer.reCountNumbersInSquares();
-        // if the number of numbers in a given column is 8 then add the last
-        // number
-        for (int i = 0; i < observer.getCountOfFilledSquaresIndexedByColumnNumber().length; i++) {
-            if (observer.getCountOfFilledSquaresIndexedByColumnNumber()[i] == 8) {
+        // if the number of numbers in a given column is 8 then add the last number\
+        int[] slices = countValuesInColumns (grid);
+        for (int i = 0; i < slices.length; i++) {
+            if (slices[i] == 8) {
                 logger.info("There are 8 squares filled in column number " + i);
                 int[] set = addTheLastNumberToTheSet(grid.getColumns()[i]);
                 int[][] columns = grid.getColumns();
@@ -96,11 +97,10 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
     }
 
     private void fillLastEmptySquareInAnyRow(SudokuGrid grid) {
-        observer = new SudokuGridObserver(grid);
-        observer.reCountNumbersInSquares();
         // if the number of numbers in a given row is 8 then add the last number
-        for (int i = 0; i < observer.getCountOfFilledSquaresIndexedByRowNumber().length; i++) {
-            if (observer.getCountOfFilledSquaresIndexedByRowNumber()[i] == 8) {
+        int[] slices = countValuesInRows (grid);
+        for (int i = 0; i < slices.length; i++) {
+            if (slices[i] == 8) {
                 logger.info("There are 8 squares filled in row number " + i);
                 int set[] = addTheLastNumberToTheSet(grid.getRows()[i]);
                 int[][] rows = grid.getRows();
@@ -111,11 +111,10 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
     }
 
     private void fillLastEmptySquareInAnyBox(SudokuGrid grid) {
-        observer = new SudokuGridObserver(grid);
-        observer.reCountNumbersInSquares();
         // if the number of numbers in a given box is 8 then add the last number
-        for (int i = 0; i < observer.getCountOfFilledSquaresIndexedByBoxNumber().length; i++) {
-            if (observer.getCountOfFilledSquaresIndexedByBoxNumber()[i] == 8) {
+        int[] slices = countValuesInBoxes (grid);
+        for (int i = 0; i < slices.length; i++) {
+            if (slices[i] == 8) {
                 logger.info("There are 8 squares filled in box number " + i);
                 int set[] = addTheLastNumberToTheSet(grid.getBoxes()[i]);
                 int[][] boxes = grid.getBoxes();
