@@ -7,7 +7,7 @@ import service.SudokuGridChecker;
 import service.SudokuGridObserver;
 import view.SudokuGridView;
 
-public class AdjacentElimination implements SudokuGridSolverAlgorithms {
+public class AdjacentElimination implements SudokuGridSolverAlgorithm {
 
     static final Logger logger =
             LoggerFactory.getLogger(AdjacentElimination.class);

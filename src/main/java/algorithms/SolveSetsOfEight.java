@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import service.SudokuGridObserver;
 import service.SudokuGridSolver;
 
-public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithms {
+public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
 
     static final Logger logger =
             LoggerFactory.getLogger(SolveSetsOfEight.class);

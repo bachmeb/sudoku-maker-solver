@@ -1,13 +1,11 @@
 package service;
 
 import algorithms.AdjacentElimination;
-import algorithms.SolveByCrossChecking;
 import algorithms.SolveSetsOfEight;
-import algorithms.SudokuGridSolverAlgorithms;
+import algorithms.SudokuGridSolverAlgorithm;
 import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import view.SudokuGridView;
 
 public class SudokuGridSolver {
 
@@ -59,7 +57,7 @@ public class SudokuGridSolver {
     private SudokuGrid trySomeAlgorithms(SudokuGrid grid) {
         loop++;
 
-        SudokuGridSolverAlgorithms[] algorithms = new SudokuGridSolverAlgorithms[2];
+        SudokuGridSolverAlgorithm[] algorithms = new SudokuGridSolverAlgorithm[2];
 
         algorithms[1] = new AdjacentElimination();
         //algorithms[1] = new SolveByCrossChecking();
@@ -69,7 +67,7 @@ public class SudokuGridSolver {
         int filledSquaresBefore = observer.countAllFilledSquares();
 
         for (int i = 0; i < algorithms.length; i++) {
-            SudokuGridSolverAlgorithms algorithm = algorithms[i];
+            SudokuGridSolverAlgorithm algorithm = algorithms[i];
             grid = algorithm.solve(grid);
             solved = checker.checkGridSolved(grid);
             if (solved) {

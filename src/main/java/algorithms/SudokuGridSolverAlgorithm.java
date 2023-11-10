@@ -2,6 +2,6 @@ package algorithms;
 
 import model.SudokuGrid;
 
-public interface SudokuGridSolverAlgorithms {
+public interface SudokuGridSolverAlgorithm {
     SudokuGrid solve(SudokuGrid grid);
 }

@@ -8,7 +8,7 @@ import service.SudokuGridObserver;
 import service.SudokuGridSolver;
 import view.SudokuGridView;
 
-public class SolveByCrossChecking extends SudokuGridSolver implements SudokuGridSolverAlgorithms {
+public class SolveByCrossChecking extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
 
     static final Logger logger =
             LoggerFactory.getLogger(SolveByCrossChecking.class);
