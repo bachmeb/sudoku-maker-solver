@@ -92,13 +92,26 @@ public class SudokuGrid {
         sb.append("I Am A Grid");
 
         sb.append("\n");
+        String ROW = "-------------------------------------\n";
 
+        sb.append(ROW);
+        int rowNum = 0;
         for (int[] row : rows) {
+            sb.append("|  ");
+            rowNum++;
+            int colNum = 0;
             for (int numby : row) {
+                colNum++;
                 sb.append(numby);
                 sb.append("  ");
+                if(colNum % 3 == 0){
+                    sb.append("|  ");
+                }
             }
             sb.append("\n");
+            if(rowNum % 3 == 0){
+                sb.append(ROW);
+            }
         }
 
         output = sb.toString();

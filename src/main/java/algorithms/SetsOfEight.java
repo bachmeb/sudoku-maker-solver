@@ -6,12 +6,21 @@ import org.slf4j.LoggerFactory;
 import service.SudokuGridObserver;
 import service.SudokuGridSolver;
 
-public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
+public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
 
-    static final Logger logger =
-            LoggerFactory.getLogger(SolveSetsOfEight.class);
+    static final Logger logger = LoggerFactory.getLogger(SetsOfEight.class);
 
     SudokuGridObserver observer;
+
+    @Override
+    public String explanation() {
+        return "this algorithm checks each column, row, and box to see if eight squares are already filled. If so, the one empty square is filled with the missing number.";
+    }
+
+    @Override
+    public SudokuGrid solve(SudokuGrid grid) {
+        return solveSetsOfEight(grid);
+    }
 
     public static int[] addTheLastNumberToTheSet(int[] set) {
         // make sure the set is not null
@@ -24,8 +33,8 @@ public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolv
         }
         // make sure the set has 8 numbers
         int countOfNumbers = 0;
-        for (int i = 0; i < set.length; i++) {
-            if (set[i] > 0) {
+        for (int j : set) {
+            if (j > 0) {
                 countOfNumbers++;
             }
         }
@@ -35,8 +44,8 @@ public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolv
         // find the missing number
         int missingNumber = 0;
         int sumOfNumbersInSet = 0;
-        for (int i = 0; i < set.length; i++) {
-            sumOfNumbersInSet += set[i];
+        for (int j : set) {
+            sumOfNumbersInSet += j;
         }
         int sumOfAllNumbers = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
 
@@ -55,40 +64,33 @@ public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolv
 
     }
 
-    @Override
-    public SudokuGrid solve(SudokuGrid grid) {
-        solveSetsOfEight(grid);
-        return
-                grid;
-    }
 
     private SudokuGrid solveSetsOfEight(SudokuGrid grid) {
         logger.info("solve by looking for sets of eight");
 
-        grid = fillLastEmptySquareInAnyBox(grid);
-        grid = fillLastEmptySquareInAnyRow(grid);
-        grid = fillLastEmptySquareInAnyColumn(grid);
+        fillLastEmptySquareInAnyBox(grid);
+        fillLastEmptySquareInAnyRow(grid);
+        fillLastEmptySquareInAnyColumn(grid);
 
         return grid;
     }
 
-    private SudokuGrid fillLastEmptySquareInAnyColumn(SudokuGrid grid) {
+    private void fillLastEmptySquareInAnyColumn(SudokuGrid grid) {
         observer = new SudokuGridObserver(grid);
         observer.reCountNumbersInSquares();
         // if the number of numbers in a given column is 8 then add the last number
         for (int i = 0; i < observer.getCountOfFilledSquaresIndexedByColumnNumber().length; i++) {
             if (observer.getCountOfFilledSquaresIndexedByColumnNumber()[i] == 8) {
                 logger.info("There are 8 squares filled in column number " + i);
-                int set[] = addTheLastNumberToTheSet(grid.getColumns()[i]);
+                int[] set = addTheLastNumberToTheSet(grid.getColumns()[i]);
                 int[][] columns = grid.getColumns();
                 columns[i] = set;
                 grid.setColumns(columns);
             }
         }
-        return grid;
     }
 
-    private SudokuGrid fillLastEmptySquareInAnyRow(SudokuGrid grid) {
+    private void fillLastEmptySquareInAnyRow(SudokuGrid grid) {
         observer = new SudokuGridObserver(grid);
         observer.reCountNumbersInSquares();
         // if the number of numbers in a given row is 8 then add the last number
@@ -101,10 +103,9 @@ public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolv
                 grid.setRows(rows);
             }
         }
-        return grid;
     }
 
-    private SudokuGrid fillLastEmptySquareInAnyBox(SudokuGrid grid) {
+    private void fillLastEmptySquareInAnyBox(SudokuGrid grid) {
         observer = new SudokuGridObserver(grid);
         observer.reCountNumbersInSquares();
         // if the number of numbers in a given box is 8 then add the last number
@@ -117,7 +118,6 @@ public class SolveSetsOfEight extends SudokuGridSolver implements SudokuGridSolv
                 grid.setBoxes(boxes);
             }
         }
-        return grid;
     }
 
 }

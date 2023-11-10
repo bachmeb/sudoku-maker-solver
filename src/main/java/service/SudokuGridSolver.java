@@ -1,7 +1,7 @@
 package service;
 
 import algorithms.AdjacentElimination;
-import algorithms.SolveSetsOfEight;
+import algorithms.SetsOfEight;
 import algorithms.SudokuGridSolverAlgorithm;
 import model.SudokuGrid;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class SudokuGridSolver {
 
         algorithms[1] = new AdjacentElimination();
         //algorithms[1] = new SolveByCrossChecking();
-        algorithms[0] = new SolveSetsOfEight();
+        algorithms[0] = new SetsOfEight();
 
         observer = new SudokuGridObserver(grid);
         int filledSquaresBefore = observer.countAllFilledSquares();

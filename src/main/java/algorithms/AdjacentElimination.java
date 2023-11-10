@@ -16,11 +16,16 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
 
     @Override
     public SudokuGrid solve(SudokuGrid grid) {
-        grid = solveByEliminationInAdjacentBoxesHorizontal(grid);
+        solveByEliminationInAdjacentBoxesHorizontal(grid);
         return grid;
     }
 
-    private SudokuGrid solveByEliminationInAdjacentBoxesHorizontal(SudokuGrid grid) {
+    @Override
+    public String explanation() {
+        return null;
+    }
+
+    private void solveByEliminationInAdjacentBoxesHorizontal(SudokuGrid grid) {
         logger.info("solve by elimination in adjacent boxes and rows horizontal");
 
         // get a list of numbers 1 - 9
@@ -102,7 +107,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                                     int[][] boxes = grid.getBoxes();
                                     boxes[boxIndex] = box;
                                     grid.setBoxes(boxes);
-                                    return grid;
+                                    return;
                                 }
                             }
                         }
@@ -119,7 +124,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                                         int[][] boxes = grid.getBoxes();
                                         boxes[boxIndex] = box;
                                         grid.setBoxes(boxes);
-                                        return grid;
+                                        return;
                                     } else if (firstSquarePos == -1) {
                                         firstSquarePos = candidateSquaresPos[b];
                                     }
@@ -139,7 +144,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                                                 int[][] boxes = grid.getBoxes();
                                                 boxes[boxIndex] = box;
                                                 grid.setBoxes(boxes);
-                                                return grid;
+                                                return;
                                             }
                                         }
                                     }
@@ -150,7 +155,6 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                 }
             }
         }
-        return grid;
     }
 
     private SudokuGrid solveByEliminationInAdjacentBoxesVertical(SudokuGrid grid) {

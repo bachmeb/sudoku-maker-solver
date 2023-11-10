@@ -22,7 +22,7 @@ public class Player {
 
     public void assess(SudokuGrid grid) {
         this.grid = grid;
-        PlayerAction next = new PlayerAction3();
+        PlayerAction next = new SolveBySetsOfEight();
         updatePlan(next);
     }
 
