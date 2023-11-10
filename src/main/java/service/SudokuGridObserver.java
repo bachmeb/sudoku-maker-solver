@@ -39,7 +39,7 @@ public class SudokuGridObserver {
 
 
 
-    private int[] countNumberAppearancesByDimension(int[][] slices) {
+    public static int[] countNumberAppearancesByDimension(int[][] slices) {
         // count the number of times each number appears in any slice of the given dimension
         int[] countByDimension = new int[10];
         for (int num = 1; num < 10; num++) {

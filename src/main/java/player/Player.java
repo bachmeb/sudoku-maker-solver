@@ -42,6 +42,16 @@ public class Player {
     }
 
     private boolean aSquareCanBeSolvedByOnlyOne(SudokuGrid grid) {
+        int[] boxes = countNumberAppearancesByDimension( grid.getBoxes());
+        int[] columns = countNumberAppearancesByDimension( grid.getColumns());
+        int[] rows = countNumberAppearancesByDimension( grid.getRows());
+        int sum = 0;
+        for(int i =0; i < boxes.length; i++ ){
+            sum += ((boxes[i])+(columns[i])+(rows[i]));
+            if(sum==8){
+                return true;
+            }
+        }
         return false;
     }
 
