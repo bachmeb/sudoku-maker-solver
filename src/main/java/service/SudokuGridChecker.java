@@ -4,7 +4,7 @@ import model.SudokuGrid;
 
 public class SudokuGridChecker {
 
-    public boolean checkGridSolved(SudokuGrid grid) {
+    public static boolean checkGridSolved(SudokuGrid grid) {
 
         boolean rowsSolved = false;
         boolean columnsSolved = false;
@@ -14,69 +14,33 @@ public class SudokuGridChecker {
             return false;
         }
 
-        int count = 0;
-
-        for (int[] row : grid.getRows()) {
-            if (checkArrayHasAllNineNumbers(row)) {
-                count++;
-            }
-        }
-
-        if (count == 9) {
-            rowsSolved = true;
-        }
-
-        count = 0;
-
-        for (int[] column : grid.getColumns()) {
-            if (checkArrayHasAllNineNumbers(column)) {
-                count++;
-            }
-        }
-
-        if (count == 9) {
-            columnsSolved = true;
-        }
-
-        count = 0;
-
-        for (int[] box : grid.getBoxes()) {
-            if (checkArrayHasAllNineNumbers(box)) {
-                count++;
-            }
-        }
-
-        if (count == 9) {
-            boxesSolved = true;
-        }
+        rowsSolved = checkDimensionSolved(grid.getRows());
+        columnsSolved = checkDimensionSolved(grid.getColumns());
+        boxesSolved = checkDimensionSolved(grid.getBoxes());
 
         return rowsSolved && columnsSolved && boxesSolved;
 
     }
 
-    private boolean checkArrayHasAllNineNumbers(int[] set) {
-
-        int count = 0;
-
-        for (int number = 1; number <= 9; number++) {
-            for (int answer : set) {
-                if (answer == 0) {
-                    return false;
-                }
-                if (answer == number) {
-                    count++;
-                }
-            }
-            if (count != 1) {
+    private static boolean checkDimensionSolved(int[][] dim) {
+        for (int[] a : dim) {
+            if (!checkSetHasAllNineNumbers(a)) {
                 return false;
             }
-            count = 0;
         }
-
         return true;
     }
 
-    public boolean checkGridForErrors(SudokuGrid grid) {
+    public static boolean checkSetHasAllNineNumbers(int[] set) {
+        for (int number = 1; number <= 9; number++) {
+            if (!checkSetForNumber(number, set)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkGridForErrors(SudokuGrid grid) {
 
         for (int[] row : grid.getRows()) {
             if (checkSetForDuplicates(row)) {
@@ -100,11 +64,11 @@ public class SudokuGridChecker {
 
     }
 
-    private boolean checkSetForDuplicates(int[] set) {
+    public static boolean checkSetForDuplicates(int[] set) {
         for (int num = 1; num < 10; num++) {
             int count = 0;
-            for (int pos = 0; pos < set.length; pos++) {
-                if (set[pos] == num) {
+            for (int i : set) {
+                if (i == num) {
                     count++;
                     if (count > 1) {
                         return true;
@@ -116,9 +80,8 @@ public class SudokuGridChecker {
     }
 
     public static boolean checkSetForNumber(int findNum, int[] set) {
-
-        for (int i = 0; i < set.length; i++) {
-            if (set[i] == findNum) {
+        for (int j : set) {
+            if (j == findNum) {
                 return true;
             }
         }

@@ -5,6 +5,8 @@ import model.SudokuGrid;
 import java.util.Scanner;
 
 import static player.PlayerUtil.print;
+import static service.SudokuGridChecker.checkGridSolved;
+import static service.SudokuGridObserver.*;
 
 public class Player {
 
@@ -13,7 +15,8 @@ public class Player {
     SudokuGrid grid;
 
     public void introduce() {
-        print("Hi, We're going to play Sudoku. Let's solve this puzzle together.");
+        print("Hi! We're going to play Sudoku. Let's solve this puzzle " +
+                "together.");
     }
 
     public PlayerAction getNextAction() {
@@ -22,15 +25,42 @@ public class Player {
 
     public void assess(SudokuGrid grid) {
         this.grid = grid;
+        PlayerAction next = null;
         // Check if the grid is solved
-        // Check columns for sets of eight
-        // Check rows for sets of eight
-        // Check boxes for sets of eight
-        //
+        if (checkGridSolved(grid)) {
+            next = new Celebrate();
+        }
         // Check for sets of eight
-        //
-        PlayerAction next = new SolveBySetsOfEight();
+        if (aDimensionHasEight(grid)){
+            next = new SolveBySetsOfEight();
+        };
         updatePlan(next);
+    }
+
+    private boolean aDimensionHasEight(SudokuGrid grid) {
+        int[] values;
+        // Check columns for sets of eight
+        values = countValuesInColumns(grid);
+        for(int j : values){
+            if(j==8){
+                return true;
+            }
+        }
+        // Check rows for sets of eight
+        values = countValuesInRows(grid);
+        for(int j : values){
+            if(j==8){
+                return true;
+            }
+        }
+        // Check boxes for sets of eight
+        values = countValuesInBoxes(grid);
+        for(int j : values){
+            if(j==8){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void updatePlan(PlayerAction next) {
@@ -57,6 +87,6 @@ public class Player {
 
     public SudokuGrid take(PlayerAction next) {
         nextAction++;
-        return next.move(grid);
+        return next.move(this.grid);
     }
 }
