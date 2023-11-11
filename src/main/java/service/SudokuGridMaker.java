@@ -4,7 +4,7 @@ import model.SudokuGrid;
 
 public class SudokuGridMaker {
 
-    public SudokuGrid makeEmptyGrid() {
+    public static SudokuGrid makeEmptyGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -29,7 +29,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeZerosGrid() {
+    public static SudokuGrid makeZerosGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -158,7 +158,7 @@ public class SudokuGridMaker {
         return grid;
     }
 
-    public SudokuGrid makeOnesThruNinesGrid() {
+    public static SudokuGrid makeOnesThruNinesGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -287,7 +287,7 @@ public class SudokuGridMaker {
         return grid;
     }
 
-    public SudokuGrid makeSolvedGrid() {
+    public static SudokuGrid makeSolvedGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -447,7 +447,7 @@ public class SudokuGridMaker {
 
     }
 
-    public SudokuGrid makeAlmostSolvedGridWithOneMissingNumber() {
+    public static SudokuGrid makeAlmostSolvedGridWithOneMissingNumber() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -607,7 +607,7 @@ public class SudokuGridMaker {
 
     }
 
-    public SudokuGrid makeAlmostSolvedGridMissingLastRow() {
+    public static SudokuGrid makeAlmostSolvedGridMissingLastRow() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -767,7 +767,7 @@ public class SudokuGridMaker {
 
     }
 
-    public SudokuGrid makeAlmostSolvedGridMissingLastColumn() {
+    public static SudokuGrid makeAlmostSolvedGridMissingLastColumn() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -928,7 +928,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingOneInEveryBox() {
+    public static SudokuGrid makeAlmostSolvedGridMissingOneInEveryBox() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1089,7 +1089,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeHalfSolvedGrid() {
+    public static SudokuGrid makeHalfSolvedGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1250,7 +1250,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingOneRowInThreeBoxes() {
+    public static SudokuGrid makeAlmostSolvedGridMissingOneRowInThreeBoxes() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1411,7 +1411,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingOneBox() {
+    public static SudokuGrid makeAlmostSolvedGridMissingOneBox() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1572,7 +1572,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeAlmostSolvedGridMissingTwoBoxes() {
+    public static SudokuGrid makeAlmostSolvedGridMissingTwoBoxes() {
 
         SudokuGrid grid = new SudokuGrid();
 
@@ -1733,7 +1733,7 @@ public class SudokuGridMaker {
     }
 
 
-    public SudokuGrid makeGridFromPCGame() {
+    public static SudokuGrid makeGridFromPCGame() {
 
         SudokuGrid grid = new SudokuGrid();
 

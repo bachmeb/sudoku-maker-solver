@@ -5,7 +5,7 @@ import model.SudokuGrid;
 public class Celebrate implements PlayerAction{
     @Override
     public String explanation() {
-        return "We win";
+        return "Celebrate!!!";
     }
 
     @Override

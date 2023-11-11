@@ -3,6 +3,7 @@ import player.Player;
 import player.PlayerAction;
 
 import static player.PlayerUtil.print;
+import static service.SudokuGridMaker.makeAlmostSolvedGridWithOneMissingNumber;
 
 public class Play {
 
@@ -18,11 +19,9 @@ public class Play {
 
     private void gameLoop() {
         // create a sudoku grid
-        SudokuGrid grid = new SudokuGrid();
-        // print the grid
-        print(grid.toString());
+        SudokuGrid grid = getNewSudokuGrid();
         // Make a player
-        Player player = new Player();
+        Player player = new Player(grid);
         // Introduce the player
         player.introduce();
         // Create a boolean to indicate when the game is finished
@@ -30,7 +29,7 @@ public class Play {
         // Loop until finished
         while (!finished) {
             // Assess what to do next
-            player.assess(grid);
+            finished = player.assess();
             // Get the next action
             PlayerAction next = player.getNextAction();
             // explain what's going to happen next
@@ -38,9 +37,13 @@ public class Play {
             // wait for input
             player.waitForInput("Ready?");
             // given input, do the next thing
-            finished = player.take(next);
+            player.take(next);
         }
         print("Our game is over. Thanks for playing.");
+    }
+
+    private SudokuGrid getNewSudokuGrid() {
+        return makeAlmostSolvedGridWithOneMissingNumber();
     }
 
 

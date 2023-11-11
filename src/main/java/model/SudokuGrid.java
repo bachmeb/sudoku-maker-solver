@@ -5,13 +5,9 @@ import org.slf4j.LoggerFactory;
 
 public class SudokuGrid {
 
-    static final Logger logger =
-            LoggerFactory.getLogger(SudokuGrid.class);
+    static final Logger logger = LoggerFactory.getLogger(SudokuGrid.class);
 
-    int[] squares;
-    int[][] rows;
-    int[][] columns;
-    int[][] boxes;
+    static int[] squares;
 
     public SudokuGrid() {
         this.setSquares(new int[81]);
@@ -52,15 +48,15 @@ public class SudokuGrid {
         }
     }
 
-    public int[][] getRows() {
+    public static int[][] getRows() {
         return makeRowsOfSquares();
     }
 
-    public int[][] getColumns() {
+    public static int[][] getColumns() {
         return makeColumnsOfSquares();
     }
 
-    public int[][] getBoxes() {
+    public static int[][] getBoxes() {
         return makeBoxesOfSquares();
     }
 
@@ -89,8 +85,6 @@ public class SudokuGrid {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("I Am A Grid");
-
         sb.append("\n");
         String ROW = "-------------------------------------\n";
 
@@ -104,12 +98,12 @@ public class SudokuGrid {
                 colNum++;
                 sb.append(numby);
                 sb.append("  ");
-                if(colNum % 3 == 0){
+                if (colNum % 3 == 0) {
                     sb.append("|  ");
                 }
             }
             sb.append("\n");
-            if(rowNum % 3 == 0){
+            if (rowNum % 3 == 0) {
                 sb.append(ROW);
             }
         }
@@ -119,7 +113,7 @@ public class SudokuGrid {
         return output;
     }
 
-    private int[][] makeRowsOfSquares() {
+    private static int[][] makeRowsOfSquares() {
         int[][] rows = new int[9][9];
         int[] row = new int[9];
         int rowIndex = 0;
@@ -136,13 +130,13 @@ public class SudokuGrid {
         return rows;
     }
 
-    private int[][] makeColumnsOfSquares() {
+    private static int[][] makeColumnsOfSquares() {
         int[][] rows = makeRowsOfSquares();
         int[][] columns = makeColumnsFromRows(rows);
         return columns;
     }
 
-    private int[][] makeBoxesOfSquares() {
+    private static int[][] makeBoxesOfSquares() {
         int[][] rows = makeRowsOfSquares();
         int[][] boxes = makeBoxesFromRows(rows);
         return boxes;
@@ -174,7 +168,7 @@ public class SudokuGrid {
         return sqs;
     }
 
-    private int[][] makeColumnsFromRows(int[][] rowSet) {
+    private static int[][] makeColumnsFromRows(int[][] rowSet) {
 
         int[][] columns = new int[9][9];
 
@@ -505,7 +499,7 @@ public class SudokuGrid {
     }
 
 
-    private int[][] makeBoxesFromRows(int[][] rowSet) {
+    private static int[][] makeBoxesFromRows(int[][] rowSet) {
 
         int[][] boxes = new int[9][];
         int[] box = new int[9];
@@ -522,7 +516,8 @@ public class SudokuGrid {
         return boxes;
     }
 
-    private int[] selectBoxFromRows(int[][] rowSet, int row, int column) {
+    private static int[] selectBoxFromRows(int[][] rowSet, int row,
+                                           int column) {
 
         int[] box = new int[9];
         int count = 0;
@@ -737,5 +732,25 @@ public class SudokuGrid {
         return columnNumbersByBoxNumAndPosNum[boxNum][posNum];
     }
 
+
+    public static int[] getBoxForSquare(int square) {
+        int row = (square / 9);
+        int minus = row * 9;
+        int column = square - minus;
+        int box = (column / 3) + (row / 3);
+        return getBoxes()[box];
+    }
+
+    public static int[] getColumnForSquare(int square) {
+        int row = (square / 9);
+        int minus = row * 9;
+        int column = square - minus;
+        return getColumns()[column];
+    }
+
+    public static int[] getRowForSquare(int square) {
+        int row = (square / 9);
+        return getRows()[row];
+    }
 
 }
