@@ -50,12 +50,14 @@ public class Player {
         // Check for sets of eight
         if (aDimensionHasEight(grid)) {
             next = new SolveBySetsOfEight();
-        }
+            updatePlan(next);
+            return false;        }
         ;
         // Check if a square can be solved by only one number
         if (aSquareCanBeSolvedByOnlyOne(grid)) {
             next = new SolveByThreeWayElimination();
-        }
+            updatePlan(next);
+            return false;        }
         ;
         updatePlan(next);
         return false;

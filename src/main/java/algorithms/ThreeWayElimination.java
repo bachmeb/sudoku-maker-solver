@@ -10,7 +10,7 @@ public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
         int[] squares = grid.getSquares();
         for (int i = 0; i < squares.length; i++) {
             if (squares[i] == 0) {
-                int[] range = whatCouldBeHere(i);
+                int[] range = whatCouldBeHere(grid, i);
                 if (range.length == 1) {
                     squares[i] = range[0];
                 }
@@ -19,10 +19,10 @@ public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
         return grid;
     }
 
-    private int[] whatCouldBeHere(int i) {
-        int[] row = getRowForSquare(i);
-        int[] column = getColumnForSquare(i);
-        int[] box = getBoxForSquare(i);
+    private int[] whatCouldBeHere(SudokuGrid grid, int i) {
+        int[] row = grid.getRowForSquare(i);
+        int[] column = grid.getColumnForSquare(i);
+        int[] box = grid.getBoxForSquare(i);
         int[] whatIs = new int[10];
         for (int j = 0; j < row.length; j++) {
             whatIs[row[j]] = whatIs[row[j]] + 1;

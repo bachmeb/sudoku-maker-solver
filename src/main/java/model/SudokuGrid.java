@@ -48,15 +48,15 @@ public class SudokuGrid {
         }
     }
 
-    public static int[][] getRows() {
+    public  int[][] getRows() {
         return makeRowsOfSquares();
     }
 
-    public static int[][] getColumns() {
+    public  int[][] getColumns() {
         return makeColumnsOfSquares();
     }
 
-    public static int[][] getBoxes() {
+    public  int[][] getBoxes() {
         return makeBoxesOfSquares();
     }
 
@@ -733,22 +733,22 @@ public class SudokuGrid {
     }
 
 
-    public static int[] getBoxForSquare(int square) {
+    public  int[] getBoxForSquare(int square) {
         int row = (square / 9);
         int minus = row * 9;
         int column = square - minus;
-        int box = (column / 3) + (row / 3);
+        int box = (column / 3) + ((row / 3) * 3);
         return getBoxes()[box];
     }
 
-    public static int[] getColumnForSquare(int square) {
+    public  int[] getColumnForSquare(int square) {
         int row = (square / 9);
         int minus = row * 9;
         int column = square - minus;
         return getColumns()[column];
     }
 
-    public static int[] getRowForSquare(int square) {
+    public  int[] getRowForSquare(int square) {
         int row = (square / 9);
         return getRows()[row];
     }

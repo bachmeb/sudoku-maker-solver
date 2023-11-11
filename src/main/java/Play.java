@@ -3,7 +3,7 @@ import player.Player;
 import player.PlayerAction;
 
 import static player.PlayerUtil.print;
-import static service.SudokuGridMaker.makeAlmostSolvedGridWithOneMissingNumber;
+import static service.SudokuGridMaker.*;
 
 public class Play {
 
@@ -43,7 +43,12 @@ public class Play {
     }
 
     private SudokuGrid getNewSudokuGrid() {
-        return makeAlmostSolvedGridWithOneMissingNumber();
+        //return makeAlmostSolvedGridWithOneMissingNumber();
+        //return makeAlmostSolvedGridMissingLastRow();
+        //return makeAlmostSolvedGridMissingLastColumn();
+        //return makeAlmostSolvedGridMissingOneInEveryBox();
+        //return makeHalfSolvedGrid();
+        return makeAlmostSolvedGridMissingOneRowInThreeBoxes();
     }
 
 
