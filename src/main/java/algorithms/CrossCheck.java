@@ -8,6 +8,9 @@ import service.SudokuGridObserver;
 import service.SudokuGridSolver;
 import view.SudokuGridView;
 
+import static service.SudokuGridTransformer.findColNumForBoxNumAndPosNum;
+import static service.SudokuGridTransformer.findRowNumForBoxNumAndPosNum;
+
 public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
 
     static final Logger logger = LoggerFactory.getLogger(CrossCheck.class);
@@ -67,14 +70,13 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
                         if (box[j] == 0) {
                             // get the row of numbers for that square
                             int rowNum =
-                                    grid.findRowNumForBoxNumAndPosNum(boxNum,
+                                    findRowNumForBoxNumAndPosNum(boxNum,
                                             j);
                             int[] row = grid.getRows()[rowNum];
                             logger.debug(SudokuGridView.intArrayToString(row));
 
                             // get the column of numbers for that square
-                            int colNum =
-                                    grid.findColNumForBoxNumAndPosNum(boxNum,
+                            int colNum = findColNumForBoxNumAndPosNum(boxNum,
                                             j);
                             int[] column = grid.getColumns()[colNum];
                             logger.debug(SudokuGridView.intArrayToString(column));

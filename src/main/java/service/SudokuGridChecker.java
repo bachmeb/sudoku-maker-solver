@@ -2,6 +2,8 @@ package service;
 
 import model.SudokuGrid;
 
+import static service.SudokuGridObserver.*;
+
 public class SudokuGridChecker {
 
     public static boolean checkGridSolved(SudokuGrid grid) {
@@ -88,5 +90,42 @@ public class SudokuGridChecker {
         return false;
     }
 
+    public static boolean checkAllAdjacentRowsAndColumnsForNumber(SudokuGrid grid, int q, int n) {
+        // See if the corresponding row column and box contain a given number
+        int[] combined = lookThreeWays(grid, q);
+        if (combined[n] == 0) {
+            // if not, get the box num
+            int boxNumber = getBoxNumForSquare(q);
+            // Then get the rows and columns that intersect the same box
+            int[][] columns = grid.getColumnsForBoxNum(boxNumber);
+            int[][] rows = grid.getRowsForBoxNum(boxNumber);
+            // See if a given number is present twice in the adjacent
+            // rows and columns
+            int[] rCount = countNumberAppearancesByDimension(columns);
+            int[] cCount = countNumberAppearancesByDimension(rows);
+            return rCount[n] == 2 && cCount[n] == 2;
+        }
+        return false;
+    }
+
+    private static boolean checkSuperSetForNumber(int[][] superSet, int n) {
+        for (int[] set : superSet) {
+            if (checkSetForNumber(n, set)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validGrid(int[][] grid) {
+        boolean valid = grid.length == 9;
+        for (int[] ints : grid) {
+            if (ints.length != 9) {
+                valid = false;
+                break;
+            }
+        }
+        return valid;
+    }
 
 }

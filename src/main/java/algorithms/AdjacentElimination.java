@@ -7,12 +7,15 @@ import service.SudokuGridChecker;
 import service.SudokuGridObserver;
 import view.SudokuGridView;
 
+import static service.SudokuGridTransformer.findColNumForBoxNumAndPosNum;
+import static service.SudokuGridTransformer.findRowNumForBoxNumAndPosNum;
+
 public class AdjacentElimination implements SudokuGridSolverAlgorithm {
 
     static final Logger logger =
             LoggerFactory.getLogger(AdjacentElimination.class);
 
-    SudokuGridObserver observer;
+
 
     @Override
     public SudokuGrid solve(SudokuGrid grid) {
@@ -63,7 +66,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                             int[] box = grid.getBoxes()[otherTwoAdjacentBoxesHorizontal[i]];
                             for (int pos = 0; pos < 9; pos++) {
                                 if (box[pos] == numberInMind) {
-                                    int rowNum = grid.findRowNumForBoxNumAndPosNum(otherTwoAdjacentBoxesHorizontal[i], pos);
+                                    int rowNum = findRowNumForBoxNumAndPosNum(otherTwoAdjacentBoxesHorizontal[i], pos);
                                     otherRowsThatHaveTheNumberInMind[otherRowsIndex++] = rowNum;
                                 }
                             }
@@ -74,7 +77,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                         int candidateSquaresPos[] = new int[3];
                         int candidateIndex = 0;
                         for (int posNum = 0; posNum < 9; posNum++) {
-                            int rowNum = grid.findRowNumForBoxNumAndPosNum(boxIndex, posNum);
+                            int rowNum = findRowNumForBoxNumAndPosNum(boxIndex, posNum);
                             boolean inOther = false;
                             for (int i = 0; i < 2; i++) {
                                 if (rowNum == otherRowsThatHaveTheNumberInMind[i]) {
@@ -129,7 +132,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                                         firstSquarePos = candidateSquaresPos[b];
                                     }
                                     // get the column of numbers for that square
-                                    int colNum = grid.findColNumForBoxNumAndPosNum(boxIndex, candidateSquaresPos[b]);
+                                    int colNum = findColNumForBoxNumAndPosNum(boxIndex, candidateSquaresPos[b]);
                                     int[] column = grid.getColumns()[colNum];
                                     logger.debug(SudokuGridView.intArrayToString(column));
 
@@ -195,7 +198,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                             int[] box = grid.getBoxes()[adjacentBoxesVertical[i]];
                             for (int pos = 0; pos < 9; pos++) {
                                 if (box[pos] == numberInMind) {
-                                    int colNum = grid.findColNumForBoxNumAndPosNum(adjacentBoxesVertical[i], pos);
+                                    int colNum = findColNumForBoxNumAndPosNum(adjacentBoxesVertical[i], pos);
                                     otherColNums[otherColsIndex++] = colNum;
                                 }
                             }
@@ -206,7 +209,7 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
                         int candidateSquaresPos[] = new int[3];
                         int candidateIndex = 0;
                         for (int posNum = 0; posNum < 9; posNum++) {
-                            int colNum = grid.findColNumForBoxNumAndPosNum(boxIndex, posNum);
+                            int colNum = findColNumForBoxNumAndPosNum(boxIndex, posNum);
                             boolean inOther = false;
                             for (int i = 0; i < 2; i++) {
                                 if (colNum == otherColNums[i]) {

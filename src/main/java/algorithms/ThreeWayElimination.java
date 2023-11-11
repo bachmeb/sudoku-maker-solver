@@ -2,7 +2,7 @@ package algorithms;
 
 import model.SudokuGrid;
 
-import static model.SudokuGrid.*;
+import static service.SudokuGridObserver.whatCouldBeHere;
 
 public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
     @Override
@@ -18,28 +18,6 @@ public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
             }
         }
         return grid;
-    }
-
-    private int[] whatCouldBeHere(SudokuGrid grid, int i) {
-        int[] row = grid.getRowForSquare(i);
-        int[] column = grid.getColumnForSquare(i);
-        int[] box = grid.getBoxForSquare(i);
-        int[] whatIs = new int[10];
-        for (int j = 0; j < row.length; j++) {
-            whatIs[row[j]] = whatIs[row[j]] + 1;
-            whatIs[column[j]] = whatIs[column[j]] + 1;
-            whatIs[box[j]] = whatIs[box[j]] + 1;
-        }
-        int[] couldBe = new int[0];
-        for (int k = 0; k < row.length; k++) {
-            if (whatIs[k] == 0) {
-                int[] newCouldBe = new int[couldBe.length + 1];
-                System.arraycopy(couldBe, 0, newCouldBe, 0, couldBe.length);
-                couldBe = newCouldBe;
-                couldBe[couldBe.length - 1] = k;
-            }
-        }
-        return couldBe;
     }
 
     @Override

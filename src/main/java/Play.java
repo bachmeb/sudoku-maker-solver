@@ -48,7 +48,8 @@ public class Play {
         //return makeAlmostSolvedGridMissingLastColumn();
         //return makeAlmostSolvedGridMissingOneInEveryBox();
         //return makeHalfSolvedGrid();
-        return makeAlmostSolvedGridMissingOneRowInThreeBoxes();
+        //return makeAlmostSolvedGridMissingOneRowInThreeBoxes();
+        return makeGridFromPCGame();
     }
 
 

@@ -30,8 +30,6 @@ public class Player {
     public boolean assess() {
         // print the grid
         print(grid.toString());
-        // Create a default action
-        PlayerAction next = new DefaultAction();
         // Print the turn number
         print("Turn: " + nextAction);
         // Print the number of filled squares
@@ -39,73 +37,30 @@ public class Player {
         print("Filled squares: " + filled);
         // Print the number of empty squares
         print("Empty squares: " + (81 - filled));
-        // Preface to new action
-        System.out.print("Next action: ");
         // Check if the grid is solved
         if (checkGridSolved(grid)) {
-            next = new Celebrate();
-            updatePlan(next);
+            updatePlan(new Celebrate());
             return true;
         }
         // Check for sets of eight
         if (aDimensionHasEight(grid)) {
-            next = new SolveBySetsOfEight();
-            updatePlan(next);
-            return false;        }
-        ;
+            updatePlan(new SolveBySetsOfEight());
+            return false;
+        }
         // Check if a square can be solved by only one number
         if (aSquareCanBeSolvedByOnlyOne(grid)) {
-            next = new SolveByThreeWayElimination();
-            updatePlan(next);
-            return false;        }
-        ;
-        updatePlan(next);
+            updatePlan(new SolveByThreeWayElimination());
+            return false;
+        }
+        // Check if a square can be solved by adjacent elimination
+        if (aSquareCanBeSolvedByAdjacentElimination(grid)) {
+            updatePlan(new SolveByAdjacentElimination());
+            return false;
+        }
+        updatePlan(new DefaultAction());
         return false;
     }
 
-    private boolean aSquareCanBeSolvedByOnlyOne(SudokuGrid grid) {
-        int[] boxes = countNumberAppearancesByDimension(grid.getBoxes());
-        int[] columns = countNumberAppearancesByDimension(grid.getColumns());
-        int[] rows = countNumberAppearancesByDimension(grid.getRows());
-        for (int i = 1; i < boxes.length; i++) {
-            if ((boxes[i] == 8)) {
-                return true;
-            }
-            if ((columns[i] == 8)) {
-                return true;
-            }
-            if ((rows[i] == 8)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean aDimensionHasEight(SudokuGrid grid) {
-        int[] values;
-        // Check columns for sets of eight
-        values = countValuesInColumns(grid);
-        for (int j : values) {
-            if (j == 8) {
-                return true;
-            }
-        }
-        // Check rows for sets of eight
-        values = countValuesInRows(grid);
-        for (int j : values) {
-            if (j == 8) {
-                return true;
-            }
-        }
-        // Check boxes for sets of eight
-        values = countValuesInBoxes(grid);
-        for (int j : values) {
-            if (j == 8) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void updatePlan(PlayerAction next) {
         PlayerAction[] newPlan = new PlayerAction[nextAction + 1];
@@ -117,16 +72,18 @@ public class Player {
     public void waitForInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
         print(prompt);
-        scanner.nextLine();
+        scanner.next();
+        print("Here we go....");
     }
 
     public void explain(PlayerAction next) {
+        // Preface to new action
+        System.out.print("Next action: ");
         print(next.explanation());
     }
 
-    public boolean take(PlayerAction next) {
+    public void take(PlayerAction next) {
         nextAction++;
         this.grid = next.move(this.grid);
-        return checkGridSolved(this.grid);
     }
 }
