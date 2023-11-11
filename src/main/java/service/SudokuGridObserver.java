@@ -3,14 +3,17 @@ package service;
 import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import view.SudokuGridView;
 
 public class SudokuGridObserver {
 
     static final Logger logger =
             LoggerFactory.getLogger(SudokuGridObserver.class);
 
-
+    /**
+     * @param grid a SudokuGrid object
+     * @return an integer representing the number of squares filled with a
+     * value other than 0
+     */
     public static int countAllFilledSquares(SudokuGrid grid) {
         int count = 0;
         for (int square : grid.getSquares()) {
@@ -21,56 +24,65 @@ public class SudokuGridObserver {
         return count;
     }
 
-    private static int[]  countFilledSquaresByDimension(int[][] things) {
-        int[] countOfFilledSquaresInThing = new int[things.length];
-        int thingNum = 0;
+    /**
+     * @param things an array of integer arrays
+     * @return an array of integers each representing the number of squares
+     * in each array that are filled with a value other than 0
+     */
+    private static int[] countFilledSquaresPerDimension(int[][] things) {
+        int[] countOfFilledSquares = new int[things.length];
+        int index = 0;
         for (int[] thing : things) {
-            countOfFilledSquaresInThing[thingNum] = 0;
+            countOfFilledSquares[index] = 0;
             for (int value : thing) {
                 if (value > 0) {
-                    countOfFilledSquaresInThing[thingNum]++;
+                    countOfFilledSquares[index]++;
                 }
             }
-            thingNum++;
+            index++;
         }
-        return countOfFilledSquaresInThing;
+        return countOfFilledSquares;
     }
 
-
-
-
+    /**
+     * count the number of times each number appears in any slice of the
+     * given dimension
+     *
+     * @param slices an array of integer arrays
+     * @return an array with 10 values each representing a count of each
+     * occurrence of the number represented by the index of the value in the
+     * array
+     */
     public static int[] countNumberAppearancesByDimension(int[][] slices) {
-        // count the number of times each number appears in any slice of the given dimension
-        int[] countByDimension = new int[10];
+
+        int[] summary = new int[10];
         for (int num = 1; num < 10; num++) {
-            countByDimension[num] = 0;
+            summary[num] = 0;
             for (int[] slice : slices) {
                 for (int i = 0; i < 9; i++) {
                     if (num == slice[i]) {
-                        countByDimension[num]++;
+                        summary[num]++;
                     }
                 }
             }
         }
-        return countByDimension;
+        return summary;
     }
 
-
-
-    public static int[] countValuesInBoxes(SudokuGrid grid){
-        return countFilledSquaresByDimension(grid.getBoxes()) ;
+    public static int[] countValuesInBoxes(SudokuGrid grid) {
+        return countFilledSquaresPerDimension(grid.getBoxes());
     }
-    public static int[] countValuesInColumns(SudokuGrid grid){
-        return countFilledSquaresByDimension(grid.getColumns()) ;
+
+    public static int[] countValuesInColumns(SudokuGrid grid) {
+        return countFilledSquaresPerDimension(grid.getColumns());
     }
-    public static int[] countValuesInRows(SudokuGrid grid){
-        return countFilledSquaresByDimension(grid.getRows()) ;
+
+    public static int[] countValuesInRows(SudokuGrid grid) {
+        return countFilledSquaresPerDimension(grid.getRows());
     }
 
     public int[] getCountOfBoxesWithNumberIndexedByNumber(SudokuGrid grid) {
-        return   countNumberAppearancesByDimension(grid.getBoxes());
+        return countNumberAppearancesByDimension(grid.getBoxes());
     }
-
-
 
 }
