@@ -13,6 +13,7 @@ public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
                 int[] range = whatCouldBeHere(grid, i);
                 if (range.length == 1) {
                     squares[i] = range[0];
+                    break;
                 }
             }
         }

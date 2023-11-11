@@ -96,7 +96,11 @@ public class SudokuGrid {
             int colNum = 0;
             for (int numby : row) {
                 colNum++;
-                sb.append(numby);
+                if(numby == 0){
+                    sb.append(" ");
+                } else {
+                    sb.append(numby);
+                }
                 sb.append("  ");
                 if (colNum % 3 == 0) {
                     sb.append("|  ");
