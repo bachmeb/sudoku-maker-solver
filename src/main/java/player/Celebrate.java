@@ -2,6 +2,8 @@ package player;
 
 import model.SudokuGrid;
 
+import static player.PlayerUtil.print;
+
 public class Celebrate implements PlayerAction {
     @Override
     public String explanation() {
@@ -9,7 +11,8 @@ public class Celebrate implements PlayerAction {
     }
 
     @Override
-    public SudokuGrid move( ) {
+    public SudokuGrid move() {
+        print("Woohoo!!");
         return null;
     }
 }

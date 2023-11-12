@@ -4,13 +4,13 @@ import algorithms.OneSquareLeft;
 import algorithms.SudokuGridSolverAlgorithm;
 import model.SudokuGrid;
 
-public class SolveByOneSquareLeft implements PlayerAction{
+public class SolveByOneSquareLeft implements PlayerAction {
     SudokuGridSolverAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;
 
-    public SolveByOneSquareLeft(SudokuGrid grid,int q,int v) {
+    public SolveByOneSquareLeft(SudokuGrid grid, int q, int v) {
         this.algorithm = new OneSquareLeft();
         this.grid = grid;
         this.q = q;
@@ -23,7 +23,7 @@ public class SolveByOneSquareLeft implements PlayerAction{
     }
 
     @Override
-    public SudokuGrid move( ) {
-        return algorithm.solve(grid,q,v);
+    public SudokuGrid move() {
+        return algorithm.solve(grid, q, v);
     }
 }

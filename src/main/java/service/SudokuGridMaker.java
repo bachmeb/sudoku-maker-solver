@@ -8,9 +8,9 @@ public class SudokuGridMaker {
 
         SudokuGrid grid = new SudokuGrid();
 
-        int rows[][] = new int[9][];
+        int[][] rows = new int[9][];
 
-        int row[] = new int[9];
+        int[] row = new int[9];
 
         rows[0] = row;
         rows[1] = row;
@@ -28,14 +28,13 @@ public class SudokuGridMaker {
 
     }
 
-
     public static SudokuGrid makeZerosGrid() {
 
         SudokuGrid grid = new SudokuGrid();
 
-        int rows[][] = new int[9][];
+        int[][] rows = new int[9][];
 
-        int row[] = new int[9];
+        int[] row = new int[9];
 
         row[0] = 0;
         row[1] = 0;
@@ -162,9 +161,9 @@ public class SudokuGridMaker {
 
         SudokuGrid grid = new SudokuGrid();
 
-        int rows[][] = new int[9][];
+        int[][] rows = new int[9][];
 
-        int row[] = new int[9];
+        int[] row = new int[9];
 
         row[0] = 1;
         row[1] = 1;
@@ -927,7 +926,6 @@ public class SudokuGridMaker {
 
     }
 
-
     public static SudokuGrid makeAlmostSolvedGridMissingOneInEveryBox() {
 
         SudokuGrid grid = new SudokuGrid();
@@ -1087,7 +1085,6 @@ public class SudokuGridMaker {
         return grid;
 
     }
-
 
     public static SudokuGrid makeHalfSolvedGrid() {
 
@@ -1249,7 +1246,6 @@ public class SudokuGridMaker {
 
     }
 
-
     public static SudokuGrid makeAlmostSolvedGridMissingOneRowInThreeBoxes() {
 
         SudokuGrid grid = new SudokuGrid();
@@ -1409,7 +1405,6 @@ public class SudokuGridMaker {
         return grid;
 
     }
-
 
     public static SudokuGrid makeAlmostSolvedGridMissingOneBox() {
 
@@ -1571,7 +1566,6 @@ public class SudokuGridMaker {
 
     }
 
-
     public static SudokuGrid makeAlmostSolvedGridMissingTwoBoxes() {
 
         SudokuGrid grid = new SudokuGrid();
@@ -1732,14 +1726,13 @@ public class SudokuGridMaker {
 
     }
 
-
     public static SudokuGrid makeGridFromPCGame() {
 
         SudokuGrid grid = new SudokuGrid();
 
-        int rows[][] = new int[9][];
+        int[][] rows = new int[9][];
 
-        int row[] = new int[9];
+        int[] row = new int[9];
 
         row[0] = 8;
         row[1] = 9;
@@ -1861,6 +1854,5 @@ public class SudokuGridMaker {
 
         return grid;
     }
-
 
 }

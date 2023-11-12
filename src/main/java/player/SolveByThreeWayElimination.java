@@ -10,7 +10,7 @@ public class SolveByThreeWayElimination implements PlayerAction {
     int q;
     int v;
 
-    public SolveByThreeWayElimination(SudokuGrid grid,int q,int v) {
+    public SolveByThreeWayElimination(SudokuGrid grid, int q, int v) {
         algorithm = new ThreeWayElimination();
         this.grid = grid;
         this.q = q;
@@ -23,7 +23,7 @@ public class SolveByThreeWayElimination implements PlayerAction {
     }
 
     @Override
-    public SudokuGrid move( ) {
-        return algorithm.solve(grid,q,v);
+    public SudokuGrid move() {
+        return algorithm.solve(grid, q, v);
     }
 }

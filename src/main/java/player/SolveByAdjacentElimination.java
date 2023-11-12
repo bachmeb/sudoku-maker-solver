@@ -1,7 +1,6 @@
 package player;
 
 import algorithms.AdjacentElimination;
-import algorithms.OneSquareLeft;
 import algorithms.SudokuGridSolverAlgorithm;
 import model.SudokuGrid;
 
@@ -11,7 +10,7 @@ public class SolveByAdjacentElimination implements PlayerAction {
     int q;
     int v;
 
-    public SolveByAdjacentElimination(SudokuGrid grid,int q,int v) {
+    public SolveByAdjacentElimination(SudokuGrid grid, int q, int v) {
         algorithm = new AdjacentElimination();
         this.grid = grid;
         this.q = q;
@@ -25,6 +24,6 @@ public class SolveByAdjacentElimination implements PlayerAction {
 
     @Override
     public SudokuGrid move() {
-        return algorithm.solve(grid,q,v);
+        return algorithm.solve(grid, q, v);
     }
 }

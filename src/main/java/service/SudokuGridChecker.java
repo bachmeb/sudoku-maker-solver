@@ -2,8 +2,6 @@ package service;
 
 import model.SudokuGrid;
 
-import static service.SudokuGridObserver.*;
-
 public class SudokuGridChecker {
 
     public static boolean checkGridSolved(SudokuGrid grid) {

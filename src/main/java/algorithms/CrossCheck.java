@@ -17,6 +17,59 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
 
     SudokuGridObserver observer;
 
+    private static int[] sortUnsolvedNumbersByMostCommon(int[] numbers) {
+        int[] sorted = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        // TODO -
+        //  sort
+        //  the
+        //  indexes
+        return sorted;
+    }
+
+    private static int[] findTheNumbersOfTheTwoAdjacentColumnsOrRows(int num) {
+        int[] otherTwo = new int[2];
+        switch (num) {
+            case 0:
+                otherTwo[0] = 1;
+                otherTwo[1] = 2;
+                break;
+            case 1:
+                otherTwo[0] = 0;
+                otherTwo[1] = 2;
+                break;
+            case 2:
+                otherTwo[0] = 0;
+                otherTwo[1] = 1;
+                break;
+            case 3:
+                otherTwo[0] = 4;
+                otherTwo[1] = 5;
+                break;
+            case 4:
+                otherTwo[0] = 3;
+                otherTwo[1] = 5;
+                break;
+            case 5:
+                otherTwo[0] = 3;
+                otherTwo[1] = 4;
+                break;
+            case 6:
+                otherTwo[0] = 7;
+                otherTwo[1] = 8;
+                break;
+            case 7:
+                otherTwo[0] = 6;
+                otherTwo[1] = 8;
+                break;
+            case 8:
+                otherTwo[0] = 6;
+                otherTwo[1] = 7;
+                break;
+        }
+
+        return otherTwo;
+    }
+
     @Override
     public SudokuGrid solve(SudokuGrid grid, int q, int v) {
         grid = solveByCrossChecking(grid);
@@ -36,17 +89,7 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
                 "square in the grid and looks at the two rows " + "and " +
                 "columns adjacent to that square and sees if the number in " + "mind is already present in the other two rows and " + "columns. If so, then the number in mind is added to the " + "square.";
 
-
         return e;
-    }
-
-    private static int[] sortUnsolvedNumbersByMostCommon(int[] numbers) {
-        int[] sorted = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-        // TODO -
-        //  sort
-        //  the
-        //  indexes
-        return sorted;
     }
 
     private SudokuGrid solveByCrossChecking(SudokuGrid grid) {
@@ -58,7 +101,7 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
         // numbers by most common
         int[] numbersInOrderOfMostCommon = new int[9];
         numbersInOrderOfMostCommon =
-                sortUnsolvedNumbersByMostCommon(observer.getCountOfBoxesWithNumberIndexedByNumber(grid));
+                sortUnsolvedNumbersByMostCommon(SudokuGridObserver.getCountOfBoxesWithNumberIndexedByNumber(grid));
 
         for (int numberInMind : numbersInOrderOfMostCommon) {
 
@@ -74,15 +117,14 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
                         squareWithZero:
                         if (box[j] == 0) {
                             // get the row of numbers for that square
-                            int rowNum =
-                                    findRowNumForBoxNumAndPosNum(boxNum,
-                                            j);
+                            int rowNum = findRowNumForBoxNumAndPosNum(boxNum,
+                                    j);
                             int[] row = grid.getRows()[rowNum];
                             logger.debug(SudokuGridView.intArrayToString(row));
 
                             // get the column of numbers for that square
                             int colNum = findColNumForBoxNumAndPosNum(boxNum,
-                                            j);
+                                    j);
                             int[] column = grid.getColumns()[colNum];
                             logger.debug(SudokuGridView.intArrayToString(column));
 
@@ -146,51 +188,6 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
             }
         }
         return grid;
-    }
-
-
-    private static int[] findTheNumbersOfTheTwoAdjacentColumnsOrRows(int num) {
-        int[] otherTwo = new int[2];
-        switch (num) {
-            case 0:
-                otherTwo[0] = 1;
-                otherTwo[1] = 2;
-                break;
-            case 1:
-                otherTwo[0] = 0;
-                otherTwo[1] = 2;
-                break;
-            case 2:
-                otherTwo[0] = 0;
-                otherTwo[1] = 1;
-                break;
-            case 3:
-                otherTwo[0] = 4;
-                otherTwo[1] = 5;
-                break;
-            case 4:
-                otherTwo[0] = 3;
-                otherTwo[1] = 5;
-                break;
-            case 5:
-                otherTwo[0] = 3;
-                otherTwo[1] = 4;
-                break;
-            case 6:
-                otherTwo[0] = 7;
-                otherTwo[1] = 8;
-                break;
-            case 7:
-                otherTwo[0] = 6;
-                otherTwo[1] = 8;
-                break;
-            case 8:
-                otherTwo[0] = 6;
-                otherTwo[1] = 7;
-                break;
-        }
-
-        return otherTwo;
     }
 
 }

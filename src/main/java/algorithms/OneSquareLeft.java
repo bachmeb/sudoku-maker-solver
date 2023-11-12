@@ -40,11 +40,11 @@ public class OneSquareLeft implements SudokuGridSolverAlgorithm {
                         continue;
                     }
                     if (theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1, box2, p)) {
-                        int v = theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1,box2,p);
+                        int v = theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1, box2, p);
                         int q = getSquareForBoxNumAndPosNum(b, p);
                         int[] squareAndValue = new int[2];
-                        squareAndValue[0]=q;
-                        squareAndValue[1]=v;
+                        squareAndValue[0] = q;
+                        squareAndValue[1] = v;
                         return squareAndValue;
                     }
                 }
@@ -52,7 +52,6 @@ public class OneSquareLeft implements SudokuGridSolverAlgorithm {
         }
         return null;
     }
-
 
     int theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(int[] box1,
                                                                  int[] box2,
@@ -69,8 +68,6 @@ public class OneSquareLeft implements SudokuGridSolverAlgorithm {
         }
         return 0;
     }
-
-
 
     @Override
     public String explanation() {

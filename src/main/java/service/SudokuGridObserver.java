@@ -36,7 +36,7 @@ public class SudokuGridObserver {
         return countOfFilledSquares;
     }
 
-    public static int countFilledSquaresInSet(int[] set){
+    public static int countFilledSquaresInSet(int[] set) {
         int c = 0;
         for (int value : set) {
             if (value > 0) {
@@ -71,33 +71,30 @@ public class SudokuGridObserver {
         return summary;
     }
 
-
-
     public static int[] getCountOfBoxesWithNumberIndexedByNumber(SudokuGrid grid) {
         return countNumberAppearancesByDimension(grid.getBoxes());
     }
 
-
     public static boolean theInnerColumnHasMoreThanOneZero(int[] box0, int p) {
         int cn = getInnerColumnNumFromPosition(p);
-        int[] c = getInnerColumnFromBox(box0,cn);
+        int[] c = getInnerColumnFromBox(box0, cn);
         int zeros = 0;
-        for(int q : c){
-            if(q==0){
+        for (int q : c) {
+            if (q == 0) {
                 zeros++;
             }
         }
-        return zeros>1;
+        return zeros > 1;
     }
 
     private static int[] getInnerColumnFromBox(int[] box, int cn) {
         int[][] columns = new int[3][3];
         int ci = 0;
         int ri = 0;
-        for (int q : box){
-            columns[ci++][ri++/3]=q;
-            if(ci>2){
-                ci=0;
+        for (int q : box) {
+            columns[ci++][ri++ / 3] = q;
+            if (ci > 2) {
+                ci = 0;
             }
         }
         return columns[cn];
@@ -117,7 +114,8 @@ public class SudokuGridObserver {
         return false;
     }
 
-    public static int[] getVerticallyAdjacentSquaresInBox(int[] box, int position) {
+    public static int[] getVerticallyAdjacentSquaresInBox(int[] box,
+                                                          int position) {
         int innerColumn = getInnerColumnNumFromPosition(position);
         int[] adjacentSquares = new int[6];
         int index = 0;
@@ -185,7 +183,7 @@ public class SudokuGridObserver {
         for (int i = 0; i < whatIs.length; i++) {
             if (whatIs[i] == 0) {
                 int[] newCouldBe = new int[couldBe.length + 1];
-                if(couldBe.length>0){
+                if (couldBe.length > 0) {
                     System.arraycopy(couldBe, 0, newCouldBe, 0, couldBe.length);
                 }
                 couldBe = newCouldBe;
@@ -256,22 +254,22 @@ public class SudokuGridObserver {
         return (square / 9);
     }
 
-    public static int getSquareForBoxNumAndPosNum(int bn, int p){
-        int columnPad = getBoxColumnNumForBoxNum(bn)*3;
+    public static int getSquareForBoxNumAndPosNum(int bn, int p) {
+        int columnPad = getBoxColumnNumForBoxNum(bn) * 3;
         int innerColNum = getInnerColumnNumFromPosition(p);
-        int columnNum = columnPad+innerColNum;
+        int columnNum = columnPad + innerColNum;
         int rowPad = getBoxRowNumForBoxNum(bn);
         int innerRowNum = getInnerRowNumFromPosition(p);
-        int rowNum = rowPad+innerRowNum;
-        return (rowNum*9)+columnNum;
+        int rowNum = rowPad + innerRowNum;
+        return (rowNum * 9) + columnNum;
     }
 
     private static int getInnerRowNumFromPosition(int p) {
-        return p/3;
+        return p / 3;
     }
 
     public static int getBoxRowNumForBoxNum(int bn) {
-        return bn/3;
+        return bn / 3;
     }
 
     public static int findRowNumForBoxNumAndPosNum(int boxNum, int posNum) {
@@ -486,9 +484,7 @@ public class SudokuGridObserver {
         return rowPad + p;
     }
 
-
-
-    public static int findMissingNumberInSet(int[] set){
+    public static int findMissingNumberInSet(int[] set) {
         int sumOfNumbersInSet = 0;
         for (int j : set) {
             sumOfNumbersInSet += j;
