@@ -2,10 +2,12 @@ package algorithms;
 
 import model.SudokuGrid;
 
+import static player.PlayerUtil.print;
+import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridChecker.checkSetForNumber;
 import static service.SudokuGridObserver.*;
 
-public class OneSquareLeft implements SudokuGridSolverAlgorithm{
+public class OneSquareLeft implements SudokuGridSolverAlgorithm {
     @Override
     public SudokuGrid solve(SudokuGrid grid) {
         int[][] boxes = grid.getBoxes();
@@ -16,17 +18,25 @@ public class OneSquareLeft implements SudokuGridSolverAlgorithm{
             int[] box2 = boxes[verticallyAdjacentBoxes[1]];
             for (int p = 0; p < 9; p++) {
                 if (box0[p] == 0) {
-                    if(theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1,box2,p)) {
-                        box0[p] = theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1, box2, p);
+                    if (theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1, box2, p)) {
+                        box0[p] =
+                                theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1, box2, p);
                         grid.setBoxes(boxes);
+                        if (checkGridForErrors(grid)) {
+                            print(grid.toString());
+                            throw new RuntimeException("Grid has errors");
+                        }
                         return grid;
                     }
                 }
             }
-        }return grid;
+        }
+        return grid;
     }
 
-    int theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(int[] box1, int[] box2, int position) {
+    int theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(int[] box1,
+                                                                 int[] box2,
+                                                                 int position) {
         for (int n = 1; n < 10; n++) {
             int[] vAdjacent1 = getVerticallyAdjacentSquaresInBox(box1,
                     position);
