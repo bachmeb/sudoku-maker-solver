@@ -1,15 +1,14 @@
 import model.SudokuGrid;
-import service.SudokuGridMaker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.SudokuGridMaker;
 
 class SudokuGridTest {
 
-    static final Logger logger =
-            LoggerFactory.getLogger(SudokuGridTest.class);
+    static final Logger logger = LoggerFactory.getLogger(SudokuGridTest.class);
 
     SudokuGrid fixture;
     SudokuGridMaker maker;

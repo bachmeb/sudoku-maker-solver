@@ -6,8 +6,7 @@ import org.slf4j.LoggerFactory;
 
 class HelloTest {
 
-    static final Logger logger =
-            LoggerFactory.getLogger(HelloTest.class);
+    static final Logger logger = LoggerFactory.getLogger(HelloTest.class);
 
     Hello fixture;
 

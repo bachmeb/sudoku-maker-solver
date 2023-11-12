@@ -1,16 +1,19 @@
 import model.SudokuGrid;
-import service.SudokuGridChecker;
-import service.SudokuGridMaker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.SudokuGridChecker;
+import service.SudokuGridMaker;
 import service.SudokuGridSolver;
 
-class SudokuGridSolverTest {
+import static service.SudokuGridChecker.checkGridSolved;
+import static service.SudokuGridMaker.makeEmptyGrid;
+import static service.SudokuGridMaker.makeSolvedGrid;
 
+class SudokuGridSolverTest {
 
     static final Logger logger =
             LoggerFactory.getLogger(SudokuGridSolverTest.class);
@@ -29,20 +32,18 @@ class SudokuGridSolverTest {
 
     @Test
     void solveEmptyGrid() {
-        SudokuGridMaker maker = new SudokuGridMaker();
-        SudokuGrid grid = maker.makeEmptyGrid();
+        SudokuGrid grid = makeEmptyGrid();
         Assertions.assertNotNull(grid);
         try {
             fixture.solve(grid);
-        } catch (RuntimeException e){
-            Assertions.assertEquals(RuntimeException.class,e.getClass());
+        } catch (RuntimeException e) {
+            Assertions.assertEquals(RuntimeException.class, e.getClass());
         }
     }
 
     @Test
     void solveSolvedGrid() {
-        SudokuGridMaker maker = new SudokuGridMaker();
-        SudokuGrid grid = maker.makeSolvedGrid();
+        SudokuGrid grid = makeSolvedGrid();
         Assertions.assertNotNull(grid);
 
         String result = grid.toString();
@@ -50,9 +51,7 @@ class SudokuGridSolverTest {
 
         SudokuGrid solvedGrid = fixture.solve(grid);
         Assertions.assertNotNull(solvedGrid);
-
-        SudokuGridChecker checker = new SudokuGridChecker();
-        Assertions.assertTrue(checker.checkGridSolved(solvedGrid));
+        Assertions.assertTrue(checkGridSolved(solvedGrid));
     }
 
     @Test
@@ -62,11 +61,10 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(grid);
 
         try {
-         fixture.solve(grid);
-        } catch (RuntimeException e){
-            Assertions.assertEquals(RuntimeException.class,e.getClass());
+            fixture.solve(grid);
+        } catch (RuntimeException e) {
+            Assertions.assertEquals(RuntimeException.class, e.getClass());
         }
-
 
     }
 
@@ -80,7 +78,7 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(solvedGrid);
+        boolean solved = checkGridSolved(solvedGrid);
         Assertions.assertTrue(solved);
     }
 
@@ -94,11 +92,10 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(solvedGrid);
+        boolean solved = checkGridSolved(solvedGrid);
         Assertions.assertTrue(solved);
 
     }
-
 
     @Test
     void addTheLastNumberToTheSet_MissingColumn8() {
@@ -110,7 +107,7 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(grid);
+        boolean solved = checkGridSolved(grid);
         Assertions.assertTrue(solved);
 
     }
@@ -125,7 +122,7 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(grid);
+        boolean solved = checkGridSolved(grid);
         Assertions.assertTrue(solved);
     }
 
@@ -139,11 +136,10 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(grid);
+        boolean solved = checkGridSolved(grid);
         Assertions.assertTrue(solved);
 
     }
-
 
     @Test
     void solveGridMissingOneBox() {
@@ -155,7 +151,7 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(grid);
+        boolean solved = checkGridSolved(grid);
         Assertions.assertTrue(solved);
 
     }
@@ -170,7 +166,7 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(grid);
+        boolean solved = checkGridSolved(grid);
         Assertions.assertTrue(solved);
 
     }
@@ -185,7 +181,7 @@ class SudokuGridSolverTest {
         Assertions.assertNotNull(solvedGrid);
 
         SudokuGridChecker checker = new SudokuGridChecker();
-        boolean solved = checker.checkGridSolved(grid);
+        boolean solved = checkGridSolved(grid);
         Assertions.assertTrue(solved);
 
     }
