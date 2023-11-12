@@ -53,15 +53,15 @@ public class Player {
         if (qv != null) {
             return new SolveBySetsOfEight(grid, qv[0], qv[1]);
         }
-        // Check if a square can be solved by only one number
-        qv = new ThreeWayElimination().search(grid);
-        if (qv != null) {
-            return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
-        }
         // Check if a square can be solved by adjacent elimination
         qv = new AdjacentElimination().search(grid);
         if (qv != null) {
             return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
+        }
+        // Check if a square can be solved by only one number
+        qv = new ThreeWayElimination().search(grid);
+        if (qv != null) {
+            return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adding the one value that fits
         qv = new OneSquareLeft().search(grid);
