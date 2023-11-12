@@ -1,15 +1,23 @@
 package player;
 
+import algorithms.AdjacentElimination;
+import algorithms.SudokuGridSolverAlgorithm;
 import model.SudokuGrid;
 
-public class SolveByAdjacentElimination implements PlayerAction{
+public class SolveByAdjacentElimination implements PlayerAction {
+    SudokuGridSolverAlgorithm algorithm;
+
+    public SolveByAdjacentElimination() {
+        algorithm = new AdjacentElimination();
+    }
+
     @Override
     public String explanation() {
-        return null;
+        return algorithm.explanation();
     }
 
     @Override
     public SudokuGrid move(SudokuGrid grid) {
-        return null;
+        return algorithm.solve(grid);
     }
 }

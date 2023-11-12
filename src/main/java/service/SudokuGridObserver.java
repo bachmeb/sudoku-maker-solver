@@ -2,7 +2,7 @@ package service;
 
 import model.SudokuGrid;
 
-import static service.SudokuGridChecker.checkAllAdjacentRowsAndColumnsForNumber;
+import static service.SudokuGridChecker.checkBoxAndAdjacentRowsAndColumnsForNumber;
 import static service.SudokuGridChecker.checkSetForNumber;
 
 public class SudokuGridObserver {
@@ -139,16 +139,82 @@ public class SudokuGridObserver {
         int[] squares = grid.getSquares();
         for (int q = 0; q < squares.length; q++) {
             for (int n = 1; n < 10; n++) {
-                int[] b = grid.getBoxForSquare(q);
-                if (checkSetForNumber(n, b)) {
-                    break;
-                }
-                if (checkAllAdjacentRowsAndColumnsForNumber(grid, q, n)) {
+                if (checkBoxAndAdjacentRowsAndColumnsForNumber(grid, q, n)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public static boolean aBoxOnlyHasOneSquareLeftForANumber(SudokuGrid grid) {
+        int[][] boxes = grid.getBoxes();
+        for (int b = 0; b < boxes.length; b++) {
+            int[] box0 = boxes[b];
+            int[] verticallyAdjacentBoxes = getVerticallyAdjacentBoxNumbers(b);
+            int[] box1 = boxes[verticallyAdjacentBoxes[0]];
+            int[] box2 = boxes[verticallyAdjacentBoxes[1]];
+            for (int p = 0; p < 9; p++) {
+                if (box0[p] == 0) {
+                    if (theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1, box2, p)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(int[] box1, int[] box2, int position) {
+        for (int n = 1; n < 10; n++) {
+            int[] vAdjacent1 = getVerticallyAdjacentSquaresInBox(box1,
+                    position);
+            int[] vAdjacent2 = getVerticallyAdjacentSquaresInBox(box2,
+                    position);
+            if (checkSetForNumber(n, vAdjacent1) && checkSetForNumber(n,
+                    vAdjacent2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int[] getVerticallyAdjacentSquaresInBox(int[] box, int position) {
+        int innerColumn = getInnerColumnNumFromPosition(position);
+        int[] adjacentSquares = new int[6];
+        int index = 0;
+        for (int i = 0; i < 9; i++) {
+            if (innerColumn == getInnerColumnNumFromPosition(i)) {
+                continue;
+            }
+            adjacentSquares[index++] = box[i];
+        }
+        return adjacentSquares;
+    }
+
+    private static int getInnerColumnNumFromPosition(int position) {
+        int innerRowNum = position / 3;
+        int minus = innerRowNum * 3;
+        return position - minus;
+    }
+
+    public static int[] getVerticallyAdjacentBoxNumbers(int b) {
+        int columnNum = getBoxColumnNumForBoxNum(b);
+        int[] adjacent = new int[2];
+        int index = 0;
+        for (int i = columnNum; i < 9; i += 3) {
+            if (i == b) {
+                continue;
+            }
+            adjacent[index++] = i;
+        }
+        return adjacent;
+    }
+
+    public static int getBoxColumnNumForBoxNum(int b) {
+        int boxRow = b / 3;
+        int minus = boxRow * 3;
+        return b - minus;
     }
 
     public static int[] lookThreeWays(SudokuGrid grid, int q) {
@@ -164,8 +230,19 @@ public class SudokuGridObserver {
         return whatIs;
     }
 
+    public static int[] lookTwoWays(SudokuGrid grid, int q) {
+        int[] row = grid.getRowForSquare(q);
+        int[] column = grid.getColumnForSquare(q);
+        int[] whatIs = new int[10];
+        for (int j = 0; j < row.length; j++) {
+            whatIs[row[j]] = whatIs[row[j]] + 1;
+            whatIs[column[j]] = whatIs[column[j]] + 1;
+        }
+        return whatIs;
+    }
+
     public static int[] whatCouldBeHere(SudokuGrid grid, int q) {
-        int[] whatIs = lookThreeWays(grid,q);
+        int[] whatIs = lookThreeWays(grid, q);
         int[] couldBe = new int[0];
         for (int i = 0; i < whatIs.length; i++) {
             if (whatIs[i] == 0) {
@@ -177,7 +254,6 @@ public class SudokuGridObserver {
         }
         return couldBe;
     }
-
 
     /**
      * This method returns the box number for a given square in a sudoku grid.
@@ -202,12 +278,11 @@ public class SudokuGridObserver {
         return boxColumn + (3 * boxRow);
     }
 
-
     /**
      * This method returns the column number for a given square number in a
      * sudoku grid by identifying the row of the square and then subtracting
-     * the row number
-     * times 9 from the square number. Basically this removes every whole row
+     * the row number times 9 from the square number. Basically this removes
+     * every whole row
      * from the grid prior to the position of the square, and then counts the
      * position of the square from the first position in the final row.
      *
@@ -221,7 +296,6 @@ public class SudokuGridObserver {
         int minus = row * 9;
         return square - minus;
     }
-
 
     /**
      * This method uses integer division in Java to return a value

@@ -5,7 +5,11 @@ import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 
 public class SolveByThreeWayElimination implements PlayerAction {
-    SudokuGridSolverAlgorithm algorithm = new ThreeWayElimination();
+    SudokuGridSolverAlgorithm algorithm;
+
+    public SolveByThreeWayElimination() {
+        algorithm = new ThreeWayElimination();
+    }
 
     @Override
     public String explanation() {

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.SudokuGridSolver;
 
+import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridObserver.*;
 
 public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
@@ -24,7 +25,11 @@ public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlg
 
     @Override
     public SudokuGrid solve(SudokuGrid grid) {
-        return solveSetsOfEight(grid);
+        SudokuGrid result = solveSetsOfEight(grid);
+        if(checkGridForErrors( result)){
+            throw new RuntimeException("Grid has errors");
+        }
+        return result;
     }
 
     public static int[] addTheLastNumberToTheSet(int[] set) {

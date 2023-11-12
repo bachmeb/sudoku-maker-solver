@@ -2,7 +2,7 @@ package player;
 
 import model.SudokuGrid;
 
-public class DefaultAction implements PlayerAction{
+public class DefaultAction implements PlayerAction {
     @Override
     public String explanation() {
         return "this is the default action";

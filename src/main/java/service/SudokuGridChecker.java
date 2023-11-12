@@ -90,9 +90,14 @@ public class SudokuGridChecker {
         return false;
     }
 
-    public static boolean checkAllAdjacentRowsAndColumnsForNumber(SudokuGrid grid, int q, int n) {
+    public static boolean checkBoxAndAdjacentRowsAndColumnsForNumber(SudokuGrid grid, int q, int n) {
+        // See if the corresponding box contains the number
+        int[] b = grid.getBoxForSquare(q);
+        if (checkSetForNumber(n, b)) {
+            return false;
+        }
         // See if the corresponding row column and box contain a given number
-        int[] combined = lookThreeWays(grid, q);
+        int[] combined = lookTwoWays(grid, q);
         if (combined[n] == 0) {
             // if not, get the box num
             int boxNumber = getBoxNumForSquare(q);

@@ -129,10 +129,14 @@ public class SudokuGrid {
         // box 0 = columns 0,1,2 = (0*3)+0,(0*3)+1,(0*3)+2
         // box 1 = columns 3,4,5 = (1*3)+0,(1*3)+1,(1*3)+2
         // box 2 = columns 6,7,8 = (2*3)+0,(2*3)+1,(2*3)+2
+        // box 3 = columns 0,1,2 = (0*3)+0,(2*3)+1,(2*3)+2
         int[][] columns = getColumns();
-        int[] col0 = columns[(n * 3)];
-        int[] col1 = columns[(n * 3) + 1];
-        int[] col2 = columns[(n * 3) + 2];
+        int boxRow =  n/3;
+        int minus = boxRow * 3;
+        int boxColumn = n - minus;
+        int[] col0 = columns[(boxColumn * 3)];
+        int[] col1 = columns[(boxColumn * 3) + 1];
+        int[] col2 = columns[(boxColumn * 3) + 2];
         int[][] columnsForBoxNum = new int[3][9];
         columnsForBoxNum[0] = col0;
         columnsForBoxNum[1] = col1;
@@ -143,11 +147,13 @@ public class SudokuGrid {
     public int[][] getRowsForBoxNum(int n) {
         // box 0 = row 0, 1, 2 = (0+0),(0+1),(0+2)
         // box 1 = row 0, 1, 2 = (boxRow+0),(boxRow+1),(boxRow+2)
+        // box 3 = row 3, 4, 5 = (boxRow+0),(boxRow+1),(boxRow+2)
         int boxRow = n / 3;
+        int rowRow = boxRow * 3;
         int[][] rows = getRows();
-        int[] row0 = rows[boxRow];
-        int[] row1 = rows[boxRow + 1];
-        int[] row2 = rows[boxRow + 2];
+        int[] row0 = rows[rowRow];
+        int[] row1 = rows[rowRow + 1];
+        int[] row2 = rows[rowRow + 2];
         int[][] rowsForBoxNum = new int[3][9];
         rowsForBoxNum[0] = row0;
         rowsForBoxNum[1] = row1;

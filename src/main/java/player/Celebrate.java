@@ -2,7 +2,7 @@ package player;
 
 import model.SudokuGrid;
 
-public class Celebrate implements PlayerAction{
+public class Celebrate implements PlayerAction {
     @Override
     public String explanation() {
         return "Celebrate!!!";

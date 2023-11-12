@@ -1,15 +1,14 @@
 package player;
 
-import algorithms.SetsOfEight;
+import algorithms.OneSquareLeft;
 import algorithms.SudokuGridSolverAlgorithm;
 import model.SudokuGrid;
 
-public class SolveBySetsOfEight implements PlayerAction {
-
+public class SolveByOneSquareLeft implements PlayerAction{
     SudokuGridSolverAlgorithm algorithm;
 
-    public SolveBySetsOfEight() {
-        algorithm = new SetsOfEight();
+    public SolveByOneSquareLeft() {
+        this.algorithm = new OneSquareLeft();
     }
 
     @Override

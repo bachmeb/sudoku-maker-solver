@@ -57,10 +57,13 @@ public class Player {
             updatePlan(new SolveByAdjacentElimination());
             return false;
         }
+        if(aBoxOnlyHasOneSquareLeftForANumber(grid)){
+            updatePlan(new SolveByOneSquareLeft());
+            return false;
+        }
         updatePlan(new DefaultAction());
         return false;
     }
-
 
     public void updatePlan(PlayerAction next) {
         PlayerAction[] newPlan = new PlayerAction[nextAction + 1];
