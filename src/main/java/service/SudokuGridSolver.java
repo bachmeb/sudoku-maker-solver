@@ -1,59 +1,74 @@
 package service;
 
+import algorithms.AdjacentElimination;
+import algorithms.OneSquareLeft;
+import algorithms.SetsOfEight;
+import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import player.*;
 
-import static service.SudokuGridChecker.checkGridForErrors;
+import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridSolved;
 
 public class SudokuGridSolver {
 
     static final Logger logger =
             LoggerFactory.getLogger(SudokuGridSolver.class);
-
     SudokuGrid grid;
-    boolean solved;
 
     public SudokuGrid solve(SudokuGrid grid) {
-        this.grid = grid;
-        int loop = 0;
-
-        solved = checkGridSolved(grid);
-
-        if (solved) {
-            logger.info("This grid is solved after " + loop + " loops!!!");
-        }
-
-        logger.info("loop number: " + loop++ + " - not yet solved");
-
-        // does the grid have any errors?
-        boolean hasError = checkGridForErrors(grid);
-
-        if (hasError) {
-            logger.info("this grid has more than one of the same number in a "
-                    + "box, row, or column");
+        if(checkGridSolved(grid)){
             return grid;
         }
-
-        grid = trySomeAlgorithms(grid);
-
-        if (solved) {
-            logger.info("This grid is solved after " + loop + " loops!!!");
-        } else {
-            logger.info("I give up after " + loop + " loops! I've tried " +
-                    "everything I know how to do...");
-        }
-
+        logger.info(grid.toString());
+        this.grid = trySomeAlgorithms(grid);
         logger.info(grid.toString());
         return grid;
-
     }
 
     private SudokuGrid trySomeAlgorithms(SudokuGrid grid) {
-
+        boolean solved = false;
+        int tries = 0;
+        while (!solved) {
+            grid = trySolving(grid);
+            tries++;
+            solved = checkGridSolved(grid);
+        }
+        print("That took " + tries + " tries!");
         return grid;
 
     }
+
+    private SudokuGrid trySolving(SudokuGrid grid) {
+
+        int[] qv;
+        // Check for sets of eight
+        qv = new SetsOfEight().search(grid);
+        if (qv != null) {
+            return new SolveBySetsOfEight(grid, qv[0], qv[1]).move();
+        }
+
+        // Check if a square can be solved by adjacent elimination
+        qv = new AdjacentElimination().search(grid);
+        if (qv != null) {
+            return new SolveByAdjacentElimination(grid, qv[0], qv[1]).move();
+        }
+        // Check if a square can be solved by only one number
+        qv = new ThreeWayElimination().search(grid);
+        if (qv != null) {
+            return new SolveByThreeWayElimination(grid, qv[0], qv[1]).move();
+        }
+        // Check if a square can be solved by adding the one value that fits
+        qv = new OneSquareLeft().search(grid);
+        if (qv != null) {
+            return new SolveByOneSquareLeft(grid, qv[0], qv[1]).move();
+        }
+
+        throw new RuntimeException("I give up!");
+    }
+
+
 
 }

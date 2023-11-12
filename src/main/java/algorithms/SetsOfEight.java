@@ -7,7 +7,7 @@ import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridObserver.*;
 
-public class SetsOfEight extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
+public class SetsOfEight implements SudokuGridSolverAlgorithm {
 
     /**
      * @param grid
