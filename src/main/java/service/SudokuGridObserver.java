@@ -2,7 +2,6 @@ package service;
 
 import model.SudokuGrid;
 
-import static service.SudokuGridChecker.checkBoxAndAdjacentRowsAndColumnsForNumber;
 import static service.SudokuGridChecker.checkSetForNumber;
 
 public class SudokuGridObserver {
@@ -27,19 +26,24 @@ public class SudokuGridObserver {
      * @return an array of integers each representing the number of squares
      * in each array that are filled with a value other than 0
      */
-    private static int[] countFilledSquaresPerDimension(int[][] things) {
+    public static int[] countFilledSquaresPerDimension(int[][] things) {
         int[] countOfFilledSquares = new int[things.length];
         int index = 0;
         for (int[] thing : things) {
-            countOfFilledSquares[index] = 0;
-            for (int value : thing) {
-                if (value > 0) {
-                    countOfFilledSquares[index]++;
-                }
-            }
+            countOfFilledSquares[index] = countFilledSquaresInSet(thing);
             index++;
         }
         return countOfFilledSquares;
+    }
+
+    public static int countFilledSquaresInSet(int[] set){
+        int c = 0;
+        for (int value : set) {
+            if (value > 0) {
+                c++;
+            }
+        }
+        return c;
     }
 
     /**
@@ -67,102 +71,36 @@ public class SudokuGridObserver {
         return summary;
     }
 
-    public static int[] countValuesInBoxes(SudokuGrid grid) {
-        return countFilledSquaresPerDimension(grid.getBoxes());
-    }
 
-    public static int[] countValuesInColumns(SudokuGrid grid) {
-        return countFilledSquaresPerDimension(grid.getColumns());
-    }
-
-    public static int[] countValuesInRows(SudokuGrid grid) {
-        return countFilledSquaresPerDimension(grid.getRows());
-    }
 
     public static int[] getCountOfBoxesWithNumberIndexedByNumber(SudokuGrid grid) {
         return countNumberAppearancesByDimension(grid.getBoxes());
     }
 
-    /**
-     * @param grid
-     * @return
-     */
-    public static boolean aSquareCanBeSolvedByOnlyOne(SudokuGrid grid) {
-        int[] boxes = countNumberAppearancesByDimension(grid.getBoxes());
-        int[] columns = countNumberAppearancesByDimension(grid.getColumns());
-        int[] rows = countNumberAppearancesByDimension(grid.getRows());
-        for (int i = 1; i < boxes.length; i++) {
-            if ((boxes[i] == 8)) {
-                return true;
-            }
-            if ((columns[i] == 8)) {
-                return true;
-            }
-            if ((rows[i] == 8)) {
-                return true;
+
+    public static boolean theInnerColumnHasMoreThanOneZero(int[] box0, int p) {
+        int cn = getInnerColumnNumFromPosition(p);
+        int[] c = getInnerColumnFromBox(box0,cn);
+        int zeros = 0;
+        for(int q : c){
+            if(q==0){
+                zeros++;
             }
         }
-        return false;
+        return zeros>1;
     }
 
-    /**
-     * @param grid
-     * @return
-     */
-    public static boolean aDimensionHasEight(SudokuGrid grid) {
-        // Check columns for sets of eight
-        for (int j : countValuesInColumns(grid)) {
-            if (j == 8) {
-                return true;
+    private static int[] getInnerColumnFromBox(int[] box, int cn) {
+        int[][] columns = new int[3][3];
+        int ci = 0;
+        int ri = 0;
+        for (int q : box){
+            columns[ci++][ri++/3]=q;
+            if(ci>2){
+                ci=0;
             }
         }
-        // Check rows for sets of eight
-        for (int j : countValuesInRows(grid)) {
-            if (j == 8) {
-                return true;
-            }
-        }
-        // Check boxes for sets of eight
-        for (int j : countValuesInBoxes(grid)) {
-            if (j == 8) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param grid
-     * @return
-     */
-    public static boolean aSquareCanBeSolvedByAdjacentElimination(SudokuGrid grid) {
-        int[] squares = grid.getSquares();
-        for (int q = 0; q < squares.length; q++) {
-            for (int n = 1; n < 10; n++) {
-                if (checkBoxAndAdjacentRowsAndColumnsForNumber(grid, q, n)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean aBoxOnlyHasOneSquareLeftForANumber(SudokuGrid grid) {
-        int[][] boxes = grid.getBoxes();
-        for (int b = 0; b < boxes.length; b++) {
-            int[] box0 = boxes[b];
-            int[] verticallyAdjacentBoxes = getVerticallyAdjacentBoxNumbers(b);
-            int[] box1 = boxes[verticallyAdjacentBoxes[0]];
-            int[] box2 = boxes[verticallyAdjacentBoxes[1]];
-            for (int p = 0; p < 9; p++) {
-                if (box0[p] == 0) {
-                    if (theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1, box2, p)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return columns[cn];
     }
 
     public static boolean theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(int[] box1, int[] box2, int position) {
@@ -247,7 +185,9 @@ public class SudokuGridObserver {
         for (int i = 0; i < whatIs.length; i++) {
             if (whatIs[i] == 0) {
                 int[] newCouldBe = new int[couldBe.length + 1];
-                System.arraycopy(couldBe, 0, newCouldBe, 0, couldBe.length);
+                if(couldBe.length>0){
+                    System.arraycopy(couldBe, 0, newCouldBe, 0, couldBe.length);
+                }
                 couldBe = newCouldBe;
                 couldBe[couldBe.length - 1] = i;
             }
@@ -314,6 +254,247 @@ public class SudokuGridObserver {
      */
     public static int getRowNumForSquare(int square) {
         return (square / 9);
+    }
+
+    public static int getSquareForBoxNumAndPosNum(int bn, int p){
+        int columnPad = getBoxColumnNumForBoxNum(bn)*3;
+        int innerColNum = getInnerColumnNumFromPosition(p);
+        int columnNum = columnPad+innerColNum;
+        int rowPad = getBoxRowNumForBoxNum(bn);
+        int innerRowNum = getInnerRowNumFromPosition(p);
+        int rowNum = rowPad+innerRowNum;
+        return (rowNum*9)+columnNum;
+    }
+
+    private static int getInnerRowNumFromPosition(int p) {
+        return p/3;
+    }
+
+    public static int getBoxRowNumForBoxNum(int bn) {
+        return bn/3;
+    }
+
+    public static int findRowNumForBoxNumAndPosNum(int boxNum, int posNum) {
+
+        int[][] rowNumbersByBoxNumAndPosNum = new int[9][9];
+
+        rowNumbersByBoxNumAndPosNum[0][0] = 0;
+        rowNumbersByBoxNumAndPosNum[0][1] = 0;
+        rowNumbersByBoxNumAndPosNum[0][2] = 0;
+        rowNumbersByBoxNumAndPosNum[0][3] = 1;
+        rowNumbersByBoxNumAndPosNum[0][4] = 1;
+        rowNumbersByBoxNumAndPosNum[0][5] = 1;
+        rowNumbersByBoxNumAndPosNum[0][6] = 2;
+        rowNumbersByBoxNumAndPosNum[0][7] = 2;
+        rowNumbersByBoxNumAndPosNum[0][8] = 2;
+
+        rowNumbersByBoxNumAndPosNum[1][0] = 0;
+        rowNumbersByBoxNumAndPosNum[1][1] = 0;
+        rowNumbersByBoxNumAndPosNum[1][2] = 0;
+        rowNumbersByBoxNumAndPosNum[1][3] = 1;
+        rowNumbersByBoxNumAndPosNum[1][4] = 1;
+        rowNumbersByBoxNumAndPosNum[1][5] = 1;
+        rowNumbersByBoxNumAndPosNum[1][6] = 2;
+        rowNumbersByBoxNumAndPosNum[1][7] = 2;
+        rowNumbersByBoxNumAndPosNum[1][8] = 2;
+
+        rowNumbersByBoxNumAndPosNum[2][0] = 0;
+        rowNumbersByBoxNumAndPosNum[2][1] = 0;
+        rowNumbersByBoxNumAndPosNum[2][2] = 0;
+        rowNumbersByBoxNumAndPosNum[2][3] = 1;
+        rowNumbersByBoxNumAndPosNum[2][4] = 1;
+        rowNumbersByBoxNumAndPosNum[2][5] = 1;
+        rowNumbersByBoxNumAndPosNum[2][6] = 2;
+        rowNumbersByBoxNumAndPosNum[2][7] = 2;
+        rowNumbersByBoxNumAndPosNum[2][8] = 2;
+
+        ///
+
+        rowNumbersByBoxNumAndPosNum[3][0] = 3;
+        rowNumbersByBoxNumAndPosNum[3][1] = 3;
+        rowNumbersByBoxNumAndPosNum[3][2] = 3;
+        rowNumbersByBoxNumAndPosNum[3][3] = 4;
+        rowNumbersByBoxNumAndPosNum[3][4] = 4;
+        rowNumbersByBoxNumAndPosNum[3][5] = 4;
+        rowNumbersByBoxNumAndPosNum[3][6] = 5;
+        rowNumbersByBoxNumAndPosNum[3][7] = 5;
+        rowNumbersByBoxNumAndPosNum[3][8] = 5;
+
+        rowNumbersByBoxNumAndPosNum[4][0] = 3;
+        rowNumbersByBoxNumAndPosNum[4][1] = 3;
+        rowNumbersByBoxNumAndPosNum[4][2] = 3;
+        rowNumbersByBoxNumAndPosNum[4][3] = 4;
+        rowNumbersByBoxNumAndPosNum[4][4] = 4;
+        rowNumbersByBoxNumAndPosNum[4][5] = 4;
+        rowNumbersByBoxNumAndPosNum[4][6] = 5;
+        rowNumbersByBoxNumAndPosNum[4][7] = 5;
+        rowNumbersByBoxNumAndPosNum[4][8] = 5;
+
+        rowNumbersByBoxNumAndPosNum[5][0] = 3;
+        rowNumbersByBoxNumAndPosNum[5][1] = 3;
+        rowNumbersByBoxNumAndPosNum[5][2] = 3;
+        rowNumbersByBoxNumAndPosNum[5][3] = 4;
+        rowNumbersByBoxNumAndPosNum[5][4] = 4;
+        rowNumbersByBoxNumAndPosNum[5][5] = 4;
+        rowNumbersByBoxNumAndPosNum[5][6] = 5;
+        rowNumbersByBoxNumAndPosNum[5][7] = 5;
+        rowNumbersByBoxNumAndPosNum[5][8] = 5;
+
+        ///
+
+        rowNumbersByBoxNumAndPosNum[6][0] = 6;
+        rowNumbersByBoxNumAndPosNum[6][1] = 6;
+        rowNumbersByBoxNumAndPosNum[6][2] = 6;
+        rowNumbersByBoxNumAndPosNum[6][3] = 7;
+        rowNumbersByBoxNumAndPosNum[6][4] = 7;
+        rowNumbersByBoxNumAndPosNum[6][5] = 7;
+        rowNumbersByBoxNumAndPosNum[6][6] = 8;
+        rowNumbersByBoxNumAndPosNum[6][7] = 8;
+        rowNumbersByBoxNumAndPosNum[6][8] = 8;
+
+        rowNumbersByBoxNumAndPosNum[7][0] = 6;
+        rowNumbersByBoxNumAndPosNum[7][1] = 6;
+        rowNumbersByBoxNumAndPosNum[7][2] = 6;
+        rowNumbersByBoxNumAndPosNum[7][3] = 7;
+        rowNumbersByBoxNumAndPosNum[7][4] = 7;
+        rowNumbersByBoxNumAndPosNum[7][5] = 7;
+        rowNumbersByBoxNumAndPosNum[7][6] = 8;
+        rowNumbersByBoxNumAndPosNum[7][7] = 8;
+        rowNumbersByBoxNumAndPosNum[7][8] = 8;
+
+        rowNumbersByBoxNumAndPosNum[8][0] = 6;
+        rowNumbersByBoxNumAndPosNum[8][1] = 6;
+        rowNumbersByBoxNumAndPosNum[8][2] = 6;
+        rowNumbersByBoxNumAndPosNum[8][3] = 7;
+        rowNumbersByBoxNumAndPosNum[8][4] = 7;
+        rowNumbersByBoxNumAndPosNum[8][5] = 7;
+        rowNumbersByBoxNumAndPosNum[8][6] = 8;
+        rowNumbersByBoxNumAndPosNum[8][7] = 8;
+        rowNumbersByBoxNumAndPosNum[8][8] = 8;
+
+        return rowNumbersByBoxNumAndPosNum[boxNum][posNum];
+    }
+
+    public static int findColNumForBoxNumAndPosNum(int boxNum, int posNum) {
+
+        int[][] columnNumbersByBoxNumAndPosNum = new int[9][9];
+
+        columnNumbersByBoxNumAndPosNum[0][0] = 0;
+        columnNumbersByBoxNumAndPosNum[0][1] = 1;
+        columnNumbersByBoxNumAndPosNum[0][2] = 2;
+        columnNumbersByBoxNumAndPosNum[0][3] = 0;
+        columnNumbersByBoxNumAndPosNum[0][4] = 1;
+        columnNumbersByBoxNumAndPosNum[0][5] = 2;
+        columnNumbersByBoxNumAndPosNum[0][6] = 0;
+        columnNumbersByBoxNumAndPosNum[0][7] = 1;
+        columnNumbersByBoxNumAndPosNum[0][8] = 2;
+
+        columnNumbersByBoxNumAndPosNum[1][0] = 3;
+        columnNumbersByBoxNumAndPosNum[1][1] = 4;
+        columnNumbersByBoxNumAndPosNum[1][2] = 5;
+        columnNumbersByBoxNumAndPosNum[1][3] = 3;
+        columnNumbersByBoxNumAndPosNum[1][4] = 4;
+        columnNumbersByBoxNumAndPosNum[1][5] = 5;
+        columnNumbersByBoxNumAndPosNum[1][6] = 3;
+        columnNumbersByBoxNumAndPosNum[1][7] = 4;
+        columnNumbersByBoxNumAndPosNum[1][8] = 5;
+
+        columnNumbersByBoxNumAndPosNum[2][0] = 6;
+        columnNumbersByBoxNumAndPosNum[2][1] = 7;
+        columnNumbersByBoxNumAndPosNum[2][2] = 8;
+        columnNumbersByBoxNumAndPosNum[2][3] = 6;
+        columnNumbersByBoxNumAndPosNum[2][4] = 7;
+        columnNumbersByBoxNumAndPosNum[2][5] = 8;
+        columnNumbersByBoxNumAndPosNum[2][6] = 6;
+        columnNumbersByBoxNumAndPosNum[2][7] = 7;
+        columnNumbersByBoxNumAndPosNum[2][8] = 8;
+
+        ///
+
+        columnNumbersByBoxNumAndPosNum[3][0] = 0;
+        columnNumbersByBoxNumAndPosNum[3][1] = 1;
+        columnNumbersByBoxNumAndPosNum[3][2] = 2;
+        columnNumbersByBoxNumAndPosNum[3][3] = 0;
+        columnNumbersByBoxNumAndPosNum[3][4] = 1;
+        columnNumbersByBoxNumAndPosNum[3][5] = 2;
+        columnNumbersByBoxNumAndPosNum[3][6] = 0;
+        columnNumbersByBoxNumAndPosNum[3][7] = 1;
+        columnNumbersByBoxNumAndPosNum[3][8] = 2;
+
+        columnNumbersByBoxNumAndPosNum[4][0] = 3;
+        columnNumbersByBoxNumAndPosNum[4][1] = 4;
+        columnNumbersByBoxNumAndPosNum[4][2] = 5;
+        columnNumbersByBoxNumAndPosNum[4][3] = 3;
+        columnNumbersByBoxNumAndPosNum[4][4] = 4;
+        columnNumbersByBoxNumAndPosNum[4][5] = 5;
+        columnNumbersByBoxNumAndPosNum[4][6] = 3;
+        columnNumbersByBoxNumAndPosNum[4][7] = 4;
+        columnNumbersByBoxNumAndPosNum[4][8] = 5;
+
+        columnNumbersByBoxNumAndPosNum[5][0] = 6;
+        columnNumbersByBoxNumAndPosNum[5][1] = 7;
+        columnNumbersByBoxNumAndPosNum[5][2] = 8;
+        columnNumbersByBoxNumAndPosNum[5][3] = 6;
+        columnNumbersByBoxNumAndPosNum[5][4] = 7;
+        columnNumbersByBoxNumAndPosNum[5][5] = 8;
+        columnNumbersByBoxNumAndPosNum[5][6] = 6;
+        columnNumbersByBoxNumAndPosNum[5][7] = 7;
+        columnNumbersByBoxNumAndPosNum[5][8] = 8;
+
+        ///
+
+        columnNumbersByBoxNumAndPosNum[6][0] = 0;
+        columnNumbersByBoxNumAndPosNum[6][1] = 1;
+        columnNumbersByBoxNumAndPosNum[6][2] = 2;
+        columnNumbersByBoxNumAndPosNum[6][3] = 0;
+        columnNumbersByBoxNumAndPosNum[6][4] = 1;
+        columnNumbersByBoxNumAndPosNum[6][5] = 2;
+        columnNumbersByBoxNumAndPosNum[6][6] = 0;
+        columnNumbersByBoxNumAndPosNum[6][7] = 1;
+        columnNumbersByBoxNumAndPosNum[6][8] = 2;
+
+        columnNumbersByBoxNumAndPosNum[7][0] = 3;
+        columnNumbersByBoxNumAndPosNum[7][1] = 4;
+        columnNumbersByBoxNumAndPosNum[7][2] = 5;
+        columnNumbersByBoxNumAndPosNum[7][3] = 3;
+        columnNumbersByBoxNumAndPosNum[7][4] = 4;
+        columnNumbersByBoxNumAndPosNum[7][5] = 5;
+        columnNumbersByBoxNumAndPosNum[7][6] = 3;
+        columnNumbersByBoxNumAndPosNum[7][7] = 4;
+        columnNumbersByBoxNumAndPosNum[7][8] = 5;
+
+        columnNumbersByBoxNumAndPosNum[8][0] = 6;
+        columnNumbersByBoxNumAndPosNum[8][1] = 7;
+        columnNumbersByBoxNumAndPosNum[8][2] = 8;
+        columnNumbersByBoxNumAndPosNum[8][3] = 6;
+        columnNumbersByBoxNumAndPosNum[8][4] = 7;
+        columnNumbersByBoxNumAndPosNum[8][5] = 8;
+        columnNumbersByBoxNumAndPosNum[8][6] = 6;
+        columnNumbersByBoxNumAndPosNum[8][7] = 7;
+        columnNumbersByBoxNumAndPosNum[8][8] = 8;
+
+        return columnNumbersByBoxNumAndPosNum[boxNum][posNum];
+    }
+
+    public static int getSquareForColumnNumberAndPosition(int cn, int p) {
+        int rowPad = p * 9;
+        return rowPad + cn;
+    }
+
+    public static int getSquareForRowNumberAndPosition(int rn, int p) {
+        int rowPad = rn * 9;
+        return rowPad + p;
+    }
+
+
+
+    public static int findMissingNumberInSet(int[] set){
+        int sumOfNumbersInSet = 0;
+        for (int j : set) {
+            sumOfNumbersInSet += j;
+        }
+        int sumOfAllNumbers = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
+        return sumOfAllNumbers - sumOfNumbersInSet;
     }
 
 }

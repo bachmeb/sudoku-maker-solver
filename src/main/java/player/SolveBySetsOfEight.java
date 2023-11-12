@@ -7,9 +7,15 @@ import model.SudokuGrid;
 public class SolveBySetsOfEight implements PlayerAction {
 
     SudokuGridSolverAlgorithm algorithm;
+    SudokuGrid grid;
+    int q;
+    int v;
 
-    public SolveBySetsOfEight() {
+    public SolveBySetsOfEight(SudokuGrid grid,int q,int v) {
         algorithm = new SetsOfEight();
+        this.grid = grid;
+        this.q = q;
+        this.v = v;
     }
 
     @Override
@@ -18,7 +24,7 @@ public class SolveBySetsOfEight implements PlayerAction {
     }
 
     @Override
-    public SudokuGrid move(SudokuGrid grid) {
-        return algorithm.solve(grid);
+    public SudokuGrid move( ) {
+        return algorithm.solve(grid,q,v);
     }
 }

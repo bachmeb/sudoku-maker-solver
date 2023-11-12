@@ -1,12 +1,16 @@
 package player;
 
+import algorithms.AdjacentElimination;
+import algorithms.OneSquareLeft;
+import algorithms.SetsOfEight;
+import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 
 import java.util.Scanner;
 
 import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridSolved;
-import static service.SudokuGridObserver.*;
+import static service.SudokuGridObserver.countAllFilledSquares;
 
 public class Player {
 
@@ -28,41 +32,44 @@ public class Player {
     }
 
     public boolean assess() {
-        // print the grid
         print(grid.toString());
-        // Print the turn number
         print("Turn: " + nextAction);
-        // Print the number of filled squares
         int filled = countAllFilledSquares(grid);
         print("Filled squares: " + filled);
-        // Print the number of empty squares
         print("Empty squares: " + (81 - filled));
-        // Check if the grid is solved
         if (checkGridSolved(grid)) {
             updatePlan(new Celebrate());
             return true;
-        }
-        // Check for sets of eight
-        if (aDimensionHasEight(grid)) {
-            updatePlan(new SolveBySetsOfEight());
+        } else {
+            updatePlan(determineNextAction(grid));
             return false;
+        }
+    }
+
+    private PlayerAction determineNextAction(SudokuGrid grid) {
+        int[] qv;
+        // Check for sets of eight
+        qv = new SetsOfEight().search(grid);
+        if (qv != null) {
+            return new SolveBySetsOfEight(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by only one number
-        if (aSquareCanBeSolvedByOnlyOne(grid)) {
-            updatePlan(new SolveByThreeWayElimination());
-            return false;
+        qv = new ThreeWayElimination().search(grid);
+        if (qv != null) {
+            return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adjacent elimination
-        if (aSquareCanBeSolvedByAdjacentElimination(grid)) {
-            updatePlan(new SolveByAdjacentElimination());
-            return false;
+        qv = new AdjacentElimination().search(grid);
+        if (qv != null) {
+            return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
         }
-        if(aBoxOnlyHasOneSquareLeftForANumber(grid)){
-            updatePlan(new SolveByOneSquareLeft());
-            return false;
+        // Check if a square can be solved by adding the one value that fits
+        qv = new OneSquareLeft().search(grid);
+        if (qv != null) {
+            return new SolveByOneSquareLeft(grid, qv[0], qv[1]);
         }
         updatePlan(new DefaultAction());
-        return false;
+        return null;
     }
 
     public void updatePlan(PlayerAction next) {
@@ -87,6 +94,6 @@ public class Player {
 
     public void take(PlayerAction next) {
         nextAction++;
-        this.grid = next.move(this.grid);
+        this.grid = next.move();
     }
 }

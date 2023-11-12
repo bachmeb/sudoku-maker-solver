@@ -9,7 +9,25 @@ import static service.SudokuGridObserver.*;
 
 public class OneSquareLeft implements SudokuGridSolverAlgorithm {
     @Override
-    public SudokuGrid solve(SudokuGrid grid) {
+    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
+
+        int[] squares = grid.getSquares();
+        squares[q] = v;
+
+        if (checkGridForErrors(grid)) {
+            print(grid.toString());
+            throw new RuntimeException("Grid has errors");
+        }
+        return grid;
+
+    }
+
+    @Override
+    public int[] search(SudokuGrid grid) {
+        return aBoxOnlyHasOneSquareLeftForANumber(grid);
+    }
+
+    int[] aBoxOnlyHasOneSquareLeftForANumber(SudokuGrid grid) {
         int[][] boxes = grid.getBoxes();
         for (int b = 0; b < boxes.length; b++) {
             int[] box0 = boxes[b];
@@ -18,21 +36,23 @@ public class OneSquareLeft implements SudokuGridSolverAlgorithm {
             int[] box2 = boxes[verticallyAdjacentBoxes[1]];
             for (int p = 0; p < 9; p++) {
                 if (box0[p] == 0) {
+                    if (theInnerColumnHasMoreThanOneZero(box0, p)) {
+                        continue;
+                    }
                     if (theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1, box2, p)) {
-                        box0[p] =
-                                theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1, box2, p);
-                        grid.setBoxes(boxes);
-                        if (checkGridForErrors(grid)) {
-                            print(grid.toString());
-                            throw new RuntimeException("Grid has errors");
-                        }
-                        return grid;
+                        int v = theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1,box2,p);
+                        int q = getSquareForBoxNumAndPosNum(b, p);
+                        int[] squareAndValue = new int[2];
+                        squareAndValue[0]=q;
+                        squareAndValue[1]=v;
+                        return squareAndValue;
                     }
                 }
             }
         }
-        return grid;
+        return null;
     }
+
 
     int theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(int[] box1,
                                                                  int[] box2,
@@ -49,6 +69,8 @@ public class OneSquareLeft implements SudokuGridSolverAlgorithm {
         }
         return 0;
     }
+
+
 
     @Override
     public String explanation() {

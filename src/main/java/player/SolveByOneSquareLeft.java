@@ -6,9 +6,15 @@ import model.SudokuGrid;
 
 public class SolveByOneSquareLeft implements PlayerAction{
     SudokuGridSolverAlgorithm algorithm;
+    SudokuGrid grid;
+    int q;
+    int v;
 
-    public SolveByOneSquareLeft() {
+    public SolveByOneSquareLeft(SudokuGrid grid,int q,int v) {
         this.algorithm = new OneSquareLeft();
+        this.grid = grid;
+        this.q = q;
+        this.v = v;
     }
 
     @Override
@@ -17,7 +23,7 @@ public class SolveByOneSquareLeft implements PlayerAction{
     }
 
     @Override
-    public SudokuGrid move(SudokuGrid grid) {
-        return algorithm.solve(grid);
+    public SudokuGrid move( ) {
+        return algorithm.solve(grid,q,v);
     }
 }

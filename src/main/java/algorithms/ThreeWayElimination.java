@@ -6,22 +6,36 @@ import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridObserver.whatCouldBeHere;
 
 public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
+
     @Override
-    public SudokuGrid solve(SudokuGrid grid) {
+    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
         int[] squares = grid.getSquares();
-        for (int i = 0; i < squares.length; i++) {
-            if (squares[i] == 0) {
-                int[] range = whatCouldBeHere(grid, i);
-                if (range.length == 1) {
-                    squares[i] = range[0];
-                    break;
-                }
-            }
-        }
+        squares[q] = v;
         if (checkGridForErrors(grid)) {
             throw new RuntimeException("Grid has errors");
         }
         return grid;
+    }
+
+    @Override
+    public int[] search(SudokuGrid grid) {
+        return whatCouldBeInTheBoxColumnAndRow(grid);
+    }
+
+    int[] whatCouldBeInTheBoxColumnAndRow(SudokuGrid grid) {
+        int[] squares = grid.getSquares();
+        for (int q = 0; q < squares.length; q++) {
+            if (squares[q] == 0) {
+                int[] range = whatCouldBeHere(grid, q);
+                if (range.length == 1) {
+                    int[] qv = new int[2];
+                    qv[0] = q;
+                    qv[1] = range[0];
+                    return qv;
+                }
+            }
+        }
+        return null;
     }
 
     @Override

@@ -8,8 +8,9 @@ public class DefaultAction implements PlayerAction {
         return "this is the default action";
     }
 
+
     @Override
-    public SudokuGrid move(SudokuGrid grid) {
-        return grid;
+    public SudokuGrid move( ) {
+        return null;
     }
 }

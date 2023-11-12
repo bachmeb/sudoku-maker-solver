@@ -8,8 +8,8 @@ import service.SudokuGridObserver;
 import service.SudokuGridSolver;
 import view.SudokuGridView;
 
-import static service.SudokuGridTransformer.findColNumForBoxNumAndPosNum;
-import static service.SudokuGridTransformer.findRowNumForBoxNumAndPosNum;
+import static service.SudokuGridObserver.findColNumForBoxNumAndPosNum;
+import static service.SudokuGridObserver.findRowNumForBoxNumAndPosNum;
 
 public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
 
@@ -18,9 +18,14 @@ public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgo
     SudokuGridObserver observer;
 
     @Override
-    public SudokuGrid solve(SudokuGrid grid) {
+    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
         grid = solveByCrossChecking(grid);
         return grid;
+    }
+
+    @Override
+    public int[] search(SudokuGrid grid) {
+        return null;
     }
 
     @Override

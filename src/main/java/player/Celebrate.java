@@ -9,7 +9,7 @@ public class Celebrate implements PlayerAction {
     }
 
     @Override
-    public SudokuGrid move(SudokuGrid grid) {
+    public SudokuGrid move( ) {
         return null;
     }
 }
