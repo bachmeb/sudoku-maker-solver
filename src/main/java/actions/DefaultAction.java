@@ -6,6 +6,7 @@ import static player.PlayerUtil.print;
 
 public class DefaultAction implements PlayerAction {
     SudokuGrid grid;
+
     public DefaultAction(SudokuGrid grid) {
         this.grid = grid;
     }
@@ -13,11 +14,11 @@ public class DefaultAction implements PlayerAction {
     @Override
     public String explanation() {
         return """
-        This is the default action.
-        
-        I don't know what to do next....
-        
-        """;
+                This is the default action.
+                        
+                I don't know what to do next....
+                        
+                """;
     }
 
     @Override

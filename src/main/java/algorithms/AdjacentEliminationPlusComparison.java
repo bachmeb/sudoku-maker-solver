@@ -45,7 +45,7 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
         int[] innerColumn = getInnerColumnFromBox(box, icn);
         int countOtherOpen = 0;
         int countRowContainsNumber = 0;
-        for (int icp = 0; icp<innerColumn.length;icp++) {
+        for (int icp = 0; icp < innerColumn.length; icp++) {
             if (innerColumn[icp] == 0) {
                 int oq =
                         getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn, icn, icp);

@@ -1,7 +1,6 @@
 package actions;
 
 import algorithms.OneSquareBox;
-import algorithms.OneSquareColumn;
 import algorithms.SudokuAlgorithm;
 import model.SudokuGrid;
 
