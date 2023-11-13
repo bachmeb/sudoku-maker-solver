@@ -1,6 +1,5 @@
 package actions;
 
-import algorithms.AdjacentElimination;
 import algorithms.AdjacentEliminationPlusComparison;
 import algorithms.SudokuAlgorithm;
 import model.SudokuGrid;
@@ -11,7 +10,8 @@ public class SolveByAdjacentEliminationPlusComparison implements PlayerAction {
     int q;
     int v;
 
-    public SolveByAdjacentEliminationPlusComparison(SudokuGrid grid, int q, int v) {
+    public SolveByAdjacentEliminationPlusComparison(SudokuGrid grid, int q,
+                                                    int v) {
         algorithm = new AdjacentEliminationPlusComparison();
         this.grid = grid;
         this.q = q;
@@ -20,7 +20,7 @@ public class SolveByAdjacentEliminationPlusComparison implements PlayerAction {
 
     @Override
     public String explanation() {
-        return algorithm.explanation() + "Square: " + q + "\n" + "Value: " + v + "\n" ;
+        return algorithm.explanation() + "Square: " + q + "\n" + "Value: " + v + "\n";
     }
 
     @Override

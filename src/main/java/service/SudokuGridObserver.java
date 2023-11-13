@@ -87,12 +87,12 @@ public class SudokuGridObserver {
         return zeros > 1;
     }
 
-    public static int getSquareFromBoxInnerColumnNumAndInnerColumnPosition(int bn, int icn, int icp ){
-        int rowPad = (bn/3)*3;
+    public static int getSquareFromBoxInnerColumnNumAndInnerColumnPosition(int bn, int icn, int icp) {
+        int rowPad = (bn / 3) * 3;
         int rn = rowPad + icp;
-        int columnPad = (bn - rowPad)*3;
+        int columnPad = (bn - rowPad) * 3;
         int cn = columnPad + icn;
-        return (rn*9) + cn;
+        return (rn * 9) + cn;
     }
 
     public static int[] getInnerColumnFromBox(int[] box, int cn) {

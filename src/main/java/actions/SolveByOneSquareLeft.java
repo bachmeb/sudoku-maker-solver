@@ -19,7 +19,7 @@ public class SolveByOneSquareLeft implements PlayerAction {
 
     @Override
     public String explanation() {
-        return algorithm.explanation() + "Square: " + q + "\n" + "Value: " + v + "\n" ;
+        return algorithm.explanation() + "Square: " + q + "\n" + "Value: " + v + "\n";
     }
 
     @Override

@@ -14,15 +14,17 @@ public class AdjacentElimination extends SudokuAlgorithm {
     public static int[] aSquareCanBeSolvedByAdjacentElimination(SudokuGrid grid) {
         int[] squares = grid.getSquares();
         for (int q = 0; q < squares.length; q++) {
-            if(squares[q]==0){
-            for (int n = 1; n < 10; n++) {
-                if (checkBoxAndAdjacentRowsAndColumnsForNumber(grid, q, n)) {
-                    int[] qv = new int[2];
-                    qv[0] = q;
-                    qv[1] = n;
-                    return qv;
+            if (squares[q] == 0) {
+                for (int n = 1; n < 10; n++) {
+                    if (checkBoxAndAdjacentRowsAndColumnsForNumber(grid, q,
+                            n)) {
+                        int[] qv = new int[2];
+                        qv[0] = q;
+                        qv[1] = n;
+                        return qv;
+                    }
                 }
-            }}
+            }
         }
         return null;
     }

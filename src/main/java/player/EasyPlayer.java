@@ -9,13 +9,12 @@ import model.SudokuGrid;
 
 import static player.PlayerUtil.print;
 
-public class EasyPlayer extends Player{
-
+public class EasyPlayer extends Player {
 
     @Override
     public void introduce() {
 
-            print("""
+        print("""
                 Hi! I'm Player One. I use these algorithms to solve the sudoku grid:
                 Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
                 One Square Left.

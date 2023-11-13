@@ -6,13 +6,12 @@ import model.SudokuGrid;
 
 import static player.PlayerUtil.print;
 
-public class MediumPlayer extends Player{
-
+public class MediumPlayer extends Player {
 
     @Override
     public void introduce() {
 
-            print("""
+        print("""
                 Hi! I'm Player Two. I use these algorithms to solve the sudoku grid:
                 Adjacent Elimination Plus Comparison,
                 Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
@@ -27,7 +26,8 @@ public class MediumPlayer extends Player{
         // Check if a square can be solved by adjacent elimination
         qv = new AdjacentEliminationPlusComparison().search(grid);
         if (qv != null) {
-            return new SolveByAdjacentEliminationPlusComparison(grid, qv[0], qv[1]);
+            return new SolveByAdjacentEliminationPlusComparison(grid, qv[0],
+                    qv[1]);
         }
         // Check for sets of eight
         qv = new SetsOfEight().search(grid);

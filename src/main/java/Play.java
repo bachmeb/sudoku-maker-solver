@@ -1,11 +1,10 @@
+import actions.PlayerAction;
 import model.SudokuGrid;
-import player.EasyPlayer;
 import player.MediumPlayer;
 import player.Player;
-import actions.PlayerAction;
 
 import static player.PlayerUtil.print;
-import static service.SudokuGridMaker.*;
+import static service.SudokuGridMaker.makeMediumGridFromPcGame;
 
 public class Play {
 
@@ -30,8 +29,8 @@ public class Play {
 //        grids[3] = makeAlmostSolvedGridMissingOneInEveryBox();
 //        grids[4] = makeHalfSolvedGrid();
 //        grids[5] = makeAlmostSolvedGridMissingOneRowInThreeBoxes();
-  //      grids[0] = makeGridFromPCGame();
-        grids[0]= makeMediumGridFromPcGame();
+        //      grids[0] = makeGridFromPCGame();
+        grids[0] = makeMediumGridFromPcGame();
     }
 
     private void gameLoop() {

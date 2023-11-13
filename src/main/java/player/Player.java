@@ -1,6 +1,7 @@
 package player;
 
-import actions.*;
+import actions.Celebrate;
+import actions.PlayerAction;
 import model.SudokuGrid;
 
 import java.util.Scanner;
@@ -21,8 +22,9 @@ public abstract class Player {
         plan = new PlayerAction[0];
     }
 
-    abstract public void introduce() ;
-    abstract public PlayerAction determineNextAction(SudokuGrid grid) ;
+    abstract public void introduce();
+
+    abstract public PlayerAction determineNextAction(SudokuGrid grid);
 
     public PlayerAction getNextAction() {
         return plan[nextAction];
