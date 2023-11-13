@@ -5,7 +5,7 @@ import model.SudokuGrid;
 import static service.SudokuGridChecker.checkSetForNumber;
 import static service.SudokuGridObserver.*;
 
-public class OneSquareLeft extends SudokuAlgorithm {
+public class OneSquareColumn extends SudokuAlgorithm {
 
     @Override
     public int[] search(SudokuGrid grid) {
@@ -60,7 +60,7 @@ public class OneSquareLeft extends SudokuAlgorithm {
     @Override
     public String explanation() {
         return """
-                One Square Left.
+                One Square Box Column.
                 This algorithm looks at three boxes and determines if two of the
                 boxes already contain a given number, and if the third box which
                 does not contain the number only has one square where the number

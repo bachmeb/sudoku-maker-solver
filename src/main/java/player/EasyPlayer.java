@@ -2,7 +2,7 @@ package player;
 
 import actions.*;
 import algorithms.AdjacentElimination;
-import algorithms.OneSquareLeft;
+import algorithms.OneSquareColumn;
 import algorithms.SetsOfEight;
 import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
@@ -41,9 +41,9 @@ public class EasyPlayer extends Player {
             return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adding the one value that fits
-        qv = new OneSquareLeft().search(grid);
+        qv = new OneSquareColumn().search(grid);
         if (qv != null) {
-            return new SolveByOneSquareLeft(grid, qv[0], qv[1]);
+            return new SolveByOneSquareColumn(grid, qv[0], qv[1]);
         }
         return new DefaultAction(grid);
     }

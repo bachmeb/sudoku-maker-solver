@@ -23,6 +23,11 @@ public class MediumPlayer extends Player {
     @Override
     public PlayerAction determineNextAction(SudokuGrid grid) {
         int[] qv;
+        // Check if a square can be solved by adding the one value that fits
+        qv = new OneSquareBox().search(grid);
+        if (qv != null) {
+            return new SolveByOneSquareBox(grid, qv[0], qv[1]);
+        }
         // Check if a square can be solved by adjacent elimination
         qv = new AdjacentEliminationPlusComparison().search(grid);
         if (qv != null) {
@@ -45,9 +50,9 @@ public class MediumPlayer extends Player {
             return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adding the one value that fits
-        qv = new OneSquareLeft().search(grid);
+        qv = new OneSquareColumn().search(grid);
         if (qv != null) {
-            return new SolveByOneSquareLeft(grid, qv[0], qv[1]);
+            return new SolveByOneSquareColumn(grid, qv[0], qv[1]);
         }
         return new DefaultAction(grid);
     }

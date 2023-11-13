@@ -1,11 +1,11 @@
 package service;
 
 import actions.SolveByAdjacentElimination;
-import actions.SolveByOneSquareLeft;
+import actions.SolveByOneSquareColumn;
 import actions.SolveBySetsOfEight;
 import actions.SolveByThreeWayElimination;
 import algorithms.AdjacentElimination;
-import algorithms.OneSquareLeft;
+import algorithms.OneSquareColumn;
 import algorithms.SetsOfEight;
 import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
@@ -64,9 +64,9 @@ public class SudokuGridSolver {
             return new SolveByThreeWayElimination(grid, qv[0], qv[1]).move();
         }
         // Check if a square can be solved by adding the one value that fits
-        qv = new OneSquareLeft().search(grid);
+        qv = new OneSquareColumn().search(grid);
         if (qv != null) {
-            return new SolveByOneSquareLeft(grid, qv[0], qv[1]).move();
+            return new SolveByOneSquareColumn(grid, qv[0], qv[1]).move();
         }
 
         throw new RuntimeException("I give up!");

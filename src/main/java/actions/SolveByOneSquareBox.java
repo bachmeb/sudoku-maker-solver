@@ -1,17 +1,18 @@
 package actions;
 
-import algorithms.OneSquareLeft;
+import algorithms.OneSquareBox;
+import algorithms.OneSquareColumn;
 import algorithms.SudokuAlgorithm;
 import model.SudokuGrid;
 
-public class SolveByOneSquareLeft implements PlayerAction {
+public class SolveByOneSquareBox implements PlayerAction {
     SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;
 
-    public SolveByOneSquareLeft(SudokuGrid grid, int q, int v) {
-        this.algorithm = new OneSquareLeft();
+    public SolveByOneSquareBox(SudokuGrid grid, int q, int v) {
+        this.algorithm = new OneSquareBox();
         this.grid = grid;
         this.q = q;
         this.v = v;
