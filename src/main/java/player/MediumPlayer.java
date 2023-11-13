@@ -49,7 +49,6 @@ public class MediumPlayer extends Player {
         if (qv != null) {
             return new SolveByOneSquareLeft(grid, qv[0], qv[1]);
         }
-        updatePlan(new DefaultAction());
-        return null;
+        return new DefaultAction(grid);
     }
 }

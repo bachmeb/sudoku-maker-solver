@@ -26,6 +26,9 @@ public class OneSquareLeft extends SudokuAlgorithm {
                     }
                     if (theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(box1, box2, p)) {
                         int v = theNumberTheOtherTwoBoxesHaveTheSameInTheAdjacentColumns(box1, box2, p);
+                        if(checkSetForNumber(v,box0)){
+                            continue;
+                        }
                         int q = getSquareForBoxNumAndPosNum(b, p);
                         int[] squareAndValue = new int[2];
                         squareAndValue[0] = q;
