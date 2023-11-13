@@ -1,7 +1,6 @@
 package algorithms;
 
 import model.SudokuGrid;
-import service.SudokuGridSolver;
 
 import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridForErrors;
@@ -15,8 +14,8 @@ public class SetsOfEight implements SudokuGridSolverAlgorithm {
      */
     public static int[] aDimensionHasEight(SudokuGrid grid) {
         int[] qv;
-        // Check columns for sets of eight
-        qv = checkColumnsForSetsOfEight(grid);
+        // Check boxes for sets of eight
+        qv = checkBoxesForSetsOfEight(grid);
         if (qv != null) {
             return qv;
         }
@@ -25,9 +24,12 @@ public class SetsOfEight implements SudokuGridSolverAlgorithm {
         if (qv != null) {
             return qv;
         }
-        // Check boxes for sets of eight
-        qv = checkBoxesForSetsOfEight(grid);
-        return qv;
+        // Check columns for sets of eight
+        qv = checkColumnsForSetsOfEight(grid);
+        if (qv != null) {
+            return qv;
+        }
+        return null;
     }
 
     private static int[] checkColumnsForSetsOfEight(SudokuGrid grid) {
@@ -66,7 +68,7 @@ public class SetsOfEight implements SudokuGridSolverAlgorithm {
     }
 
     private static int[] checkBoxesForSetsOfEight(SudokuGrid grid) {
-        int[][] boxes = grid.getColumns();
+        int[][] boxes = grid.getBoxes();
         for (int i = 0; i < 9; i++) {
             if (countFilledSquaresInSet(boxes[i]) == 8) {
                 for (int j = 0; j < 9; j++) {

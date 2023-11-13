@@ -14,17 +14,23 @@ import static service.SudokuGridObserver.countAllFilledSquares;
 
 public class Player {
 
-    PlayerAction[] plan = new PlayerAction[3];
+    PlayerAction[] plan = new PlayerAction[0];
     int nextAction = 0;
     SudokuGrid grid;
 
-    public Player(SudokuGrid grid) {
+    public void setGrid(SudokuGrid grid) {
         this.grid = grid;
+        nextAction = 0;
+        plan = new PlayerAction[0];
     }
 
     public void introduce() {
-        print("Hi! We're going to play Sudoku. Let's solve this puzzle " +
-                "together.");
+        print("""
+                Hi! I'm Player One. I use these algorithms to solve the sudoku grid:
+                Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
+                One Square Left. 
+                """
+        );
     }
 
     public PlayerAction getNextAction() {
@@ -95,5 +101,12 @@ public class Player {
     public void take(PlayerAction next) {
         nextAction++;
         this.grid = next.move();
+    }
+
+    public boolean invite() {
+        Scanner scanner = new Scanner(System.in);
+        print("Do you want to make a new grid?");
+        String response =  scanner.next();
+        return response.contains("y");
     }
 }
