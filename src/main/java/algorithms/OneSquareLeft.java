@@ -58,7 +58,7 @@ public class OneSquareLeft extends SudokuAlgorithm {
     public String explanation() {
         return """
                 One Square Left.
-                This algorithm looks at three boxes and determines if two of the 
+                This algorithm looks at three boxes and determines if two of the
                 boxes already contain a given number, and if the third box which
                 does not contain the number only has one square where the number
                 could be added.
