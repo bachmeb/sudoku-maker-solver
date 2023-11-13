@@ -87,7 +87,7 @@ public class SudokuGridObserver {
         return zeros > 1;
     }
 
-    private static int[] getInnerColumnFromBox(int[] box, int cn) {
+    public static int[] getInnerColumnFromBox(int[] box, int cn) {
         int[][] columns = new int[3][3];
         int ci = 0;
         int ri = 0;
@@ -128,7 +128,7 @@ public class SudokuGridObserver {
         return adjacentSquares;
     }
 
-    private static int getInnerColumnNumFromPosition(int position) {
+    public static int getInnerColumnNumFromPosition(int position) {
         int innerRowNum = position / 3;
         int minus = innerRowNum * 3;
         return position - minus;
@@ -216,6 +216,17 @@ public class SudokuGridObserver {
         return boxColumn + (3 * boxRow);
     }
 
+    public static int getBoxPositionFromSquare(int q) {
+        int bn = getBoxNumForSquare(q);
+        int rowPad = (bn / 3) * 3;
+        int rn = getRowNumForSquare(q);
+        int innerRow = rn - rowPad;
+        int cn = getColumnNumForSquare(q);
+        int columnPad = (cn / 3) * 3;
+        int innerColumn = cn - columnPad;
+        return (innerRow * 3) + innerColumn;
+    }
+
     /**
      * This method returns the column number for a given square number in a
      * sudoku grid by identifying the row of the square and then subtracting
@@ -264,7 +275,7 @@ public class SudokuGridObserver {
         return (rowNum * 9) + columnNum;
     }
 
-    private static int getInnerRowNumFromPosition(int p) {
+    public static int getInnerRowNumFromPosition(int p) {
         return p / 3;
     }
 
