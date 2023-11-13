@@ -45,14 +45,14 @@ public class MediumPlayer extends Player {
                     qv[1]);
         }
         // Check if a square can be solved by adding the one value that fits
-        qv = new OneSquareBox().search(grid);
-        if (qv != null) {
-            return new SolveByOneSquareBox(grid, qv[0], qv[1]);
-        }
-        // Check if a square can be solved by adding the one value that fits
         qv = new OneSquareColumn().search(grid);
         if (qv != null) {
             return new SolveByOneSquareColumn(grid, qv[0], qv[1]);
+        }
+        // Check if a square can be solved by adding the one value that fits
+        qv = new OneSquareBox().search(grid);
+        if (qv != null) {
+            return new SolveByOneSquareBox(grid, qv[0], qv[1]);
         }
         return new DefaultAction(grid);
     }
