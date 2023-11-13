@@ -13,9 +13,13 @@ public class MediumPlayer extends Player {
 
         print("""
                 Hi! I'm Player Two. I use these algorithms to solve the sudoku grid:
-                Adjacent Elimination Plus Comparison,
-                Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
-                One Square Left.
+                                
+                * Sets of Eight
+                * Three-Way Elimination
+                * Adjacent Elimination
+                * Adjacent Elimination Plus Comparison,
+                * One Square Column
+                * One Square Box
                 """);
 
     }

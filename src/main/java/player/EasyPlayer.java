@@ -16,8 +16,11 @@ public class EasyPlayer extends Player {
 
         print("""
                 Hi! I'm Player One. I use these algorithms to solve the sudoku grid:
-                Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
-                One Square Left.
+                                
+                * Sets of Eight
+                * Adjacent Elimination
+                * Three-Way Elimination
+                * One Square Column
                 """);
 
     }
