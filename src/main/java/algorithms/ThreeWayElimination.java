@@ -33,6 +33,7 @@ public class ThreeWayElimination extends SudokuAlgorithm {
                 Three-Way Elimination.
                 This algorithm looks at each square and determines if the square can be
                 filled by only one number given the values present in the box, row, and
-                column corresponding to the square""";
+                column corresponding to the square
+                """;
     }
 }

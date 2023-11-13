@@ -20,7 +20,7 @@ public class SolveBySetsOfEight implements PlayerAction {
 
     @Override
     public String explanation() {
-        return algorithm.explanation();
+        return algorithm.explanation() + "Square: " + q + "\n" + "Value: " + v + "\n" ;
     }
 
     @Override

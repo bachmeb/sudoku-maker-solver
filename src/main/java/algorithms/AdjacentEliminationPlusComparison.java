@@ -13,19 +13,23 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
     public static int[] aSquareCanBeSolvedByAdjacentEliminationPlusComparison(SudokuGrid grid) {
         int[] squares = grid.getSquares();
         for (int q = 0; q < squares.length; q++) {
-            // See if the corresponding row column and box contain a given number
-            int[] combined = lookThreeWays(grid, q);
-            for (int n = 1; n < 10; n++) {
-                if (combined[n] == 0) {
-                    if (!checkVerticallyAdjacentColumnsForNumber(grid, q, n)) {
-                        continue;
-                    }
-                    if (otherOpenSquaresInInnerColumnHaveNumberInRow(grid, q,
-                            n)) {
-                        int[] qv = new int[2];
-                        qv[0] = q;
-                        qv[1] = n;
-                        return qv;
+            if (squares[q] == 0) {
+                // See if the corresponding row column and box contain a
+                // given number
+                int[] combined = lookThreeWays(grid, q);
+                for (int n = 1; n < 10; n++) {
+                    if (combined[n] == 0) {
+                        if (!checkVerticallyAdjacentColumnsForNumber(grid, q,
+                                n)) {
+                            continue;
+                        }
+                        if (otherOpenSquaresInInnerColumnHaveNumberInRow(grid
+                                , q, n)) {
+                            int[] qv = new int[2];
+                            qv[0] = q;
+                            qv[1] = n;
+                            return qv;
+                        }
                     }
                 }
             }
@@ -45,8 +49,9 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
         for (int j : innerColumn) {
             if (j == 0) {
                 //TODO - find the row of the value from the inner column
-                int oq = getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn,icn,icp++);
-                if(oq==q){
+                int oq =
+                        getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn, icn, icp++);
+                if (oq == q) {
                     continue;
                 }
                 countOtherOpen++;

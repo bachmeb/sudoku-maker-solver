@@ -31,7 +31,6 @@ public class SetsOfEight extends SudokuAlgorithm {
         int[][] columns = grid.getColumns();
         for (int i = 0; i < 9; i++) {
             if (countFilledSquaresInSet(columns[i]) == 8) {
-
                 for (int j = 0; j < 9; j++) {
                     if (columns[i][j] == 0) {
                         int[] qv = new int[2];
