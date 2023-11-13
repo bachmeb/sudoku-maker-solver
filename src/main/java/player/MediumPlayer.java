@@ -23,10 +23,20 @@ public class MediumPlayer extends Player {
     @Override
     public PlayerAction determineNextAction(SudokuGrid grid) {
         int[] qv;
-        // Check if a square can be solved by adding the one value that fits
-        qv = new OneSquareBox().search(grid);
+        // Check for sets of eight
+        qv = new SetsOfEight().search(grid);
         if (qv != null) {
-            return new SolveByOneSquareBox(grid, qv[0], qv[1]);
+            return new SolveBySetsOfEight(grid, qv[0], qv[1]);
+        }
+        // Check if a square can be solved by only one number
+        qv = new ThreeWayElimination().search(grid);
+        if (qv != null) {
+            return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
+        }
+        // Check if a square can be solved by adjacent elimination
+        qv = new AdjacentElimination().search(grid);
+        if (qv != null) {
+            return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adjacent elimination
         qv = new AdjacentEliminationPlusComparison().search(grid);
@@ -34,20 +44,10 @@ public class MediumPlayer extends Player {
             return new SolveByAdjacentEliminationPlusComparison(grid, qv[0],
                     qv[1]);
         }
-        // Check for sets of eight
-        qv = new SetsOfEight().search(grid);
+        // Check if a square can be solved by adding the one value that fits
+        qv = new OneSquareBox().search(grid);
         if (qv != null) {
-            return new SolveBySetsOfEight(grid, qv[0], qv[1]);
-        }
-        // Check if a square can be solved by adjacent elimination
-        qv = new AdjacentElimination().search(grid);
-        if (qv != null) {
-            return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
-        }
-        // Check if a square can be solved by only one number
-        qv = new ThreeWayElimination().search(grid);
-        if (qv != null) {
-            return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
+            return new SolveByOneSquareBox(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adding the one value that fits
         qv = new OneSquareColumn().search(grid);
