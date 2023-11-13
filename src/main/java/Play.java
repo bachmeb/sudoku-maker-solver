@@ -1,5 +1,6 @@
 import model.SudokuGrid;
 import player.EasyPlayer;
+import player.MediumPlayer;
 import player.Player;
 import actions.PlayerAction;
 
@@ -36,7 +37,7 @@ public class Play {
     private void gameLoop() {
         loop = 0;
         // Make a player
-        Player player = new EasyPlayer();
+        Player player = new MediumPlayer();
         // Introduce the player
         player.introduce();
         // Offer to play a new game

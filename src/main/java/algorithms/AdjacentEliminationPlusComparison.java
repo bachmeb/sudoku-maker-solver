@@ -13,10 +13,9 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
     public static int[] aSquareCanBeSolvedByAdjacentEliminationPlusComparison(SudokuGrid grid) {
         int[] squares = grid.getSquares();
         for (int q = 0; q < squares.length; q++) {
+            // See if the corresponding row column and box contain a given number
+            int[] combined = lookThreeWays(grid, q);
             for (int n = 1; n < 10; n++) {
-                // See if the corresponding row column and box contain a
-                // given number
-                int[] combined = lookThreeWays(grid, q);
                 if (combined[n] == 0) {
                     if (!checkVerticallyAdjacentColumnsForNumber(grid, q, n)) {
                         continue;
@@ -40,17 +39,25 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
         int p = getBoxPositionFromSquare(q);
         int icn = getInnerColumnNumFromPosition(p);
         int[] innerColumn = getInnerColumnFromBox(box, icn);
+        int icp = 0;
+        int countOtherOpen = 0;
+        int countRowContainsNumber = 0;
         for (int j : innerColumn) {
             if (j == 0) {
                 //TODO - find the row of the value from the inner column
-                int oq = getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn,icn,j);
+                int oq = getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn,icn,icp++);
+                if(oq==q){
+                    continue;
+                }
+                countOtherOpen++;
                 int[] combined = lookTwoWays(grid, oq);
                 if (combined[n] == 0) {
                     return false;
                 }
+                countRowContainsNumber++;
             }
         }
-        return true;
+        return countOtherOpen == countRowContainsNumber;
     }
 
     public static boolean checkVerticallyAdjacentColumnsForNumber(SudokuGrid grid, int q, int n) {
@@ -71,7 +78,7 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
     @Override
     public String explanation() {
         return """
-                Adjacent elimination.
+                Adjacent elimination plus comparison.
                 This algorithm looks at every square and checks to see for every number,
                 1 through 9, if the number is present in the box and vertically adjacent
                 columns that intersect the box, and then compares the value in any other
