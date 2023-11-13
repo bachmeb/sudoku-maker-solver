@@ -22,13 +22,14 @@ public class Play {
 
     private void buildGrids() {
         grids = new SudokuGrid[10];
-        grids[0] = makeAlmostSolvedGridWithOneMissingNumber();
-        grids[1] = makeAlmostSolvedGridMissingLastRow();
-        grids[2] = makeAlmostSolvedGridMissingLastColumn();
-        grids[3] = makeAlmostSolvedGridMissingOneInEveryBox();
-        grids[4] = makeHalfSolvedGrid();
-        grids[5] = makeAlmostSolvedGridMissingOneRowInThreeBoxes();
-        grids[6] = makeGridFromPCGame();
+//        grids[0] = makeAlmostSolvedGridWithOneMissingNumber();
+//        grids[1] = makeAlmostSolvedGridMissingLastRow();
+//        grids[2] = makeAlmostSolvedGridMissingLastColumn();
+//        grids[3] = makeAlmostSolvedGridMissingOneInEveryBox();
+//        grids[4] = makeHalfSolvedGrid();
+//        grids[5] = makeAlmostSolvedGridMissingOneRowInThreeBoxes();
+  //      grids[0] = makeGridFromPCGame();
+        grids[0]= makeMediumGridFromPcGame();
     }
 
     private void gameLoop() {
