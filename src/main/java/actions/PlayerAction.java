@@ -1,4 +1,4 @@
-package player;
+package actions;
 
 import model.SudokuGrid;
 

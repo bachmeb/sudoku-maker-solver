@@ -1,17 +1,18 @@
-package player;
+package actions;
 
-import algorithms.OneSquareLeft;
+import algorithms.SetsOfEight;
 import algorithms.SudokuAlgorithm;
 import model.SudokuGrid;
 
-public class SolveByOneSquareLeft implements PlayerAction {
+public class SolveBySetsOfEight implements PlayerAction {
+
     SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;
 
-    public SolveByOneSquareLeft(SudokuGrid grid, int q, int v) {
-        this.algorithm = new OneSquareLeft();
+    public SolveBySetsOfEight(SudokuGrid grid, int q, int v) {
+        algorithm = new SetsOfEight();
         this.grid = grid;
         this.q = q;
         this.v = v;

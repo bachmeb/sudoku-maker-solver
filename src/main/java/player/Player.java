@@ -1,9 +1,6 @@
 package player;
 
-import algorithms.AdjacentElimination;
-import algorithms.OneSquareLeft;
-import algorithms.SetsOfEight;
-import algorithms.ThreeWayElimination;
+import actions.*;
 import model.SudokuGrid;
 
 import java.util.Scanner;
@@ -12,7 +9,7 @@ import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridSolved;
 import static service.SudokuGridObserver.countAllFilledSquares;
 
-public class Player {
+public abstract class Player {
 
     PlayerAction[] plan = new PlayerAction[0];
     int nextAction = 0;
@@ -24,13 +21,8 @@ public class Player {
         plan = new PlayerAction[0];
     }
 
-    public void introduce() {
-        print("""
-                Hi! I'm Player One. I use these algorithms to solve the sudoku grid:
-                Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
-                One Square Left. 
-                """);
-    }
+    abstract public void introduce() ;
+    abstract public PlayerAction determineNextAction(SudokuGrid grid) ;
 
     public PlayerAction getNextAction() {
         return plan[nextAction];
@@ -49,32 +41,6 @@ public class Player {
             updatePlan(determineNextAction(grid));
             return false;
         }
-    }
-
-    private PlayerAction determineNextAction(SudokuGrid grid) {
-        int[] qv;
-        // Check for sets of eight
-        qv = new SetsOfEight().search(grid);
-        if (qv != null) {
-            return new SolveBySetsOfEight(grid, qv[0], qv[1]);
-        }
-        // Check if a square can be solved by adjacent elimination
-        qv = new AdjacentElimination().search(grid);
-        if (qv != null) {
-            return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
-        }
-        // Check if a square can be solved by only one number
-        qv = new ThreeWayElimination().search(grid);
-        if (qv != null) {
-            return new SolveByThreeWayElimination(grid, qv[0], qv[1]);
-        }
-        // Check if a square can be solved by adding the one value that fits
-        qv = new OneSquareLeft().search(grid);
-        if (qv != null) {
-            return new SolveByOneSquareLeft(grid, qv[0], qv[1]);
-        }
-        updatePlan(new DefaultAction());
-        return null;
     }
 
     public void updatePlan(PlayerAction next) {

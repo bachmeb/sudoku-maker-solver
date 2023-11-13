@@ -1,17 +1,17 @@
-package player;
+package actions;
 
+import algorithms.OneSquareLeft;
 import algorithms.SudokuAlgorithm;
-import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 
-public class SolveByThreeWayElimination implements PlayerAction {
+public class SolveByOneSquareLeft implements PlayerAction {
     SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;
 
-    public SolveByThreeWayElimination(SudokuGrid grid, int q, int v) {
-        algorithm = new ThreeWayElimination();
+    public SolveByOneSquareLeft(SudokuGrid grid, int q, int v) {
+        this.algorithm = new OneSquareLeft();
         this.grid = grid;
         this.q = q;
         this.v = v;

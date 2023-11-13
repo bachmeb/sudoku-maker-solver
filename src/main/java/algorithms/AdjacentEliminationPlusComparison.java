@@ -38,12 +38,13 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
         int bn = getBoxNumForSquare(q);
         int[] box = grid.getBoxes()[bn];
         int p = getBoxPositionFromSquare(q);
-        int cn = getInnerColumnNumFromPosition(p);
-        int[] innerColumn = getInnerColumnFromBox(box, cn);
+        int icn = getInnerColumnNumFromPosition(p);
+        int[] innerColumn = getInnerColumnFromBox(box, icn);
         for (int j : innerColumn) {
             if (j == 0) {
                 //TODO - find the row of the value from the inner column
-                int[] combined = lookTwoWays(grid, q);
+                int oq = getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn,icn,j);
+                int[] combined = lookTwoWays(grid, oq);
                 if (combined[n] == 0) {
                     return false;
                 }

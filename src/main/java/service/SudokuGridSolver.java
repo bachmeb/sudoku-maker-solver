@@ -7,10 +7,10 @@ import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import player.SolveByAdjacentElimination;
-import player.SolveByOneSquareLeft;
-import player.SolveBySetsOfEight;
-import player.SolveByThreeWayElimination;
+import actions.SolveByAdjacentElimination;
+import actions.SolveByOneSquareLeft;
+import actions.SolveBySetsOfEight;
+import actions.SolveByThreeWayElimination;
 
 import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridSolved;
