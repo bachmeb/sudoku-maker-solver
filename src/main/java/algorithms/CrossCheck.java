@@ -5,13 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.SudokuGridChecker;
 import service.SudokuGridObserver;
-import service.SudokuGridSolver;
 import view.SudokuGridView;
 
 import static service.SudokuGridObserver.findColNumForBoxNumAndPosNum;
 import static service.SudokuGridObserver.findRowNumForBoxNumAndPosNum;
 
-public class CrossCheck extends SudokuGridSolver implements SudokuGridSolverAlgorithm {
+public class CrossCheck extends SudokuAlgorithm {
 
     static final Logger logger = LoggerFactory.getLogger(CrossCheck.class);
 

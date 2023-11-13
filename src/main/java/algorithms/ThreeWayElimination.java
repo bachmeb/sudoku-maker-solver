@@ -2,20 +2,9 @@ package algorithms;
 
 import model.SudokuGrid;
 
-import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridObserver.whatCouldBeHere;
 
-public class ThreeWayElimination implements SudokuGridSolverAlgorithm {
-
-    @Override
-    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
-        int[] squares = grid.getSquares();
-        squares[q] = v;
-        if (checkGridForErrors(grid)) {
-            throw new RuntimeException("Grid has errors");
-        }
-        return grid;
-    }
+public class ThreeWayElimination extends SudokuAlgorithm {
 
     @Override
     public int[] search(SudokuGrid grid) {

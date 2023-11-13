@@ -66,7 +66,7 @@ public class Play {
     }
 
     private SudokuGrid getNewSudokuGrid(int i) {
-        if(i>grids.length){
+        if (i > grids.length) {
             throw new RuntimeException("No more grids!");
         }
         return grids[i];

@@ -2,25 +2,10 @@ package algorithms;
 
 import model.SudokuGrid;
 
-import static player.PlayerUtil.print;
-import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridChecker.checkSetForNumber;
 import static service.SudokuGridObserver.*;
 
-public class OneSquareLeft implements SudokuGridSolverAlgorithm {
-    @Override
-    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
-
-        int[] squares = grid.getSquares();
-        squares[q] = v;
-
-        if (checkGridForErrors(grid)) {
-            print(grid.toString());
-            throw new RuntimeException("Grid has errors");
-        }
-        return grid;
-
-    }
+public class OneSquareLeft extends SudokuAlgorithm {
 
     @Override
     public int[] search(SudokuGrid grid) {

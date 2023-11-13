@@ -258,7 +258,7 @@ public class SudokuGridObserver {
         int columnPad = getBoxColumnNumForBoxNum(bn) * 3;
         int innerColNum = getInnerColumnNumFromPosition(p);
         int columnNum = columnPad + innerColNum;
-        int rowPad = getBoxRowNumForBoxNum(bn)*3;
+        int rowPad = getBoxRowNumForBoxNum(bn) * 3;
         int innerRowNum = getInnerRowNumFromPosition(p);
         int rowNum = rowPad + innerRowNum;
         return (rowNum * 9) + columnNum;

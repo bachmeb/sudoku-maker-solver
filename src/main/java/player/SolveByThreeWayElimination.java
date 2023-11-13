@@ -1,11 +1,11 @@
 package player;
 
-import algorithms.SudokuGridSolverAlgorithm;
+import algorithms.SudokuAlgorithm;
 import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 
 public class SolveByThreeWayElimination implements PlayerAction {
-    SudokuGridSolverAlgorithm algorithm;
+    SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;

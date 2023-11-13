@@ -131,7 +131,7 @@ public class SudokuGrid {
         // box 2 = columns 6,7,8 = (2*3)+0,(2*3)+1,(2*3)+2
         // box 3 = columns 0,1,2 = (0*3)+0,(2*3)+1,(2*3)+2
         int[][] columns = getColumns();
-        int boxRow =  n/3;
+        int boxRow = n / 3;
         int minus = boxRow * 3;
         int boxColumn = n - minus;
         int[] col0 = columns[(boxColumn * 3)];

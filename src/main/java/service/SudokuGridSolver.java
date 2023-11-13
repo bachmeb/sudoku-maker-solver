@@ -7,7 +7,10 @@ import algorithms.ThreeWayElimination;
 import model.SudokuGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import player.*;
+import player.SolveByAdjacentElimination;
+import player.SolveByOneSquareLeft;
+import player.SolveBySetsOfEight;
+import player.SolveByThreeWayElimination;
 
 import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridSolved;
@@ -19,7 +22,7 @@ public class SudokuGridSolver {
     SudokuGrid grid;
 
     public SudokuGrid solve(SudokuGrid grid) {
-        if(checkGridSolved(grid)){
+        if (checkGridSolved(grid)) {
             return grid;
         }
         logger.info(grid.toString());
@@ -68,7 +71,5 @@ public class SudokuGridSolver {
 
         throw new RuntimeException("I give up!");
     }
-
-
 
 }

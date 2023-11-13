@@ -1,11 +1,11 @@
 package player;
 
 import algorithms.AdjacentElimination;
-import algorithms.SudokuGridSolverAlgorithm;
+import algorithms.SudokuAlgorithm;
 import model.SudokuGrid;
 
 public class SolveByAdjacentElimination implements PlayerAction {
-    SudokuGridSolverAlgorithm algorithm;
+    SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;

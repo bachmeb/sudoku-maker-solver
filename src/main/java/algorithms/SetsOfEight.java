@@ -2,11 +2,9 @@ package algorithms;
 
 import model.SudokuGrid;
 
-import static player.PlayerUtil.print;
-import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridObserver.*;
 
-public class SetsOfEight implements SudokuGridSolverAlgorithm {
+public class SetsOfEight extends SudokuAlgorithm {
 
     /**
      * @param grid
@@ -26,10 +24,7 @@ public class SetsOfEight implements SudokuGridSolverAlgorithm {
         }
         // Check columns for sets of eight
         qv = checkColumnsForSetsOfEight(grid);
-        if (qv != null) {
-            return qv;
-        }
-        return null;
+        return qv;
     }
 
     private static int[] checkColumnsForSetsOfEight(SudokuGrid grid) {
@@ -82,17 +77,6 @@ public class SetsOfEight implements SudokuGridSolverAlgorithm {
             }
         }
         return null;
-    }
-
-    @Override
-    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
-        int[] squares = grid.getSquares();
-        squares[q] = v;
-        if (checkGridForErrors(grid)) {
-            print(grid.toString());
-            throw new RuntimeException("Grid has errors");
-        }
-        return grid;
     }
 
     @Override

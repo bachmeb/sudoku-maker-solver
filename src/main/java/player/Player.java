@@ -29,8 +29,7 @@ public class Player {
                 Hi! I'm Player One. I use these algorithms to solve the sudoku grid:
                 Sets of Eight, Adjacent Elimination, Three-Way Elimination, and
                 One Square Left. 
-                """
-        );
+                """);
     }
 
     public PlayerAction getNextAction() {
@@ -106,7 +105,7 @@ public class Player {
     public boolean invite() {
         Scanner scanner = new Scanner(System.in);
         print("Do you want to make a new grid?");
-        String response =  scanner.next();
+        String response = scanner.next();
         return response.contains("y");
     }
 }

@@ -1,12 +1,12 @@
 package player;
 
 import algorithms.SetsOfEight;
-import algorithms.SudokuGridSolverAlgorithm;
+import algorithms.SudokuAlgorithm;
 import model.SudokuGrid;
 
 public class SolveBySetsOfEight implements PlayerAction {
 
-    SudokuGridSolverAlgorithm algorithm;
+    SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;

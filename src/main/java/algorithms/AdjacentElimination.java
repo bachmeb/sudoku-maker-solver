@@ -2,12 +2,10 @@ package algorithms;
 
 import model.SudokuGrid;
 
-import static player.PlayerUtil.print;
-import static service.SudokuGridChecker.checkGridForErrors;
 import static service.SudokuGridChecker.checkSetForNumber;
 import static service.SudokuGridObserver.*;
 
-public class AdjacentElimination implements SudokuGridSolverAlgorithm {
+public class AdjacentElimination extends SudokuAlgorithm {
 
     /**
      * @param grid
@@ -49,17 +47,6 @@ public class AdjacentElimination implements SudokuGridSolverAlgorithm {
             return rCount[n] == 2 && cCount[n] == 2;
         }
         return false;
-    }
-
-    @Override
-    public SudokuGrid solve(SudokuGrid grid, int q, int v) {
-        int[] squares = grid.getSquares();
-        squares[q] = v;
-        if (checkGridForErrors(grid)) {
-            print(grid.toString());
-            throw new RuntimeException("Grid has errors");
-        }
-        return grid;
     }
 
     @Override

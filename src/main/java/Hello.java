@@ -4,8 +4,7 @@ import org.slf4j.LoggerFactory;
 
 public class Hello {
 
-    static final Logger logger =
-            LoggerFactory.getLogger(Hello.class);
+    static final Logger logger = LoggerFactory.getLogger(Hello.class);
 
     public static void main(String[] arg0) {
         System.out.println("hello");
