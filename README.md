@@ -11,6 +11,7 @@ This point of this project is for me to see if I can:
 * No imported libraries (except for unit testing). I haven't imported any classes that would make building or transforming a matrix any easier. 
 * Primitive data types and simple data structures. Where possible and practical I'm using integers and arrays and arrays of arrays. That's it. Not even the Java Collections API.
 * Core Java 1.6 or below. I'm using lots of for loops and if statements. No streams. I may revise this later, or refactor the application to use Java 1.8+ conventions. I wanted to get the application to work with the simplest conventions I could before applying methods that made my work easier.
+* Only algorithms a person can use without a computer. I got the idea to write a Java program to solve a sudoku puzzle after seeing someone demonstrate a solution to any sudoku puzzle using a 15-line recursive algorithm. I wanted to see, by comparison, how much more work does a person have to do to solve a sudoku puzzle without a computer. And how much more code would I have to write in an application that uses the same algorithms a person does when solving a puzzle without a computer.
 
 ## Tools
 * 4 GB PC running Fedora Linux 38
