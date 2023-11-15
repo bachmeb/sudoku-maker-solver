@@ -512,4 +512,9 @@ public class SudokuGridObserver {
         return sumOfAllNumbers - sumOfNumbersInSet;
     }
 
+    public static boolean setHasThisMany(int[] set, int thisMany) {
+        return thisMany == countFilledSquaresInSet(set);
+    }
+
+
 }

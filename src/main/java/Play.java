@@ -1,14 +1,15 @@
 import actions.PlayerAction;
 import model.SudokuGrid;
+import player.HardPlayer;
 import player.MediumPlayer;
 import player.Player;
 
 import static player.PlayerUtil.print;
-import static service.SudokuGridMaker.makeMediumGridFromPcGame;
+import static service.SudokuGridMaker.*;
 
 public class Play {
 
-    SudokuGrid[] grids;
+    int[][] grids;
     int loop;
 
     public static void main(String[] args) {
@@ -22,21 +23,23 @@ public class Play {
     }
 
     private void buildGrids() {
-        grids = new SudokuGrid[10];
-//        grids[0] = makeAlmostSolvedGridWithOneMissingNumber();
-//        grids[1] = makeAlmostSolvedGridMissingLastRow();
-//        grids[2] = makeAlmostSolvedGridMissingLastColumn();
-//        grids[3] = makeAlmostSolvedGridMissingOneInEveryBox();
-//        grids[4] = makeHalfSolvedGrid();
-//        grids[5] = makeAlmostSolvedGridMissingOneRowInThreeBoxes();
-        //      grids[0] = makeGridFromPCGame();
-        grids[0] = makeMediumGridFromPcGame();
+        grids = new int[10][];
+        grids[0] = makeAlmostSolvedGridWithOneMissingNumber().getSquares();
+        grids[1] = makeAlmostSolvedGridMissingLastRow().getSquares();
+        grids[2] = makeAlmostSolvedGridMissingLastColumn().getSquares();
+        grids[3] = makeAlmostSolvedGridMissingOneInEveryBox().getSquares();
+        grids[4] = makeHalfSolvedGrid().getSquares();
+        grids[5] = makeAlmostSolvedGridMissingOneRowInThreeBoxes().getSquares();
+        grids[6] = makeGridFromPCGame().getSquares();
+        grids[7] = makeMediumGridFromPcGame().getSquares();
+        grids[0] = makeHardGridFromPcGame().getSquares();
+
     }
 
     private void gameLoop() {
         loop = 0;
         // Make a player
-        Player player = new MediumPlayer();
+        Player player = new HardPlayer();
         // Introduce the player
         player.introduce();
         // Offer to play a new game
@@ -46,7 +49,7 @@ public class Play {
             // Create a boolean to indicate when the game is finished
             boolean finished = false;
             // Give the player a new grid
-            player.setGrid(getNewSudokuGrid(loop));
+            player.setupGrid(getNewSudokuGrid(loop));
             // Loop until finished
             while (!finished) {
                 // Assess what to do next
@@ -67,11 +70,11 @@ public class Play {
         }
     }
 
-    private SudokuGrid getNewSudokuGrid(int i) {
-        if (i > grids.length) {
+    private int[] getNewSudokuGrid(int index) {
+        if (index > grids.length) {
             throw new RuntimeException("No more grids!");
         }
-        return grids[i];
+        return grids[index];
     }
 
 }

@@ -16,8 +16,8 @@ public abstract class Player {
     int nextAction = 0;
     SudokuGrid grid;
 
-    public void setGrid(SudokuGrid grid) {
-        this.grid = grid;
+    public void setupGrid(int[] squares) {
+        this.grid = new SudokuGrid(squares);
         nextAction = 0;
         plan = new PlayerAction[0];
     }
