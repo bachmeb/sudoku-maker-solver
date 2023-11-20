@@ -1883,16 +1883,22 @@ public class SudokuGridMaker {
         return grid;
     }
 
-    public static SudokuGrid makeARandomGrid() {
+    public static SudokuGrid makeARandomGrid(int emptySquares) {
         int[] solvedSquares = generateRandomSquaresForSolvedGrid();
-        int[] unsolvedSquares = removeSomeVales(solvedSquares,20);
+        int[] unsolvedSquares = removeSomeVales(solvedSquares, emptySquares);
         return new SudokuGrid(unsolvedSquares);
     }
 
     private static int[] removeSomeVales(int[] solvedSquares, int howMany) {
-        for(int i = 0; i<howMany;i++){
-            int r = new Random().nextInt(1, 81);
-            solvedSquares[r]=0;
+        for (int i = 0; i < howMany; i++) {
+            boolean removedOne = false;
+            while (!removedOne) {
+                int r = new Random().nextInt(1, 81);
+                if (!(solvedSquares[r] == 0)) {
+                    solvedSquares[r] = 0;
+                    removedOne = true;
+                }
+            }
         }
         return solvedSquares;
     }
