@@ -2,6 +2,12 @@ package service;
 
 import model.SudokuGrid;
 
+import java.util.Random;
+
+import static player.PlayerUtil.print;
+import static service.SudokuGridChecker.*;
+import static service.SudokuGridObserver.whatCouldBeHere;
+
 public class SudokuGridMaker {
 
     public static SudokuGrid makeEmptyGrid() {
@@ -1857,38 +1863,90 @@ public class SudokuGridMaker {
 
     public static SudokuGrid makeMediumGridFromPcGame() {
         SudokuGrid grid = new SudokuGrid();
-        int[] squares = {
-            0, 0, 3, 1, 0, 0, 9, 7, 0,
-            0, 1, 0, 4, 0, 0, 0, 0, 8,
-            0, 0, 0, 0, 2, 0, 0, 0, 0,
-            3, 0, 0, 5, 0, 0, 4, 0, 0,
-            0, 0, 1, 0, 0, 0, 8, 0, 0,
-            9, 0, 0, 7, 0, 0, 5, 0, 0,
-            0, 0, 0, 0, 1, 0, 0, 0, 0,
-            0, 5, 0, 8, 0, 0, 0, 0, 3,
-            0, 0, 4, 9, 0, 0, 6, 2, 0
-        };
+        int[] squares = {0, 0, 3, 1, 0, 0, 9, 7, 0, 0, 1, 0, 4, 0, 0, 0, 0, 8
+                , 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 5, 0, 0, 4, 0, 0, 0, 0,
+                1, 0, 0, 0, 8, 0, 0, 9, 0, 0, 7, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1
+                , 0, 0, 0, 0, 0, 5, 0, 8, 0, 0, 0, 0, 3, 0, 0, 4, 9, 0, 0, 6,
+                2, 0};
         grid.setSquares(squares);
         return grid;
     }
 
     public static SudokuGrid makeHardGridFromPcGame() {
         SudokuGrid grid = new SudokuGrid();
-        int[] squares = {
-            0, 9, 0, 0, 0, 0, 6, 0, 0,
-            2, 0, 8, 7, 0, 0, 0, 3, 1,
-            5, 0, 0, 0, 0, 4, 0, 2, 0,
-            0, 0, 0, 0, 0, 0, 8, 0, 7,
-            0, 0, 0, 1, 0, 2, 0, 0, 0,
-            9, 0, 3, 0, 0, 0, 0, 0, 0,
-            0, 8, 0, 2, 0, 0, 0, 0, 3,
-            4, 3, 0, 0, 0, 8, 5, 0, 6,
-            0, 0, 6, 0, 0, 0, 0, 8, 0
-        };
+        int[] squares = {0, 9, 0, 0, 0, 0, 6, 0, 0, 2, 0, 8, 7, 0, 0, 0, 3, 1
+                , 5, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 8, 0, 7, 0, 0,
+                0, 1, 0, 2, 0, 0, 0, 9, 0, 3, 0, 0, 0, 0, 0, 0, 0, 8, 0, 2, 0
+                , 0, 0, 0, 3, 4, 3, 0, 0, 0, 8, 5, 0, 6, 0, 0, 6, 0, 0, 0, 0,
+                8, 0};
         grid.setSquares(squares);
         return grid;
     }
 
+    public static SudokuGrid makeARandomGrid() {
+        int[] solvedSquares = generateRandomSquaresForSolvedGrid();
+        int[] unsolvedSquares = removeSomeVales(solvedSquares,20);
+        return new SudokuGrid(unsolvedSquares);
+    }
 
+    private static int[] removeSomeVales(int[] solvedSquares, int howMany) {
+        for(int i = 0; i<howMany;i++){
+            int r = new Random().nextInt(1, 81);
+            solvedSquares[r]=0;
+        }
+        return solvedSquares;
+    }
+
+    private static int[] generateRandomSquaresForSolvedGrid() {
+        int[] squares = new int[81];
+        int backtrack = 0;
+        int passes = 0;
+        for (int q = 0; q < squares.length; q++) {
+            passes++;
+            int r = new Random().nextInt(1, 10);
+            squares[q] = r;
+            boolean solvable = isSolvable(squares);
+            while (!solvable) {
+                squares[q] = 0;
+                int[] couldBes = whatCouldBeHere(new SudokuGrid(squares), q);
+                for (int pos = 0; pos <= couldBes.length; pos++) {
+                    if (pos == couldBes.length) {
+                        if (q < backtrack) {
+                            backtrack = 0;
+                        }
+                        q = backtrack(squares, q, backtrack++);
+                        break;
+                    }
+                    squares[q] = couldBes[pos];
+                    solvable = isSolvable(squares);
+                    if (solvable) {
+                        break;
+                    }
+                }
+            }
+            //print(String.valueOf(q));
+        }
+        print("This grid was created in " + passes + " passes");
+        if (checkSetForNumber(0, squares)) {
+            throw new RuntimeException("generated grid has zeros");
+        }
+        if (!checkGridSolved(new SudokuGrid(squares))) {
+            throw new RuntimeException("this grid is not solved");
+        }
+        return squares;
+    }
+
+    private static int backtrack(int[] squares, int q, int i) {
+        for (int j = 0; j < i; j++) {
+            squares[q - j] = 0;
+        }
+        return q - i;
+    }
+
+    private static boolean isSolvable(int[] squares) {
+        SudokuGrid grid = new SudokuGrid(squares);
+        //print(grid.toString());
+        return !checkGridForErrors(grid);
+    }
 
 }

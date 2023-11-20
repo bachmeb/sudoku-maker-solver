@@ -33,6 +33,7 @@ public class Play {
         grids[6] = makeGridFromPCGame().getSquares();
         grids[7] = makeMediumGridFromPcGame().getSquares();
         grids[0] = makeHardGridFromPcGame().getSquares();
+        grids[0] = makeARandomGrid().getSquares();
 
     }
 
