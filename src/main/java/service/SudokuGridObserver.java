@@ -87,6 +87,18 @@ public class SudokuGridObserver {
         return zeros > 1;
     }
 
+    public static boolean theInnerRowHasMoreThanOneZero(int[] box0, int p) {
+        int rn = getInnerRowNumFromPosition(p);
+        int[] r = getInnerRowFromBox(box0, rn);
+        int zeros = 0;
+        for (int q : r) {
+            if (q == 0) {
+                zeros++;
+            }
+        }
+        return zeros > 1;
+    }
+
     public static int getSquareFromBoxInnerColumnNumAndInnerColumnPosition(int bn, int icn, int icp) {
         int rowPad = (bn / 3) * 3;
         int rn = rowPad + icp;
@@ -143,6 +155,20 @@ public class SudokuGridObserver {
         return false;
     }
 
+    public static boolean theOtherTwoBoxesHaveTheSameNumberInTheAdjacentRows(int[] box1, int[] box2, int position) {
+        for (int n = 1; n < 10; n++) {
+            int[] vAdjacent1 = getHorizontallyAdjacentSquaresInBox(box1,
+                    position);
+            int[] vAdjacent2 = getHorizontallyAdjacentSquaresInBox(box2,
+                    position);
+            if (checkSetForNumber(n, vAdjacent1) && checkSetForNumber(n,
+                    vAdjacent2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static int[] getVerticallyAdjacentSquaresInBox(int[] box,
                                                           int position) {
         int innerColumn = getInnerColumnNumFromPosition(position);
@@ -157,6 +183,21 @@ public class SudokuGridObserver {
         return adjacentSquares;
     }
 
+
+    public static int[] getHorizontallyAdjacentSquaresInBox(int[] box,
+                                                          int position) {
+        int innerRow = getInnerRowNumFromPosition(position);
+        int[] adjacentSquares = new int[6];
+        int index = 0;
+        for (int i = 0; i < 9; i++) {
+            if (innerRow == getInnerRowNumFromPosition(i)) {
+                continue;
+            }
+            adjacentSquares[index++] = box[i];
+        }
+        return adjacentSquares;
+    }
+
     public static int getInnerColumnNumFromPosition(int position) {
         int innerRowNum = position / 3;
         int minus = innerRowNum * 3;
@@ -164,14 +205,28 @@ public class SudokuGridObserver {
     }
 
     public static int[] getVerticallyAdjacentBoxNumbers(int b) {
-        int columnNum = getBoxColumnNumForBoxNum(b);
+        int bcn = getBoxColumnNumForBoxNum(b);
         int[] adjacent = new int[2];
         int index = 0;
-        for (int i = columnNum; i < 9; i += 3) {
+        for (int i = bcn; i < 9; i+=3) {
             if (i == b) {
                 continue;
             }
             adjacent[index++] = i;
+        }
+        return adjacent;
+    }
+
+    public static int[] getHorizontallyAdjacentBoxNumbers(int bn) {
+        int[] adjacent = new int[2];
+        int index = 0;
+        for (int i = 0; i < 9; i++) {
+            if (i == bn) {
+                continue;
+            }
+            if((i/3)==(bn/3)){
+                adjacent[index++] = i;
+            }
         }
         return adjacent;
     }
