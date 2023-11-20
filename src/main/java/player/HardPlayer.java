@@ -28,12 +28,29 @@ public class HardPlayer extends Player {
     @Override
     public PlayerAction determineNextAction(SudokuGrid grid) {
         int[] qv;
+
+        // Check for two of three horizontally
+        qv = new TwoOfThreeHorizontally().search(grid);
+        if (qv != null) {
+            return new SolveByTwoOfThreeHorizontally(grid, qv[0], qv[1]);
+        }
+        // Check for two of three vertically
+        qv = new TwoOfThreeVertically().search(grid);
+        if (qv != null) {
+            return new SolveByTwoOfThreeVertically(grid, qv[0], qv[1]);
+        }
+
         // Check for horizontal elimination
         qv = new HorizontalEliminationPlusComparison().search(grid);
         if (qv != null) {
             return new SolveByHorizontalEliminationPlusComparison(grid, qv[0], qv[1]);
         }
-
+        // Check if a square can be solved by adjacent elimination
+        qv = new VerticalEliminationPlusComparison().search(grid);
+        if (qv != null) {
+            return new SolveByVerticalEliminationPlusComparison(grid, qv[0],
+                    qv[1]);
+        }
 
         // Check for sets of eight
         qv = new SetsOfEight().search(grid);
@@ -50,12 +67,7 @@ public class HardPlayer extends Player {
         if (qv != null) {
             return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
         }
-        // Check if a square can be solved by adjacent elimination
-        qv = new VerticalEliminationPlusComparison().search(grid);
-        if (qv != null) {
-            return new SolveByVerticalEliminationPlusComparison(grid, qv[0],
-                    qv[1]);
-        }
+
         // Check if a square can be solved by adding the one value that fits
         qv = new OneSquareColumn().search(grid);
         if (qv != null) {
@@ -65,11 +77,6 @@ public class HardPlayer extends Player {
         qv = new OneSquareBox().search(grid);
         if (qv != null) {
             return new SolveByOneSquareBox(grid, qv[0], qv[1]);
-        }
-        // Check for two of three
-        qv = new TwoOfThree().search(grid);
-        if (qv != null) {
-            return new SolveByTwoOfThree(grid, qv[0], qv[1]);
         }
         return new DefaultAction(grid);
     }

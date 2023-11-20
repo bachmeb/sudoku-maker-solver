@@ -1,19 +1,17 @@
-package actions;
+package algorithms;
 
-import algorithms.SetsOfEight;
-import algorithms.SudokuAlgorithm;
-import algorithms.TwoOfThree;
+import actions.PlayerAction;
 import model.SudokuGrid;
 
-public class SolveByTwoOfThree implements PlayerAction {
+public class SolveByTwoOfThreeHorizontally implements PlayerAction {
 
     SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;
 
-    public SolveByTwoOfThree(SudokuGrid grid, int q, int v) {
-        algorithm = new TwoOfThree();
+    public SolveByTwoOfThreeHorizontally(SudokuGrid grid, int q, int v) {
+        algorithm = new TwoOfThreeHorizontally();
         this.grid = grid;
         this.q = q;
         this.v = v;

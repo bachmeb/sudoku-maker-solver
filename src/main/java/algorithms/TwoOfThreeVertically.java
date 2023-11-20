@@ -5,7 +5,7 @@ import model.SudokuGrid;
 import static service.SudokuGridChecker.checkSetForNumber;
 import static service.SudokuGridObserver.*;
 
-public class TwoOfThree extends SudokuAlgorithm {
+public class TwoOfThreeVertically extends SudokuAlgorithm {
 
     /**
      * @param grid
@@ -82,7 +82,7 @@ public class TwoOfThree extends SudokuAlgorithm {
 
     private static int removeTheseFromThat(int[] onlyForTwo, int[] cbb) {
         if (cbb.length == 2) {
-            for (int j=0;j<cbb.length;j++) {
+            for (int j = 0; j < cbb.length; j++) {
                 for (int oft : onlyForTwo) {
                     if (cbb[j] == oft) {
                         cbb[j] = 0;
@@ -113,61 +113,6 @@ public class TwoOfThree extends SudokuAlgorithm {
         return -1;
     }
 
-    private static boolean twoCouldBeTwo(SudokuGrid grid, int cn) {
-        return false;
-    }
-
-    private static int[] checkColumnsForSetsOfEight(SudokuGrid grid) {
-        int[][] columns = grid.getColumns();
-        for (int i = 0; i < 9; i++) {
-            if (countFilledSquaresInSet(columns[i]) == 8) {
-                for (int j = 0; j < 9; j++) {
-                    if (columns[i][j] == 0) {
-                        int[] qv = new int[2];
-                        qv[0] = getSquareForColumnNumberAndPosition(i, j);
-                        qv[1] = findMissingNumberInSet(columns[i]);
-                        return qv;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    private static int[] checkRowsForSetsOfEight(SudokuGrid grid) {
-        int[][] rows = grid.getRows();
-        for (int i = 0; i < 9; i++) {
-            if (countFilledSquaresInSet(rows[i]) == 8) {
-                for (int j = 0; j < 9; j++) {
-                    if (rows[i][j] == 0) {
-                        int[] qv = new int[2];
-                        qv[0] = getSquareForRowNumberAndPosition(i, j);
-                        qv[1] = findMissingNumberInSet(rows[i]);
-                        return qv;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    private static int[] checkBoxesForSetsOfEight(SudokuGrid grid) {
-        int[][] boxes = grid.getBoxes();
-        for (int i = 0; i < 9; i++) {
-            if (countFilledSquaresInSet(boxes[i]) == 8) {
-                for (int j = 0; j < 9; j++) {
-                    if (boxes[i][j] == 0) {
-                        int[] qv = new int[2];
-                        qv[0] = getSquareForBoxNumAndPosNum(i, j);
-                        qv[1] = findMissingNumberInSet(boxes[i]);
-                        return qv;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     @Override
     public int[] search(SudokuGrid grid) {
         return aSetOfSixHasTwoSquaresThatCouldBeTwoNumbers(grid);
@@ -176,7 +121,7 @@ public class TwoOfThree extends SudokuAlgorithm {
     @Override
     public String explanation() {
         return """
-                Two of three.
+                Two of three vertically.
                 This algorithm checks each column to see if six boxes have already
                 been filled, and if one box of the three boxes containing the column
                 has two unfilled squares. If so, the algorithm checks to see if
