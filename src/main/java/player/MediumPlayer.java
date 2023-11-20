@@ -43,9 +43,9 @@ public class MediumPlayer extends Player {
             return new SolveByAdjacentElimination(grid, qv[0], qv[1]);
         }
         // Check if a square can be solved by adjacent elimination
-        qv = new AdjacentEliminationPlusComparison().search(grid);
+        qv = new VerticalEliminationPlusComparison().search(grid);
         if (qv != null) {
-            return new SolveByAdjacentEliminationPlusComparison(grid, qv[0],
+            return new SolveByVerticalEliminationPlusComparison(grid, qv[0],
                     qv[1]);
         }
         // Check if a square can be solved by adding the one value that fits

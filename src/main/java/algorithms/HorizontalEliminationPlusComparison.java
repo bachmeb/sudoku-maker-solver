@@ -4,13 +4,13 @@ import model.SudokuGrid;
 
 import static service.SudokuGridObserver.*;
 
-public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
+public class HorizontalEliminationPlusComparison extends SudokuAlgorithm {
 
     /**
      * @param grid
      * @return
      */
-    public static int[] aSquareCanBeSolvedByAdjacentEliminationPlusComparison(SudokuGrid grid) {
+    public static int[] aSquareCanBeSolvedByHorizontalEliminationPlusComparison(SudokuGrid grid) {
         int[] squares = grid.getSquares();
         for (int q = 0; q < squares.length; q++) {
             if (squares[q] == 0) {
@@ -19,11 +19,11 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
                 int[] combined = lookThreeWays(grid, q);
                 for (int n = 1; n < 10; n++) {
                     if (combined[n] == 0) {
-                        if (!checkVerticallyAdjacentColumnsForNumber(grid, q,
+                        if (!checkHorizontallyAdjacentColumnsForNumber(grid, q,
                                 n)) {
                             continue;
                         }
-                        if (otherOpenSquaresInInnerColumnHaveNumberInRow(grid
+                        if (otherOpenSquaresInInnerRowHaveNumberInColumn(grid
                                 , q, n)) {
                             int[] qv = new int[2];
                             qv[0] = q;
@@ -37,55 +37,55 @@ public class AdjacentEliminationPlusComparison extends SudokuAlgorithm {
         return null;
     }
 
-    private static boolean otherOpenSquaresInInnerColumnHaveNumberInRow(SudokuGrid grid, int q, int n) {
+    private static boolean otherOpenSquaresInInnerRowHaveNumberInColumn(SudokuGrid grid, int q, int n) {
         int bn = getBoxNumForSquare(q);
         int[] box = grid.getBoxes()[bn];
         int p = getBoxPositionFromSquare(q);
-        int icn = getInnerColumnNumFromPosition(p);
-        int[] innerColumn = getInnerColumnFromBox(box, icn);
+        int irn = getInnerRowNumFromPosition(p);
+        int[] innerRow = getInnerRowFromBox(box, irn);
         int countOtherOpen = 0;
-        int countRowContainsNumber = 0;
-        for (int icp = 0; icp < innerColumn.length; icp++) {
-            if (innerColumn[icp] == 0) {
+        int countColumnContainsNumber = 0;
+        for (int irp = 0; irp < innerRow.length; irp++) {
+            if (innerRow[irp] == 0) {
                 int oq =
-                        getSquareFromBoxInnerColumnNumAndInnerColumnPosition(bn, icn, icp);
+                        getSquareFromBoxInnerRowNumAndInnerRowPosition(bn, irn, irp);
                 if (oq == q) {
                     continue;
                 }
                 countOtherOpen++;
                 int[] combined = lookTwoWays(grid, oq);
                 if (combined[n] == 1) {
-                    countRowContainsNumber++;
+                    countColumnContainsNumber++;
                 }
             }
         }
-        return countOtherOpen == countRowContainsNumber;
+        return countOtherOpen == countColumnContainsNumber;
     }
 
-    public static boolean checkVerticallyAdjacentColumnsForNumber(SudokuGrid grid, int q, int n) {
+    public static boolean checkHorizontallyAdjacentColumnsForNumber(SudokuGrid grid, int q, int n) {
         // if not, get the box num
         int boxNumber = getBoxNumForSquare(q);
         // Then get the rows and columns that intersect the same box
-        int[][] columns = grid.getColumnsForBoxNum(boxNumber);
+        int[][] rows = grid.getRowsForBoxNum(boxNumber);
         // See if a given number is present twice in the adjacent columns
-        int[] rCount = countNumberAppearancesByDimension(columns);
+        int[] rCount = countNumberAppearancesByDimension(rows);
         return rCount[n] == 2;
     }
 
     @Override
     public int[] search(SudokuGrid grid) {
-        return aSquareCanBeSolvedByAdjacentEliminationPlusComparison(grid);
+        return aSquareCanBeSolvedByHorizontalEliminationPlusComparison(grid);
     }
 
     @Override
     public String explanation() {
         return """
-                Adjacent elimination plus comparison.
+                Horizontal elimination plus comparison.
                 This algorithm looks at every square and checks to see for every number,
-                1 through 9, if the number is present in the box and vertically adjacent
-                columns that intersect the box, and then compares the value in any other
-                open squares in the same inner column of the same box with values in the
-                same row.
+                1 through 9, if the number is present in the box and horizontally adjacent
+                rows that intersect the box, and then compares the value in any other
+                open squares in the same inner row of the same box with values in other
+                boxes in the same columns.
                 """;
     }
 

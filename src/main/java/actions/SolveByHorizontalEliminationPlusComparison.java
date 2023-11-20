@@ -1,18 +1,19 @@
 package actions;
 
-import algorithms.AdjacentEliminationPlusComparison;
+import algorithms.HorizontalEliminationPlusComparison;
 import algorithms.SudokuAlgorithm;
+import algorithms.VerticalEliminationPlusComparison;
 import model.SudokuGrid;
 
-public class SolveByAdjacentEliminationPlusComparison implements PlayerAction {
+public class SolveByHorizontalEliminationPlusComparison implements PlayerAction {
     SudokuAlgorithm algorithm;
     SudokuGrid grid;
     int q;
     int v;
 
-    public SolveByAdjacentEliminationPlusComparison(SudokuGrid grid, int q,
-                                                    int v) {
-        algorithm = new AdjacentEliminationPlusComparison();
+    public SolveByHorizontalEliminationPlusComparison(SudokuGrid grid, int q,
+                                                      int v) {
+        algorithm = new HorizontalEliminationPlusComparison();
         this.grid = grid;
         this.q = q;
         this.v = v;

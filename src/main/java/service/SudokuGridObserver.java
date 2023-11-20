@@ -95,6 +95,14 @@ public class SudokuGridObserver {
         return (rn * 9) + cn;
     }
 
+    public static int getSquareFromBoxInnerRowNumAndInnerRowPosition(int bn, int irn, int irp) {
+        int rowPad = (bn / 3) * 3;
+        int rn = rowPad + irn;
+        int columnPad = (bn - rowPad) * 3;
+        int cn = columnPad + irp;
+        return (rn * 9) + cn;
+    }
+
     public static int[] getInnerColumnFromBox(int[] box, int cn) {
         int[][] columns = new int[3][3];
         int ci = 0;
@@ -106,6 +114,19 @@ public class SudokuGridObserver {
             }
         }
         return columns[cn];
+    }
+
+    public static int[] getInnerRowFromBox(int[] box, int rn) {
+        int[][] rows = new int[3][3];
+        int ci = 0;
+        int ri = 0;
+        for (int q : box) {
+            rows[ci++/3][ri++] = q;
+            if (ri > 2) {
+                ri = 0;
+            }
+        }
+        return rows[rn];
     }
 
     public static boolean theOtherTwoBoxesHaveTheSameNumberInTheAdjacentColumns(int[] box1, int[] box2, int position) {
