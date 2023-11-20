@@ -76,4 +76,46 @@ public abstract class Player {
         String response = scanner.next();
         return response.contains("y");
     }
+
+    public int howManyEmptySquares() {
+        Scanner scanner = new Scanner(System.in);
+        print("How many empty squares?");
+        return scanner.nextInt();
+    }
+    public static Player whichPlayer() {
+        Scanner scanner = new Scanner(System.in);
+        print("Which player do you want to try to solve the puzzle?");
+        String answer = scanner.next();
+        return switch (answer) {
+            case "h" -> new HardPlayer();
+            case "e" -> new EasyPlayer();
+            case "m" -> new MediumPlayer();
+            default -> new Player() {
+                @Override
+                public void introduce() {
+                    print("I'm the default player");
+                }
+
+                @Override
+                public PlayerAction determineNextAction(SudokuGrid grid) {
+                    return null;
+                }
+            };
+        };
+    }
+
+
+    public Player switchPlayer() {
+        Scanner scanner = new Scanner(System.in);
+        print("Do you want to switch players?");
+        String answer = scanner.next();
+        if(answer.contains("y")){
+            return whichPlayer();
+        }
+        return this;
+    }
+
+    public SudokuGrid giveUpGrid() {
+        return grid;
+    }
 }
