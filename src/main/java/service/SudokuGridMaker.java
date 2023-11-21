@@ -1884,12 +1884,12 @@ public class SudokuGridMaker {
     }
 
     public static SudokuGrid makeARandomGrid(int emptySquares) {
-        int[] solvedSquares = generateRandomSquaresForSolvedGrid();
-        int[] unsolvedSquares = removeSomeVales(solvedSquares, emptySquares);
+        int[] solvedSquares = generateSolvedGridWithRandomValues();
+        int[] unsolvedSquares = removeSomeValues(solvedSquares, emptySquares);
         return new SudokuGrid(unsolvedSquares);
     }
 
-    private static int[] removeSomeVales(int[] solvedSquares, int howMany) {
+    private static int[] removeSomeValues(int[] solvedSquares, int howMany) {
         for (int i = 0; i < howMany; i++) {
             boolean removedOne = false;
             while (!removedOne) {
@@ -1903,7 +1903,7 @@ public class SudokuGridMaker {
         return solvedSquares;
     }
 
-    private static int[] generateRandomSquaresForSolvedGrid() {
+    private static int[] generateSolvedGridWithRandomValues() {
         int[] squares = new int[81];
         int backtrack = 0;
         int passes = 0;
@@ -1920,7 +1920,7 @@ public class SudokuGridMaker {
                         if (q < backtrack) {
                             backtrack = 0;
                         }
-                        q = backtrack(squares, q, backtrack++);
+                        q = eraseValues(squares, q, backtrack++);
                         break;
                     }
                     squares[q] = couldBes[pos];
@@ -1942,7 +1942,7 @@ public class SudokuGridMaker {
         return squares;
     }
 
-    private static int backtrack(int[] squares, int q, int i) {
+    private static int eraseValues(int[] squares, int q, int i) {
         for (int j = 0; j < i; j++) {
             squares[q - j] = 0;
         }
