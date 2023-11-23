@@ -3,11 +3,13 @@ package player;
 import actions.Celebrate;
 import actions.PlayerAction;
 import model.SudokuGrid;
+import service.SudokuGridMaker;
 
 import java.util.Scanner;
 
 import static player.PlayerUtil.print;
 import static service.SudokuGridChecker.checkGridSolved;
+import static service.SudokuGridMaker.makeARandomGrid;
 import static service.SudokuGridObserver.countAllFilledSquares;
 
 public abstract class Player {
@@ -15,6 +17,7 @@ public abstract class Player {
     PlayerAction[] plan = new PlayerAction[0];
     int nextAction = 0;
     SudokuGrid grid;
+    SudokuGridMaker maker = new SudokuGridMaker();
 
     public void setupGrid(int[] squares) {
         this.grid = new SudokuGrid(squares);
@@ -114,6 +117,36 @@ public abstract class Player {
         }
         return this;
     }
+
+    public void whichGridDoYouWant() {
+
+        Scanner scanner = new Scanner(System.in);
+        print("Which grid do you want to play?");
+        String answer = scanner.next();
+
+        int[] squares;
+        switch (answer) {
+            case "9" -> squares = maker.getNumberedGrid(9);
+            case "10" ->squares= maker.getNumberedGrid(10);
+            default -> squares=maker.getNumberedGrid(0);
+        };
+
+        setupGrid(squares);
+
+    }
+
+
+    private int[] getNewRandomSudokuGrid(int emptySquares) {
+        return makeARandomGrid(emptySquares).getSquares();
+    }
+
+//    private int[] getNewSudokuGrid(int index) {
+//        if (index > grids.length) {
+//            throw new RuntimeException("No more grids!");
+//        }
+//        return grids[index];
+//    }
+
 
     public SudokuGrid giveUpGrid() {
         return grid;

@@ -9,6 +9,11 @@ import static service.SudokuGridChecker.*;
 import static service.SudokuGridObserver.whatCouldBeHere;
 
 public class SudokuGridMaker {
+    int[][] grids;
+
+    public SudokuGridMaker() {
+        this.buildGrids();
+    }
 
     public static SudokuGrid makeEmptyGrid() {
 
@@ -1861,6 +1866,17 @@ public class SudokuGridMaker {
         return grid;
     }
 
+    public static SudokuGrid makeEasyGrid2FromPcGame() {
+        SudokuGrid grid = new SudokuGrid();
+        int[] squares = {0, 0, 0, 2, 0, 0, 8, 6, 0, 8, 6, 5, 3, 0, 0, 0, 1, 0
+                , 3, 0, 2, 0, 1, 0, 5, 7, 0, 0, 0, 0, 1, 0, 5, 0, 8, 2, 0, 0,
+                9, 0, 0, 0, 6, 0, 0, 2, 5, 0, 8, 0, 6, 0, 0, 0, 0, 9, 6, 0, 3
+                , 0, 4, 0, 8, 0, 2, 0, 0, 0, 7, 3, 5, 1, 0, 1, 3, 0, 0, 2, 0,
+                0, 0};
+        grid.setSquares(squares);
+        return grid;
+    }
+
     public static SudokuGrid makeMediumGridFromPcGame() {
         SudokuGrid grid = new SudokuGrid();
         int[] squares = {0, 0, 3, 1, 0, 0, 9, 7, 0, 0, 1, 0, 4, 0, 0, 0, 0, 8
@@ -1953,6 +1969,25 @@ public class SudokuGridMaker {
         SudokuGrid grid = new SudokuGrid(squares);
         //print(grid.toString());
         return !checkGridForErrors(grid);
+    }
+
+    private void buildGrids() {
+        grids = new int[11][];
+        grids[0] = makeAlmostSolvedGridWithOneMissingNumber().getSquares();
+        grids[1] = makeAlmostSolvedGridMissingLastRow().getSquares();
+        grids[2] = makeAlmostSolvedGridMissingLastColumn().getSquares();
+        grids[3] = makeAlmostSolvedGridMissingOneInEveryBox().getSquares();
+        grids[4] = makeHalfSolvedGrid().getSquares();
+        grids[5] = makeAlmostSolvedGridMissingOneRowInThreeBoxes().getSquares();
+        grids[6] = makeGridFromPCGame().getSquares();
+        grids[7] = makeMediumGridFromPcGame().getSquares();
+        grids[8] = makeHardGridFromPcGame().getSquares();
+        grids[9] = makeARandomGrid(30).getSquares();
+        grids[10] = makeEasyGrid2FromPcGame().getSquares();
+    }
+
+    public int[] getNumberedGrid(int n) {
+        return  grids[n];
     }
 
 }
