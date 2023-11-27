@@ -1877,6 +1877,24 @@ public class SudokuGridMaker {
         return grid;
     }
 
+    public static  SudokuGrid makeHardGrid2FromPcGame() {
+        SudokuGrid grid = new SudokuGrid();
+        int[] squares = {
+                3,7,2,0,0,1,5,6,8,
+                5,4,8,6,7,3,0,2,0,
+                6,1,9,0,0,8,7,4,3,
+                2,5,4,0,0,0,0,3,0,
+                0,3,0,0,0,0,0,0,0,
+                0,8,0,0,3,0,2,5,4,
+                8,2,5,7,0,0,3,0,0,
+                0,6,0,3,0,2,4,8,0,
+                4,9,3,8,0,0,0,0,2
+        };
+
+        grid.setSquares(squares);
+        return grid;
+    }
+
     public static SudokuGrid makeMediumGridFromPcGame() {
         SudokuGrid grid = new SudokuGrid();
         int[] squares = {0, 0, 3, 1, 0, 0, 9, 7, 0, 0, 1, 0, 4, 0, 0, 0, 0, 8
@@ -1972,7 +1990,7 @@ public class SudokuGridMaker {
     }
 
     private void buildGrids() {
-        grids = new int[11][];
+        grids = new int[12][];
         grids[0] = makeAlmostSolvedGridWithOneMissingNumber().getSquares();
         grids[1] = makeAlmostSolvedGridMissingLastRow().getSquares();
         grids[2] = makeAlmostSolvedGridMissingLastColumn().getSquares();
@@ -1984,7 +2002,10 @@ public class SudokuGridMaker {
         grids[8] = makeHardGridFromPcGame().getSquares();
         grids[9] = makeARandomGrid(30).getSquares();
         grids[10] = makeEasyGrid2FromPcGame().getSquares();
+        grids[11] = makeHardGrid2FromPcGame().getSquares();
     }
+
+
 
     public int[] getNumberedGrid(int n) {
         return  grids[n];

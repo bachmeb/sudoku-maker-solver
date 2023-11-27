@@ -128,6 +128,7 @@ public abstract class Player {
         switch (answer) {
             case "9" -> squares = maker.getNumberedGrid(9);
             case "10" ->squares= maker.getNumberedGrid(10);
+            case "11" ->squares= maker.getNumberedGrid(11);
             default -> squares=maker.getNumberedGrid(0);
         };
 
